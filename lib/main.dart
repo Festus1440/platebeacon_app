@@ -118,7 +118,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                           child: Text(
                             "Log in",
                             style: TextStyle(
-                              fontSize: 15.0,
+                              fontSize: 14.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
