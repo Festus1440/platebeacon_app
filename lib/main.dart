@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/restaurantDetails.dart';
+import 'package:flutterapp/draweItems/restaurantDetails.dart';
 import 'forgotPass.dart';
 import 'register.dart';
 import 'ShelterMain.dart';
@@ -93,7 +93,8 @@ class _MaterialHomeState extends State<MaterialHome> {
                     child: InkWell(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushReplacementNamed('/recover');
+                          Navigator.of(context)
+                              .pushReplacementNamed('/recover');
                         },
                         child: Text(
                           "Forogot Password?",
@@ -107,27 +108,27 @@ class _MaterialHomeState extends State<MaterialHome> {
                   ),
                   SizedBox(height: 20.0),
                   Container(
-                      child: FlatButton(
-                          color: Colors.black38,
-                          textColor: Colors.white,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.black,
-                          //splashColor: Colors.blueAccent,
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed('/home');
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 50.0,
-                            child: Text(
-                              "Log in",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                    child: FlatButton(
+                      color: Colors.black38,
+                      textColor: Colors.white,
+                      disabledColor: Colors.grey,
+                      disabledTextColor: Colors.black,
+                      //splashColor: Colors.blueAccent,
+                      onPressed: () {
+                        Navigator.of(context).pushReplacementNamed('/home');
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50.0,
+                        child: Text(
+                          "Log in",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
                       ),
+                    ),
                   ),
                   SizedBox(height: 15.0),
                   Container(
@@ -141,27 +142,27 @@ class _MaterialHomeState extends State<MaterialHome> {
                   ),
                   SizedBox(height: 15.0),
                   Container(
-                      child: FlatButton(
-                          color: Colors.black38,
-                          textColor: Colors.white,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.black,
-                          //splashColor: Colors.blueAccent,
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/register');
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 50.0,
-                            child: Text(
-                              "Register",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                    child: FlatButton(
+                      color: Colors.black38,
+                      textColor: Colors.white,
+                      disabledColor: Colors.grey,
+                      disabledTextColor: Colors.black,
+                      //splashColor: Colors.blueAccent,
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/register');
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50.0,
+                        child: Text(
+                          "Register",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
                       ),
+                    ),
                   ),
                   SizedBox(height: 30.0),
                 ],

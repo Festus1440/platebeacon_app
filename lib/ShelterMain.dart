@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/restaurantDetails.dart';
+import 'package:flutterapp/draweItems/restaurantDetails.dart';
 import 'main.dart';
 
 class ShelterMain extends StatelessWidget {
