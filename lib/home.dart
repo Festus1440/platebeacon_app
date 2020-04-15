@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/register.dart';
 import 'package:flutterapp/draweItems/restaurant.dart';
-import 'homeMenu.dart';
 import 'main.dart';
-import 'main_drawer.dart';
 
 class LoginHome extends StatelessWidget {
   @override

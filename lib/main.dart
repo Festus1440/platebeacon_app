@@ -92,7 +92,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                     child: InkWell(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/recover');
+                          Navigator.of(context).pushReplacementNamed('/recover');
                         },
                         child: Text(
                           "Forogot Password?",

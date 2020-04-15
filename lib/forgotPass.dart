@@ -1,7 +1,33 @@
 import 'package:flutter/material.dart';
+
 import 'main.dart';
 
 class PassRecover extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      routes: <String, WidgetBuilder>{
+        '/main': (BuildContext context) => MaterialDesign(),
+      },
+      //debugShowCheckedModeBanner: false,
+      title: "Material",
+      home: ViewWidget(),
+    );
+  }
+}
+
+class ViewWidget extends StatefulWidget {
+  @override
+  ViewWidgetState createState() => ViewWidgetState();
+}
+
+class ViewWidgetState extends State<ViewWidget> {
+  bool viewVisible = false;
+  void showWidget() {
+    setState(() {
+      viewVisible = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +62,7 @@ class PassRecover extends StatelessWidget {
               ),
             ),
             Visibility(
-              visible: true,
+              visible: !viewVisible,
               child: Container(
                 padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
                 child: Column(
@@ -59,7 +85,7 @@ class PassRecover extends StatelessWidget {
                         disabledTextColor: Colors.black,
                         //splashColor: Colors.blueAccent,
                         onPressed: () {
-                          //Navigator.of(context).pushReplacementNamed('/home');
+                          showWidget();
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -79,7 +105,7 @@ class PassRecover extends StatelessWidget {
               ),
             ),
             Visibility(
-              visible: true,
+              visible: viewVisible,
               child: Container(
                 padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
                 child: Column(
@@ -111,7 +137,7 @@ class PassRecover extends StatelessWidget {
                         disabledTextColor: Colors.black,
                         //splashColor: Colors.blueAccent,
                         onPressed: () {
-                          //Navigator.of(context).pushReplacementNamed('/home');
+                          Navigator.of(context).pushReplacementNamed('/main');
                         },
                         child: Container(
                           alignment: Alignment.center,

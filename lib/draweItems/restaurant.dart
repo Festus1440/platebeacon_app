@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
 
 class Restaurant extends StatelessWidget {
   @override
@@ -126,3 +125,4 @@ class Restaurant extends StatelessWidget {
     );
   }
 }
+

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+
 // this file isn't being used
 class HomeMenu extends StatelessWidget {
   @override
