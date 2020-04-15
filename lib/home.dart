@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/register.dart';
-import 'package:flutterapp/restaurant.dart';
+import 'package:flutterapp/draweItems/restaurant.dart';
 import 'homeMenu.dart';
 import 'main.dart';
 import 'main_drawer.dart';
@@ -12,7 +12,8 @@ class LoginHome extends StatelessWidget {
       title: "Material",
       home: Home(),
       routes: <String, WidgetBuilder>{
-        '/register': (BuildContext context) => Restaurant(),
+        '/restaurant': (BuildContext context) => Restaurant(),
+        '/main': (BuildContext context) => MaterialDesign(),
       },
     );
   }
@@ -138,7 +139,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/register');
+                Navigator.of(context).pushNamed('/restaurant');
               },
               leading: Icon(Icons.restaurant),
               title: Text("Restaurant Details"),
@@ -190,10 +191,8 @@ class _MaterialHomeState extends State<Home> {
             ),
             ListTile(
               onTap: () {
-                //Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MaterialDesign(),
-                ));
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed('/main');
               },
               leading: Icon(Icons.arrow_back),
               title: Text("Log out"),

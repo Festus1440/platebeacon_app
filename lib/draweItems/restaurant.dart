@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import '../main.dart';
 
 class Restaurant extends StatelessWidget {
   @override
@@ -12,14 +12,16 @@ class Restaurant extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Center(
+          Container(
+            alignment: Alignment.topLeft,
+            //padding: EdgeInsets.only(top: 15.0, left: 14.0),
             child: Container(
-              width: 350,
+              //width: 350,
               height: 200,
-              margin: EdgeInsets.only(top: 20.0),
+              margin: EdgeInsets.only(top: 20.0,left: 14.0,right: 14.0),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                  border: Border.all(width: 2.0, color: const Color(0x000000)),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  border: Border.all(width: 1.0, color: Colors.black38),
                   //shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,

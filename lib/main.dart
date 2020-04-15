@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'forgotPass.dart';
 import 'register.dart';
 import 'home.dart';
 
@@ -12,7 +13,8 @@ class MaterialDesign extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/register': (BuildContext context) => RegisterPage(),
-        '/home': (BuildContext context) => LoginHome()
+        '/home': (BuildContext context) => LoginHome(),
+        '/recover': (BuildContext context) => PassRecover()
       },
       title: "Material",
       home: MaterialHome(),
@@ -55,12 +57,12 @@ class _MaterialHomeState extends State<MaterialHome> {
                     image: AssetImage('assets/PB.jpg'),
                     width: 190.0,
                   ),
-                )
+                ),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
             child: Column(
               children: <Widget>[
                 TextField(
@@ -89,7 +91,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                   child: InkWell(
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed('/register');
+                        Navigator.of(context).pushNamed('/recover');
                       },
                       child: Text(
                         "Forogot Password?",

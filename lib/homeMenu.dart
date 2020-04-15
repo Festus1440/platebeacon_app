@@ -9,7 +9,7 @@ class HomeMenu extends StatelessWidget {
         Container(
           //alignment: Alignment.center,
           child: Center(
-            child: Text("Notifications"),
+            child: Text("Home"),
           ),
         ),
       ],
