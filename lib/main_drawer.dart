@@ -1,114 +1,75 @@
 import 'package:flutter/material.dart';
 
+import 'main.dart';
 
 class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(20.0),
-            color: Colors.blue,
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(top: 20.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage('assets/PB.jpg'),
-                      )
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 15.0),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          "Shelter Name",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        Text(
-                          "Chicago, IL",
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              )
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+          child: FlatButton(
+            //elevation: 0.0,
+            color: Colors.black38,
+            textColor: Colors.white,
+            disabledColor: Colors.grey,
+            disabledTextColor: Colors.black,
+            //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
+            //splashColor: Colors.blueAccent,
+            onPressed: () {
+              //Navigator.of(context).pushReplacementNamed('/home');
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 50.0,
+              child: Text(
+                "Create account",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            leading: Icon(Icons.restaurant),
-            title: Text("Restaurant Details"),
-          ),
-          ListTile(
-            onTap: () {
-              //Navigator.of(context).pushNamed(main.routeName);
-            },
-            leading: Icon(Icons.insert_chart),
-            title: Text("Analytics"),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            leading: Icon(Icons.library_books),
-            title: Text("Stories"),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            leading: Icon(Icons.notifications),
-            title: Text("Notifications"),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            leading: Icon(Icons.event),
-            title: Text("Events"),
-          ),
-          Divider(
-            height: 15.0,
-            thickness: 0.5,
+        ),
+      ],
+    );
+  }
+}
+
+class MenuDrawer2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+          child: FlatButton(
+            //elevation: 0.0,
             color: Colors.black38,
-            indent: 20.0,
-            endIndent: 20.0,
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pop();
+            textColor: Colors.white,
+            disabledColor: Colors.grey,
+            disabledTextColor: Colors.black,
+            //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
+            //splashColor: Colors.blueAccent,
+            onPressed: () {
+              //Navigator.of(context).pushReplacementNamed('/home');
             },
-            leading: Icon(Icons.settings),
-            title: Text("Settings"),
+            child: Container(
+              alignment: Alignment.center,
+              height: 50.0,
+              child: Text(
+                "Create",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            leading: Icon(Icons.arrow_back),
-            title: Text("Log out"),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -17,8 +17,7 @@ class MaterialHome extends StatefulWidget {
 
 class _MaterialHomeState extends State<MaterialHome> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   final tabs = [
     Container(
@@ -177,8 +176,8 @@ class _MaterialHomeState extends State<MaterialHome> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        )
-                    )
+                        ),
+                    ),
                 ),
               ],
             ),
