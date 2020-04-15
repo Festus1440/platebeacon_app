@@ -24,15 +24,28 @@ class Home extends StatefulWidget {
 }
 
 class _MaterialHomeState extends State<Home> {
-
   String shelterName = 'Shelter Name';
 
   final bottomBarItems = [
     Container(
-        child: Center(child: Text("Home"),)
+        child: Center(
+          child: Text("Home Page"),
+        ),
     ),
     Container(
-        child: Center(child: Text("Notifications"),)
+        child: Center(
+          child: Text("Search Page"),
+        ),
+    ),
+    Container(
+        child: Center(
+          child: Text("Orders"),
+        ),
+    ),
+    Container(
+        child: Center(
+          child: Text("Account Page"),
+        ),
     ),
   ];
   int _bottomBarIndex = 0;
@@ -47,15 +60,24 @@ class _MaterialHomeState extends State<Home> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0.0,
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.black38,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            title: Text('Notifications'),
+            icon: Icon(Icons.search),
+            title: Text('Search'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_border),
+            title: Text('Orders'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Account'),
           ),
         ],
         currentIndex: _bottomBarIndex,
@@ -74,46 +96,44 @@ class _MaterialHomeState extends State<Home> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(20.0),
-              color: Colors.blue,
+              color: Colors.black38,
               child: Center(
                   child: Column(
-                    children: <Widget>[
-                      Container(
-                        width: 100,
-                        height: 100,
-                        margin: EdgeInsets.only(top: 20.0),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: AssetImage('assets/PB.jpg'),
-                            )
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 20.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage('assets/PB.jpg'),
+                        )),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 15.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          "Shelter Name",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.0,
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "Shelter Name",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            Text(
-                              "Chicago, IL",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          "Chicago, IL",
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 15.0,
+                          ),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   )
-              ),
+                ],
+              )),
             ),
             ListTile(
               onTap: () {
@@ -171,11 +191,9 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 //Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => MaterialDesign(),
-                    )
-                );
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MaterialDesign(),
+                ));
               },
               leading: Icon(Icons.arrow_back),
               title: Text("Log out"),

@@ -32,97 +32,91 @@ class Restaurant extends StatelessWidget {
             //color: Colors.black12,
             alignment: Alignment.topLeft,
             padding: EdgeInsets.only(top: 15.0, left: 14.0),
-            child: Column(
-              children: <Widget>[
-                Stack(
+            child: Container(
+                child: Stack(
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Text(
-                          "Restaurant Name",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                              "Restaurant Name",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                           ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 45.0),
-                      child: Text(
-                        "Chicago, IL",
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 65.0),
-                      child: Text(
-                        "Open 24 Hours",
-                        style: TextStyle(
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.bold,
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            "Chicago, IL",
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 85.0),
-                      child: Divider(
-                        height: 15.0,
-                        thickness: 0.5,
-                        color: Colors.black38,
-                        indent: 0.0,
-                        endIndent: 10.0,
-                      ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.only(top: 3.0),
+                          child: Text(
+                            "Open 24 Hours",
+                            style: TextStyle(
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 7.0),
+                          alignment: Alignment.topLeft,
+                          child: Divider(
+                            height: 15.0,
+                            thickness: 0.5,
+                            color: Colors.black38,
+                            indent: 0.0,
+                            endIndent: 20.0,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 7.0),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Restaurant info",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            "Address: 123 Main St",
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            "Phone: (123)456-7890",
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        "Restaurant info",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 45.0),
-                      child: Text(
-                        "Address: 123 Main St",
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 70.0),
-                      child: Text(
-                        "Phone: (123) 123-345",
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 100.0),
-                      child: Divider(
-                        height: 15.0,
-                        thickness: 0.5,
-                        color: Colors.black38,
-                        indent: 0.0,
-                        endIndent: 10.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ),
           )
         ],
