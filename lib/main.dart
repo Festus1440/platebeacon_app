@@ -43,7 +43,7 @@ class _MaterialHomeState extends State<MaterialHome> {
         title: Text("Log in"),
         backgroundColor: Colors.black38,
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Container(
             alignment: Alignment.center,
@@ -85,7 +85,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                 SizedBox(height: 5.0),
                 Container(
                   alignment: Alignment(1.0, 0.0),
-                  padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                  padding: EdgeInsets.only(top: 15.0),
                   child: InkWell(
                     child: GestureDetector(
                       onTap: () {
@@ -122,8 +122,10 @@ class _MaterialHomeState extends State<MaterialHome> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ))),
-                SizedBox(height: 15),
+                        ),
+                    ),
+                ),
+                SizedBox(height: 15.0),
                 Container(
                   child: Text(
                     "OR",
@@ -133,7 +135,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 15.0),
                 Container(
                     child: FlatButton(
                         color: Colors.black38,
@@ -154,7 +156,9 @@ class _MaterialHomeState extends State<MaterialHome> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ))),
+                        ),
+                    ),
+                ),
               ],
             ),
           )
