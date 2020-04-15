@@ -196,7 +196,7 @@ class _MaterialHomeState extends State<Home> {
                 ));
               },
               leading: Icon(Icons.arrow_back),
-              title: Text("Log outs"),
+              title: Text("Log out"),
             ),
           ],
         ),
