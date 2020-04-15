@@ -29,24 +29,24 @@ class _MaterialHomeState extends State<Home> {
 
   final bottomBarItems = [
     Container(
-        child: Center(
-          child: Text("Home Page"),
-        ),
+      child: Center(
+        child: Text("Home Page"),
+      ),
     ),
     Container(
-        child: Center(
-          child: Text("Search Page"),
-        ),
+      child: Center(
+        child: Text("Search Page"),
+      ),
     ),
     Container(
-        child: Center(
-          child: Text("Orders"),
-        ),
+      child: Center(
+        child: Text("Orders"),
+      ),
     ),
     Container(
-        child: Center(
-          child: Text("Account Page"),
-        ),
+      child: Center(
+        child: Text("Account Page"),
+      ),
     ),
   ];
   int _bottomBarIndex = 0;
@@ -99,42 +99,44 @@ class _MaterialHomeState extends State<Home> {
               padding: EdgeInsets.all(20.0),
               color: Colors.black38,
               child: Center(
-                  child: Column(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(top: 20.0),
-                    decoration: BoxDecoration(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: 100,
+                      height: 100,
+                      margin: EdgeInsets.only(top: 20.0),
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.fill,
                           image: AssetImage('assets/PB.jpg'),
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 15.0),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          "Shelter Name",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.0,
-                          ),
                         ),
-                        Text(
-                          "Chicago, IL",
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  )
-                ],
-              )),
+                    Container(
+                      margin: EdgeInsets.only(top: 15.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            "Shelter Name",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "Chicago, IL",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             ListTile(
               onTap: () {
