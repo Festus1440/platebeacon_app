@@ -55,7 +55,7 @@ class PassRecover extends StatelessWidget {
                     disabledTextColor: Colors.black,
                     //splashColor: Colors.blueAccent,
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/home');
+                      //Navigator.of(context).pushReplacementNamed('/home');
                     },
                     child: Container(
                       alignment: Alignment.center,
