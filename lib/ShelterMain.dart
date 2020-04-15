@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-//import 'package:flutterapp/register.dart';
-import 'package:flutterapp/restaurantDetails.dart';
-//import 'homeMenu.dart';
+import 'package:flutterapp/draweItems/restaurant.dart';
 import 'main.dart';
-//import 'main_drawer.dart';
 
-class ShelterMain extends StatelessWidget {
+class LoginHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Material",
       home: Home(),
       routes: <String, WidgetBuilder>{
-        '/register': (BuildContext context) => RestaurantDetails(),
+        '/restaurant': (BuildContext context) => Restaurant(),
+        '/main': (BuildContext context) => MaterialDesign(),
       },
     );
   }
@@ -98,47 +96,49 @@ class _MaterialHomeState extends State<Home> {
               padding: EdgeInsets.all(20.0),
               color: Colors.black38,
               child: Center(
-                  child: Column(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(top: 20.0),
-                    decoration: BoxDecoration(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: 100,
+                      height: 100,
+                      margin: EdgeInsets.only(top: 20.0),
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.fill,
                           image: AssetImage('assets/PB.jpg'),
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 15.0),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          "Shelter Name",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.0,
-                          ),
                         ),
-                        Text(
-                          "Chicago, IL",
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  )
-                ],
-              )),
+                    Container(
+                      margin: EdgeInsets.only(top: 15.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            "Shelter Name",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "Chicago, IL",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/register');
+                Navigator.of(context).pushNamed('/restaurant');
               },
               leading: Icon(Icons.restaurant),
               title: Text("Restaurant Details"),
@@ -190,10 +190,8 @@ class _MaterialHomeState extends State<Home> {
             ),
             ListTile(
               onTap: () {
-                //Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MaterialDesign(),
-                ));
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed('/main');
               },
               leading: Icon(Icons.arrow_back),
               title: Text("Log out"),

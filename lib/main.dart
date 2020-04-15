@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/restaurantDetails.dart';
+import 'forgotPass.dart';
 import 'register.dart';
-import 'ShelterMain.dart';
+import 'home.dart';
 
 void main() => runApp(MaterialDesign());
 
@@ -13,7 +13,8 @@ class MaterialDesign extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/register': (BuildContext context) => RegisterPage(),
-        '/home': (BuildContext context) => RestaurantDetails(),
+        '/home': (BuildContext context) => LoginHome(),
+        '/recover': (BuildContext context) => PassRecover()
       },
       title: "Material",
       home: MaterialHome(),
@@ -44,126 +45,129 @@ class _MaterialHomeState extends State<MaterialHome> {
         title: Text("Log in"),
         backgroundColor: Colors.black38,
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            alignment: Alignment.center,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                  child: Image(
-                    image: AssetImage('assets/PB.jpg'),
-                    width: 190.0,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                    child: Image(
+                      image: AssetImage('assets/PB.jpg'),
+                      width: 190.0,
+                    ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: 'Username or Email',
-                      labelStyle: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      )),
-                ),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      )),
-                ),
-                SizedBox(height: 5.0),
-                Container(
-                  alignment: Alignment(1.0, 0.0),
-                  padding: EdgeInsets.only(top: 15.0),
-                  child: InkWell(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/register');
-                      },
-                      child: Text(
-                        "Forogot Password?",
-                        style: TextStyle(
+            Container(
+              padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                        labelText: 'Username or Email',
+                        labelStyle: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                        )),
                   ),
-                ),
-                SizedBox(height: 20.0),
-                Container(
-                  child: FlatButton(
-                    color: Colors.black38,
-                    textColor: Colors.white,
-                    disabledColor: Colors.grey,
-                    disabledTextColor: Colors.black,
-                    //splashColor: Colors.blueAccent,
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/home');
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50.0,
-                      child: Text(
-                        "Log in",
-                        style: TextStyle(
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                  ),
+                  SizedBox(height: 5.0),
+                  Container(
+                    alignment: Alignment(1.0, 0.0),
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: InkWell(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushReplacementNamed('/recover');
+                        },
+                        child: Text(
+                          "Forogot Password?",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 15.0),
-                Container(
-                  child: Text(
-                    "OR",
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 10.0,
-                    ),
+                  SizedBox(height: 20.0),
+                  Container(
+                      child: FlatButton(
+                          color: Colors.black38,
+                          textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          //splashColor: Colors.blueAccent,
+                          onPressed: () {
+                            Navigator.of(context).pushReplacementNamed('/home');
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 50.0,
+                            child: Text(
+                              "Log in",
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                      ),
                   ),
-                ),
-                SizedBox(height: 15.0),
-                Container(
-                  child: FlatButton(
-                    color: Colors.black38,
-                    textColor: Colors.white,
-                    disabledColor: Colors.grey,
-                    disabledTextColor: Colors.black,
-                    //splashColor: Colors.blueAccent,
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/register');
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50.0,
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  SizedBox(height: 15.0),
+                  Container(
+                    child: Text(
+                      "OR",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 10.0,
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                  SizedBox(height: 15.0),
+                  Container(
+                      child: FlatButton(
+                          color: Colors.black38,
+                          textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          //splashColor: Colors.blueAccent,
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/register');
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 50.0,
+                            child: Text(
+                              "Register",
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                      ),
+                  ),
+                  SizedBox(height: 30.0),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
