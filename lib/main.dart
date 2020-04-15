@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/restaurantDetails.dart';
 import 'register.dart';
-import 'home.dart';
+import 'ShelterMain.dart';
 
 void main() => runApp(MaterialDesign());
 
@@ -12,7 +13,7 @@ class MaterialDesign extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/register': (BuildContext context) => RegisterPage(),
-        '/home': (BuildContext context) => LoginHome()
+        '/home': (BuildContext context) => RestaurantDetails(),
       },
       title: "Material",
       home: MaterialHome(),
@@ -103,27 +104,27 @@ class _MaterialHomeState extends State<MaterialHome> {
                 ),
                 SizedBox(height: 20.0),
                 Container(
-                    child: FlatButton(
-                        color: Colors.black38,
-                        textColor: Colors.white,
-                        disabledColor: Colors.grey,
-                        disabledTextColor: Colors.black,
-                        //splashColor: Colors.blueAccent,
-                        onPressed: () {
-                          Navigator.of(context).pushReplacementNamed('/home');
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 50.0,
-                          child: Text(
-                            "Log in",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  child: FlatButton(
+                    color: Colors.black38,
+                    textColor: Colors.white,
+                    disabledColor: Colors.grey,
+                    disabledTextColor: Colors.black,
+                    //splashColor: Colors.blueAccent,
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('/home');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50.0,
+                      child: Text(
+                        "Log in",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
                     ),
+                  ),
                 ),
                 SizedBox(height: 15.0),
                 Container(
@@ -137,27 +138,27 @@ class _MaterialHomeState extends State<MaterialHome> {
                 ),
                 SizedBox(height: 15.0),
                 Container(
-                    child: FlatButton(
-                        color: Colors.black38,
-                        textColor: Colors.white,
-                        disabledColor: Colors.grey,
-                        disabledTextColor: Colors.black,
-                        //splashColor: Colors.blueAccent,
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/register');
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 50.0,
-                          child: Text(
-                            "Register",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  child: FlatButton(
+                    color: Colors.black38,
+                    textColor: Colors.white,
+                    disabledColor: Colors.grey,
+                    disabledTextColor: Colors.black,
+                    //splashColor: Colors.blueAccent,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/register');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50.0,
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
                     ),
+                  ),
                 ),
               ],
             ),

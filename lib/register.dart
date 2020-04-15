@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class RegisterPage extends StatelessWidget {
   @override
@@ -17,7 +18,8 @@ class MaterialHome extends StatefulWidget {
 
 class _MaterialHomeState extends State<MaterialHome> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   final tabs = [
     Container(
@@ -154,30 +156,29 @@ class _MaterialHomeState extends State<MaterialHome> {
                 tabs[_selectedIndex],
                 SizedBox(height: 40.0),
                 Container(
-                    child:
-                    FlatButton(
-                      //elevation: 0.0,
-                        color: Colors.black38,
-                        textColor: Colors.white,
-                        disabledColor: Colors.grey,
-                        disabledTextColor: Colors.black,
-                        //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
-                        //splashColor: Colors.blueAccent,
-                        onPressed: () {
-                          //Navigator.of(context).pushReplacementNamed('/home');
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 50.0,
-                          child: Text(
-                            "Create account",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  child: FlatButton(
+                    //elevation: 0.0,
+                    color: Colors.black38,
+                    textColor: Colors.white,
+                    disabledColor: Colors.grey,
+                    disabledTextColor: Colors.black,
+                    //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
+                    //splashColor: Colors.blueAccent,
+                    onPressed: () {
+                      //Navigator.of(context).pushReplacementNamed('/home');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50.0,
+                      child: Text(
+                        "Create account",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
                     ),
+                  ),
                 ),
               ],
             ),

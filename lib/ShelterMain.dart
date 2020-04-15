@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/register.dart';
-import 'package:flutterapp/restaurant.dart';
-import 'homeMenu.dart';
+//import 'package:flutterapp/register.dart';
+import 'package:flutterapp/restaurantDetails.dart';
+//import 'homeMenu.dart';
 import 'main.dart';
-import 'main_drawer.dart';
+//import 'main_drawer.dart';
 
-class LoginHome extends StatelessWidget {
+class ShelterMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Material",
       home: Home(),
       routes: <String, WidgetBuilder>{
-        '/register': (BuildContext context) => Restaurant(),
+        '/register': (BuildContext context) => RestaurantDetails(),
       },
     );
   }
@@ -28,24 +28,24 @@ class _MaterialHomeState extends State<Home> {
 
   final bottomBarItems = [
     Container(
-        child: Center(
-          child: Text("Home Page"),
-        ),
+      child: Center(
+        child: Text("Home Page"),
+      ),
     ),
     Container(
-        child: Center(
-          child: Text("Search Page"),
-        ),
+      child: Center(
+        child: Text("Search Page"),
+      ),
     ),
     Container(
-        child: Center(
-          child: Text("Orders"),
-        ),
+      child: Center(
+        child: Text("Orders"),
+      ),
     ),
     Container(
-        child: Center(
-          child: Text("Account Page"),
-        ),
+      child: Center(
+        child: Text("Account Page"),
+      ),
     ),
   ];
   int _bottomBarIndex = 0;
