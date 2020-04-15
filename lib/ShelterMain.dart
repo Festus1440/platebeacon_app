@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/draweItems/restaurant.dart';
+import 'package:flutterapp/restaurantDetails.dart';
 import 'main.dart';
 
-class LoginHome extends StatelessWidget {
+class ShelterMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Material",
       home: Home(),
       routes: <String, WidgetBuilder>{
-        '/restaurant': (BuildContext context) => Restaurant(),
+        '/restaurant': (BuildContext context) => RestaurantDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
       },
     );

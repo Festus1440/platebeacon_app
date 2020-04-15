@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/restaurantDetails.dart';
 import 'forgotPass.dart';
 import 'register.dart';
-import 'home.dart';
+import 'ShelterMain.dart';
 
 void main() => runApp(MaterialDesign());
 
@@ -13,7 +14,7 @@ class MaterialDesign extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/register': (BuildContext context) => RegisterPage(),
-        '/home': (BuildContext context) => LoginHome(),
+        '/home': (BuildContext context) => ShelterMain(),
         '/recover': (BuildContext context) => PassRecover()
       },
       title: "Material",
