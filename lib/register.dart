@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'ShelterMain.dart';
+
 class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -173,7 +175,7 @@ class RegisterPageState extends State<RegisterPage> {
                     //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
                     //splashColor: Colors.blueAccent,
                     onPressed: () {
-                      //Navigator.of(context).pushReplacementNamed('/home');
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
                     },
                     child: Container(
                       alignment: Alignment.center,
