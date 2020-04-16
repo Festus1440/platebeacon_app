@@ -40,6 +40,14 @@ class LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
+        leading: InkWell(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back),
+          ),
+        ),
         title: Text("Log in"),
         backgroundColor: Colors.black38,
       ),

@@ -138,7 +138,6 @@ class RegisterPageState extends State<RegisterPage> {
             child: Icon(Icons.arrow_back),
           ),
         ),
-        //leading: Icon(Icons.arrow_back),
         title: Text("Register"),
         backgroundColor: Colors.black38,
       ),

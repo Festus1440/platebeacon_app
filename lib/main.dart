@@ -12,7 +12,7 @@ class MaterialDesign extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
-        '/register': (BuildContext context) => Register(),
+        '/register': (BuildContext context) => RegisterPage(),
       },
       title: "Material",
       home: MaterialHome(),
@@ -68,7 +68,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('/login');
+                        Navigator.of(context).pushNamed('/login');
                       },
                       child: Container(
                         alignment: Alignment.center,
