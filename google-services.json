@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "346476666465",
+    "firebase_url": "https://platebeacon-66f59.firebaseio.com",
+    "project_id": "platebeacon-66f59",
+    "storage_bucket": "platebeacon-66f59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346476666465:android:db7995c0de077281449420",
+        "android_client_info": {
+          "package_name": "com.example.platebeacon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346476666465-cprnq677u0esg05q0js6ev3meali4l6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.platebeacon",
+            "certificate_hash": "67aae06e11a28874055c3a999c0878f75ac3a96b"
+          }
+        },
+        {
+          "client_id": "346476666465-gbnqqaidigb5ohot8e5fben25ugap8d2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Vn5WdD1mnmfOm4o5TBIyWuBlBpkS_SY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346476666465-gbnqqaidigb5ohot8e5fben25ugap8d2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "346476666465-3v9u6m61nrh38806ba6hvihgtr0atg2q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutter.platebeacon"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

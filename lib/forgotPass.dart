@@ -137,7 +137,7 @@ class PassRecoverPageState extends State<PassRecoverPage> {
                         disabledTextColor: Colors.black,
                         //splashColor: Colors.blueAccent,
                         onPressed: () {
-                          Navigator.of(context).pushReplacementNamed('/main');
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MaterialDesign()),);
                         },
                         child: Container(
                           alignment: Alignment.center,

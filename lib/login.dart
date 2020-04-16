@@ -11,8 +11,8 @@ class Login extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/register': (BuildContext context) => RegisterPage(),
-        '/shelterMain': (BuildContext context) => Home(),
-        '/recoverPass': (BuildContext context) => PassRecoverPage()
+        '/shelterMain': (BuildContext context) => ShelterMain(),
+        '/recoverPass': (BuildContext context) => PassRecover()
       },
       title: "Log in",
       home: LoginPage(),
@@ -26,8 +26,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -40,14 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
-        leading: InkWell(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back),
-          ),
-        ),
+
         title: Text("Log in"),
         backgroundColor: Colors.black38,
       ),
@@ -98,8 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkWell(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed('/recoverPass');
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PassRecover()),);
                         },
                         child: Text(
                           "Forogot Password?",

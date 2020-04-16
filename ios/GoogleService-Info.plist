@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>346476666465-3v9u6m61nrh38806ba6hvihgtr0atg2q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.346476666465-3v9u6m61nrh38806ba6hvihgtr0atg2q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>346476666465-cprnq677u0esg05q0js6ev3meali4l6o.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBTUouVScdy9JJ2fZYQx1wI9a_QflCVixc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>346476666465</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.flutter.platebeacon</string>
+	<key>PROJECT_ID</key>
+	<string>platebeacon-66f59</string>
+	<key>STORAGE_BUCKET</key>
+	<string>platebeacon-66f59.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:346476666465:ios:b20028f9b700e515449420</string>
+	<key>DATABASE_URL</key>
+	<string>https://platebeacon-66f59.firebaseio.com</string>
+</dict>
+</plist>
