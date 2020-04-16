@@ -11,17 +11,17 @@ class PassRecover extends StatelessWidget {
       },
       //debugShowCheckedModeBanner: false,
       title: "Material",
-      home: ViewWidget(),
+      home: PassRecoverPage(),
     );
   }
 }
 
-class ViewWidget extends StatefulWidget {
+class PassRecoverPage extends StatefulWidget {
   @override
-  ViewWidgetState createState() => ViewWidgetState();
+  PassRecoverPageState createState() => PassRecoverPageState();
 }
 
-class ViewWidgetState extends State<ViewWidget> {
+class PassRecoverPageState extends State<PassRecoverPage> {
   bool viewVisible = false;
   void showWidget() {
     setState(() {

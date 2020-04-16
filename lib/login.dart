@@ -11,8 +11,8 @@ class Login extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/register': (BuildContext context) => RegisterPage(),
-        '/shelterMain': (BuildContext context) => ShelterMain(),
-        '/recoverPass': (BuildContext context) => PassRecover()
+        '/shelterMain': (BuildContext context) => Home(),
+        '/recoverPass': (BuildContext context) => PassRecoverPage()
       },
       title: "Log in",
       home: LoginPage(),
@@ -22,10 +22,10 @@ class Login extends StatelessWidget {
 
 class LoginPage extends StatefulWidget {
   @override
-  LoginPageState createState() => LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +120,8 @@ class LoginPageState extends State<LoginPage> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('shelterMain');
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
+                        //Navigator.of(context).pushReplacementNamed('shelterMain');
                       },
                       child: Container(
                         alignment: Alignment.center,
