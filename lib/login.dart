@@ -120,7 +120,8 @@ class LoginPageState extends State<LoginPage> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('shelterMain');
+                        Navigator.of(context)
+                            .pushReplacementNamed('shelterMain');
                       },
                       child: Container(
                         alignment: Alignment.center,
