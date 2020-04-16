@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class RegisterPage extends StatelessWidget {
+class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Material",
-      home: MaterialHome(),
+      home: RegisterPage(),
     );
   }
 }
 
-class MaterialHome extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _MaterialHomeState createState() => _MaterialHomeState();
+  RegisterPageState createState() => RegisterPageState();
 }
 
-class _MaterialHomeState extends State<MaterialHome> {
+class RegisterPageState extends State<RegisterPage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -130,6 +130,15 @@ class _MaterialHomeState extends State<MaterialHome> {
       ),
       appBar: AppBar(
         elevation: 0.0,
+        leading: InkWell(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back),
+          ),
+        ),
+        //leading: Icon(Icons.arrow_back),
         title: Text("Register"),
         backgroundColor: Colors.black38,
       ),
