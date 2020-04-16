@@ -1,31 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'forgotPass.dart';
 import 'register.dart';
+import 'ShelterMain.dart';
 
-void main() => runApp(MaterialDesign());
-
-class MaterialDesign extends StatelessWidget {
+class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/login': (BuildContext context) => LoginPage(),
         '/register': (BuildContext context) => RegisterPage(),
+        '/shelterMain': (BuildContext context) => ShelterMain(),
+        '/recoverPass': (BuildContext context) => PassRecover()
       },
-      title: "Material",
-      home: MaterialHome(),
+      title: "Log in",
+      home: LoginPage(),
     );
   }
 }
 
-class MaterialHome extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _MaterialHomeState createState() => _MaterialHomeState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _MaterialHomeState extends State<MaterialHome> {
+class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +38,19 @@ class _MaterialHomeState extends State<MaterialHome> {
       ),
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0.0,
+        leading: InkWell(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back),
+          ),
+        ),
+        title: Text("Log in"),
+        backgroundColor: Colors.black38,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -46,7 +59,7 @@ class _MaterialHomeState extends State<MaterialHome> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 100.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
                     child: Image(
                       image: AssetImage('assets/PB.jpg'),
                       width: 190.0,
@@ -59,41 +72,46 @@ class _MaterialHomeState extends State<MaterialHome> {
               padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: 80.0),
+                  TextField(
+                    decoration: InputDecoration(
+                        labelText: 'Username or Email',
+                        labelStyle: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                  ),
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                  ),
+                  SizedBox(height: 5.0),
                   Container(
-                    child: FlatButton(
-                      color: Colors.black38,
-                      textColor: Colors.white,
-                      disabledColor: Colors.grey,
-                      disabledTextColor: Colors.black,
-                      //splashColor: Colors.blueAccent,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/login');
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 50.0,
+                    alignment: Alignment(1.0, 0.0),
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: InkWell(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed('/recoverPass');
+                        },
                         child: Text(
-                          "Log in",
+                          "Forogot Password?",
                           style: TextStyle(
-                            fontSize: 15.0,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 15.0),
-                  Container(
-                    child: Text(
-                      "OR",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 10.0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 30.0),
                   Container(
                     child: FlatButton(
                       color: Colors.black38,
@@ -102,13 +120,13 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/register');
+                        Navigator.of(context).pushReplacementNamed('shelterMain');
                       },
                       child: Container(
                         alignment: Alignment.center,
                         height: 50.0,
                         child: Text(
-                          "Register",
+                          "Log in",
                           style: TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,
