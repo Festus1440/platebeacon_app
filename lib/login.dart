@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'forgotPass.dart';
 import 'register.dart';
 import 'ShelterMain.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -26,7 +27,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String _email, _password;
 
+  bool errorVisible = false;
+  String loginError = "";
+  void showError(error) {
+    setState(() {
+      loginError = error;
+      errorVisible = true;
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -74,7 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
-                        )),
+                        ),
+                    ),
+                    onChanged: (value) {
+                      this.setState((){_email = value;});
+                    },
                   ),
                   TextField(
                     obscureText: true,
@@ -84,7 +98,11 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
-                        )),
+                        ),
+                    ),
+                    onChanged: (value) {
+                      this.setState((){_password = value;});
+                    },
                   ),
                   SizedBox(height: 5.0),
                   Container(
@@ -96,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PassRecover()),);
                         },
                         child: Text(
-                          "Forogot Password?",
+                          "Forgot Password?",
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -114,8 +132,18 @@ class _LoginPageState extends State<LoginPage> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
+                        print(_email);
+                        FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password).then((value) {
+                          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
+                          //Navigator.of(context).pushReplacementNamed('/shelterMain');
+                          Navigator.of(context).pop();
+                        }).catchError((error) {
+                          showError(error.message);
+                          print("Error: "+ error.message);
+                        });
+                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
                         //Navigator.of(context).pushReplacementNamed('shelterMain');
+
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -128,6 +156,14 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: errorVisible,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      alignment: Alignment(-1.0, 0.0),
+                      child: Text(loginError),
                     ),
                   ),
                   SizedBox(height: 30.0),

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'ShelterMain.dart';
 import 'login.dart';
 import 'register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(MaterialDesign());
 
@@ -15,9 +17,33 @@ class MaterialDesign extends StatelessWidget {
         '/register': (BuildContext context) => RegisterPage(),
       },
       title: "Material",
-      home: MaterialHome(),
+      home: userLoggedIn(),
     );
   }
+}
+
+Widget userLoggedIn(){
+  return StreamBuilder(
+    stream: FirebaseAuth.instance.onAuthStateChanged,
+    builder: (BuildContext context,snapshot){
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return Scaffold(
+            body:
+            Center(
+                child: Text("Loading")
+            ),
+          );
+        }
+        else {
+          if(snapshot.hasData){
+            return ShelterMain();
+          }
+          else {
+            return MaterialHome();
+          }
+        }
+    },
+  );
 }
 
 class MaterialHome extends StatefulWidget {

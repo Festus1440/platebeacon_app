@@ -137,7 +137,25 @@ class PassRecoverPageState extends State<PassRecoverPage> {
                         disabledTextColor: Colors.black,
                         //splashColor: Colors.blueAccent,
                         onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MaterialDesign()),);
+                          Navigator.pushReplacement(context,
+                            PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 200),
+                              transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secAnimation, Widget child){
+                                var begin = Offset(-1.0, 0.0);
+                                var end = Offset.zero;
+                                var tween = Tween(begin: begin, end: end);
+                                var offsetAnimation = animation.drive(tween);
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                  //alignment: Alignment.center,
+                                );
+                              },
+                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secAnimation){
+                                return MaterialDesign();
+                              }
+                            ),);
+                            //MaterialPageRoute(builder: (context) => MaterialDesign()),);
                         },
                         child: Container(
                           alignment: Alignment.center,

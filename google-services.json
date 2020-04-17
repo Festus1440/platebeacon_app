@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:346476666465:android:db7995c0de077281449420",
+        "mobilesdk_app_id": "1:346476666465:android:5c86b95e85ef6f19449420",
         "android_client_info": {
-          "package_name": "com.example.platebeacon"
+          "package_name": "com.flutter.platebeacon"
         }
       },
       "oauth_client": [
         {
-          "client_id": "346476666465-cprnq677u0esg05q0js6ev3meali4l6o.apps.googleusercontent.com",
+          "client_id": "346476666465-sibnqd36hdujgrbln5hhgtrf90v9qjk8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.platebeacon",
+            "package_name": "com.flutter.platebeacon",
             "certificate_hash": "67aae06e11a28874055c3a999c0878f75ac3a96b"
           }
         },

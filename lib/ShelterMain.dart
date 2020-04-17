@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShelterMain extends StatelessWidget {
   @override
@@ -16,6 +18,52 @@ class ShelterMain extends StatelessWidget {
   }
 }
 
+List<Widget> makeListWidget(AsyncSnapshot snapshot) {
+  return snapshot.data.documents.map<Widget>((document) {
+    return ListTile(
+      leading: Icon(Icons.person),
+      title: Text(document['FirstName']),
+      subtitle: Text(document['LastName']),
+    );
+  }).toList();
+}
+
+Widget fireStoreSnap() {
+  return Container(
+    child: StreamBuilder(
+        stream: Firestore.instance.collection("users").snapshots(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return CircularProgressIndicator();
+            default:
+              return ListView(
+                children: makeListWidget(snapshot),
+              );
+          }
+        }),
+  );
+}
+
+Widget userLoggedIn() {
+  return StreamBuilder(
+    stream: FirebaseAuth.instance.onAuthStateChanged,
+    builder: (BuildContext context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Scaffold(
+          body: Center(child: Text("Loading")),
+        );
+      } else {
+        if (snapshot.hasData) {
+          return fireStoreSnap();
+        } else {
+          return Text("Not logged in");
+        }
+      }
+    },
+  );
+}
+
 class Home extends StatefulWidget {
   @override
   _MaterialHomeState createState() => _MaterialHomeState();
@@ -27,7 +75,7 @@ class _MaterialHomeState extends State<Home> {
   final bottomBarItems = [
     Container(
       child: Center(
-        child: Text("Home Page"),
+        child: userLoggedIn(),
       ),
     ),
     Container(
@@ -191,7 +239,9 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.pop(context);
-                Navigator.of(context).pushReplacementNamed('/main');
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.of(context).pushReplacementNamed('/main');
+                });
               },
               leading: Icon(Icons.arrow_back),
               title: Text("Log out"),
