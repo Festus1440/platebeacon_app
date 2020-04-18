@@ -31,15 +31,15 @@ class _LoginPageState extends State<LoginPage> {
 
   bool errorVisible = false;
   String loginError = "";
-  void showError(error) {
+  void showError(error, show) {
     setState(() {
       loginError = error;
-      errorVisible = true;
+      errorVisible = show;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -52,7 +52,6 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
-
         title: Text("Log in"),
         backgroundColor: Colors.black38,
       ),
@@ -79,29 +78,43 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   TextField(
                     decoration: InputDecoration(
-                        labelText: 'Username or Email',
-                        labelStyle: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                      labelText: 'Username or Email',
+                      labelStyle: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                     onChanged: (value) {
-                      this.setState((){_email = value;});
+                      this.setState(() {
+                        _email = value;
+                        if (_email == "") {
+                          showError("Email can't be empty", true);
+                        } else {
+                          showError("", false);
+                        }
+                      });
                     },
                   ),
                   TextField(
                     obscureText: true,
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                     onChanged: (value) {
-                      this.setState((){_password = value;});
+                      this.setState(() {
+                        _password = value;
+                        if (_password == "") {
+                          showError("Password can't be empty", true);
+                        } else {
+                          showError("", false);
+                        }
+                      });
                     },
                   ),
                   SizedBox(height: 5.0),
@@ -111,7 +124,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkWell(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PassRecover()),);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PassRecover()),
+                          );
                         },
                         child: Text(
                           "Forgot Password?",
@@ -132,18 +149,27 @@ class _LoginPageState extends State<LoginPage> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        print(_email);
-                        FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password).then((value) {
+                        if (_email == null) {
+                          //bool Error = true;
+                          showError("Email can't be empty", true);
+                        } else if (_password == null) {
+                          showError("Password can't be empty", true);
+                        } else {
+                          showError("", false);
+                          FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: _email, password: _password)
+                              .then((value) {
+                            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
+                            //Navigator.of(context).pushReplacementNamed('/shelterMain');
+                            Navigator.of(context).pop();
+                          }).catchError((error) {
+                            showError(error.message, true);
+                            print("Error: " + error.message);
+                          });
                           //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
-                          //Navigator.of(context).pushReplacementNamed('/shelterMain');
-                          Navigator.of(context).pop();
-                        }).catchError((error) {
-                          showError(error.message);
-                          print("Error: "+ error.message);
-                        });
-                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
-                        //Navigator.of(context).pushReplacementNamed('shelterMain');
-
+                          //Navigator.of(context).pushReplacementNamed('shelterMain');
+                        }
                       },
                       child: Container(
                         alignment: Alignment.center,

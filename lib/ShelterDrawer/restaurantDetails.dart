@@ -10,6 +10,12 @@ class RestaurantDetails extends StatelessWidget {
         title: Text("Restaurant Details"),
         backgroundColor: Colors.black38,
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 20.0,
+          color: Colors.black38,
+        ),
+      ),
       body: Column(
         children: <Widget>[
           Center(

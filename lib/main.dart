@@ -56,7 +56,6 @@ class _MaterialHomeState extends State<MaterialHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
         child: Container(
           height: 20.0,
           color: Colors.black38,

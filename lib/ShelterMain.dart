@@ -21,9 +21,12 @@ class ShelterMain extends StatelessWidget {
 List<Widget> makeListWidget(AsyncSnapshot snapshot) {
   return snapshot.data.documents.map<Widget>((document) {
     return ListTile(
-      leading: Icon(Icons.person),
+      onTap: (){
+
+      },
+      leading: Icon(Icons.person_pin),
       title: Text(document['FirstName']),
-      subtitle: Text(document['LastName']),
+      //subtitle: Text(document['LastName']),
     );
   }).toList();
 }
