@@ -181,8 +181,9 @@ class RegisterPageState extends State<RegisterPage> {
                                 .collection('users')
                                 .document(user.uid)
                                 .setData({
-                              'email': _email,
                               'displayName': _name,
+                              'email': _email,
+                              'type': "shelter",
                             }).then((onValue) {});
                             Navigator.of(context).pop();
                             //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(user: user), fullscreenDialog: true),);
