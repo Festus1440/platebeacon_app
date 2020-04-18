@@ -28,7 +28,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String _email, _password;
-
   bool errorVisible = false;
   String loginError = "";
   void showError(error, show) {
@@ -127,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PassRecover()),
+                                builder: (context) => PassRecoverPage(), fullscreenDialog: true),
                           );
                         },
                         child: Text(
@@ -149,10 +148,9 @@ class _LoginPageState extends State<LoginPage> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        if (_email == null) {
-                          //bool Error = true;
+                        if (_email == null || _email == "") {
                           showError("Email can't be empty", true);
-                        } else if (_password == null) {
+                        } else if (_password == null || _password == "") {
                           showError("Password can't be empty", true);
                         } else {
                           showError("", false);
@@ -160,8 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                               .signInWithEmailAndPassword(
                                   email: _email, password: _password)
                               .then((value) {
-                            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
-                            //Navigator.of(context).pushReplacementNamed('/shelterMain');
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(), fullscreenDialog: true),);
                             Navigator.of(context).pop();
                           }).catchError((error) {
                             showError(error.message, true);

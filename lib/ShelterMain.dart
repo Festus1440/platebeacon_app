@@ -5,6 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShelterMain extends StatelessWidget {
+  //const ShelterMain({Key key, this.user}) : super(key: key);
+  //final FirebaseUser user;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,14 +25,40 @@ class ShelterMain extends StatelessWidget {
 List<Widget> makeListWidget(AsyncSnapshot snapshot) {
   return snapshot.data.documents.map<Widget>((document) {
     return ListTile(
-      onTap: (){
-
-      },
+      onTap: () {},
       leading: Icon(Icons.person_pin),
-      title: Text(document['FirstName']),
+      title: Text(document['displayName']),
       //subtitle: Text(document['LastName']),
     );
   }).toList();
+}
+Widget fetch(data) {
+  return FutureBuilder(
+      future: FirebaseAuth.instance.currentUser(),
+      builder: (BuildContext context, AsyncSnapshot user) {
+        if (user.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        } else {
+          return StreamBuilder<DocumentSnapshot>(
+              stream: Firestore.instance
+                  .collection("users")
+                  .document(user.data.uid)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Error");
+                }
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Text("Loading");
+                  default:
+                    //String s = Text(snapshot.data[data]).data;
+                    return Text(snapshot.data[data]);
+                }
+              });
+        }
+      });
 }
 
 Widget fireStoreSnap() {
@@ -48,37 +78,31 @@ Widget fireStoreSnap() {
   );
 }
 
-Widget userLoggedIn() {
-  return StreamBuilder(
-    stream: FirebaseAuth.instance.onAuthStateChanged,
-    builder: (BuildContext context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return Scaffold(
-          body: Center(child: Text("Loading")),
-        );
-      } else {
-        if (snapshot.hasData) {
-          return fireStoreSnap();
-        } else {
-          return Text("Not logged in");
-        }
-      }
-    },
-  );
-}
-
 class Home extends StatefulWidget {
   @override
   _MaterialHomeState createState() => _MaterialHomeState();
 }
 
 class _MaterialHomeState extends State<Home> {
-  String shelterName = 'Shelter Name';
-
   final bottomBarItems = [
     Container(
       child: Center(
-        child: userLoggedIn(),
+        child: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Scaffold(
+                body: Center(child: Text("Loading")),
+              );
+            } else {
+              if (snapshot.hasData) {
+                return fireStoreSnap();
+              } else {
+                return Text("Not logged in");
+              }
+            }
+          },
+        ),
       ),
     ),
     Container(
@@ -88,12 +112,12 @@ class _MaterialHomeState extends State<Home> {
     ),
     Container(
       child: Center(
-        child: Text("Orders"),
+        child: fetch("displayName")
       ),
     ),
     Container(
       child: Center(
-        child: Text("Account Page"),
+        child: fetch("Type")
       ),
     ),
   ];
@@ -136,7 +160,7 @@ class _MaterialHomeState extends State<Home> {
       body: bottomBarItems[_bottomBarIndex],
       appBar: AppBar(
         elevation: 0.0,
-        title: Text(shelterName),
+        title: fetch("displayName"),
         backgroundColor: Colors.black38,
       ),
       drawer: Drawer(
@@ -165,13 +189,7 @@ class _MaterialHomeState extends State<Home> {
                       margin: EdgeInsets.only(top: 15.0),
                       child: Column(
                         children: <Widget>[
-                          Text(
-                            "Shelter Name",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                            ),
-                          ),
+                          fetch("displayName"),
                           Text(
                             "Chicago, IL",
                             style: TextStyle(

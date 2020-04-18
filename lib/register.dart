@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:firebase_core/firebase_core.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'ShelterMain.dart';
+//import 'ShelterMain.dart';
 
 class Register extends StatelessWidget {
   @override
@@ -14,123 +14,34 @@ class Register extends StatelessWidget {
   }
 }
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class RegisterPage extends StatefulWidget {
   @override
   RegisterPageState createState() => RegisterPageState();
 }
 
 class RegisterPageState extends State<RegisterPage> {
-
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-  final tabs = [
-    Container(
-      child: Column(
-        children: <Widget>[
-          Text("Register as a restaurant"),
-          SizedBox(
-            height: 10.0,
-          ),
-          TextField(
-            decoration: InputDecoration(
-                labelText: 'Restaurant/Organization Name',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-          ),
-          TextField(
-            decoration: InputDecoration(
-                labelText: 'Email',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-          ),
-          TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-                labelText: 'Password',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-          ),
-        ],
-      ),
-    ),
-    Container(
-      child: Column(
-        children: <Widget>[
-          Text("Register as a shelter"),
-          SizedBox(
-            height: 10.0,
-          ),
-          TextField(
-            decoration: InputDecoration(
-                labelText: 'Shelter Name',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-          ),
-          TextField(
-            decoration: InputDecoration(
-                labelText: 'Email',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-          ),
-          TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-                labelText: 'Password',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-          ),
-        ],
-      ),
-    ),
-  ];
-
-  void _onItemTapped(int index) {
+  String _name, _email, _password;
+  bool errorVisible = false;
+  String loginError = "";
+  void showError(error, show) {
     setState(() {
-      _selectedIndex = index;
+      loginError = error;
+      errorVisible = show;
     });
   }
+  //final GlobalKey<FormState> _formKey = GlobalKey<FormState>():
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0.0,
-        backgroundColor: Colors.black38,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant),
-            title: Text('Restaurant'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Shelter'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        onTap: _onItemTapped,
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 20.0,
+          color: Colors.black38,
+        ),
       ),
       appBar: AppBar(
         elevation: 0.0,
@@ -165,7 +76,75 @@ class RegisterPageState extends State<RegisterPage> {
             padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
             child: Column(
               children: <Widget>[
-                tabs[_selectedIndex],
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Shelter Name',
+                    labelStyle: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    this.setState(() {
+                      _name = value;
+                      if (_name == "") {
+                        showError("Name can't be empty", true);
+                      } else {
+                        showError("", false);
+                      }
+                    });
+                  },
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    this.setState(() {
+                      _email = value;
+                      if (_email == "") {
+                        showError("Email can't be empty", true);
+                      } else {
+                        showError("", false);
+                      }
+                    });
+                  },
+                ),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    this.setState(() {
+                      _password = value;
+                      if (_password == "") {
+                        showError("Email can't be empty", true);
+                      } else {
+                        showError("", false);
+                      }
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: errorVisible,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 10.0),
+                    alignment: Alignment(-1.0, 0.0),
+                    child: Text(loginError),
+                  ),
+                ),
                 SizedBox(height: 40.0),
                 Container(
                   child: FlatButton(
@@ -176,8 +155,42 @@ class RegisterPageState extends State<RegisterPage> {
                     disabledTextColor: Colors.black,
                     //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
                     //splashColor: Colors.blueAccent,
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
+                    onPressed: () async {
+                      if (_email == null || _email == "") {
+                        showError("Email can't be empty", true);
+                      } else if (_password == null || _password == "") {
+                        showError("Password can't be empty", true);
+                      } else if (_name == null || _name == "") {
+                        showError("Name can't be empty", true);
+                      } else {
+                        showError("", false);
+                        FirebaseUser user;
+                        try {
+                          user = (await _auth.createUserWithEmailAndPassword(
+                            email: _email,
+                            password: _password,
+                          )).user;
+                          //user.sendEmailVerification();
+                        } catch (e) {
+                          showError(e.toString(), true);
+                          print(e.toString());
+                        } finally {
+                          if (user != null) {
+                            //showError(user.uid, true);
+                            Firestore.instance
+                                .collection('users')
+                                .document(user.uid)
+                                .setData({
+                              'email': _email,
+                              'displayName': _name,
+                            }).then((onValue) {});
+                            Navigator.of(context).pop();
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(user: user), fullscreenDialog: true),);
+                          } else {
+                            showError("Error signing up", true);
+                          }
+                        }
+                      }
                     },
                     child: Container(
                       alignment: Alignment.center,

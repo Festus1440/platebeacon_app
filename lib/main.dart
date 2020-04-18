@@ -93,7 +93,12 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/login');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginPage(), fullscreenDialog: true),
+                        );
+                        //Navigator.of(context).pushNamed('/login');
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -127,7 +132,12 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/register');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage(), fullscreenDialog: true),
+                        );
+                        //Navigator.of(context).pushNamed('/register');
                       },
                       child: Container(
                         alignment: Alignment.center,
