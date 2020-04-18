@@ -130,7 +130,7 @@ class RegisterPageState extends State<RegisterPage> {
                     this.setState(() {
                       _password = value;
                       if (_password == "") {
-                        showError("Email can't be empty", true);
+                        showError("Password can't be empty", true);
                       } else {
                         showError("", false);
                       }
