@@ -87,22 +87,7 @@ class _MaterialHomeState extends State<Home> {
   final bottomBarItems = [
     Container(
       child: Center(
-        child: StreamBuilder(
-          stream: FirebaseAuth.instance.onAuthStateChanged,
-          builder: (BuildContext context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Scaffold(
-                body: Center(child: Text("Loading")),
-              );
-            } else {
-              if (snapshot.hasData) {
-                return fireStoreSnap();
-              } else {
-                return Text("Not logged in");
-              }
-            }
-          },
-        ),
+        child: fetch("email")
       ),
     ),
     Container(
@@ -117,7 +102,7 @@ class _MaterialHomeState extends State<Home> {
     ),
     Container(
       child: Center(
-        child: fetch("Type")
+        child: fetch("type")
       ),
     ),
   ];
