@@ -22,7 +22,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
-  String labelText = "Restaurant/Organization Name";
+  String dropdownValue = 'One';
+  String checkBoxLabelText = "Restaurant/Organization Name";
   bool _isRestaurant = true;
   bool _isShelter = false;
   String _name, _email, _password;
@@ -83,6 +84,63 @@ class RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
+                      ChoiceChip(
+                        backgroundColor: Colors.black12,
+                        selectedColor: Colors.blue,
+                        labelStyle: TextStyle(color: Colors.black),
+                        padding: EdgeInsets.all(6.0),
+                        label: Row(
+                          children: <Widget>[
+                            Icon(Icons.restaurant),
+                            Text(' Restaurant'),
+                          ],
+                        ),
+                        selected: _isRestaurant,
+                        onSelected: (selected) {
+                          setState(() {
+                            _isRestaurant = selected;
+                            if (selected == true) {
+                              setState(() {
+                                _isShelter = !selected;
+                                role = "Restaurant";
+                                checkBoxLabelText =
+                                "Restaurant/Organization Name";
+                              });
+                            }
+                          });
+                        },
+                      ),
+                      SizedBox(width: 10.0),
+                      ChoiceChip(
+                        backgroundColor: Colors.black12,
+                        selectedColor: Colors.blue,
+                        labelStyle: TextStyle(color: Colors.black),
+                        padding: EdgeInsets.all(6.0),
+                        label: Row(
+                          children: <Widget>[
+                            Icon(Icons.home),
+                            Text(' Shelter'),
+                          ],
+                        ),
+                        selected: _isShelter,
+                        onSelected: (selected) {
+                          setState(() {
+                            _isShelter = selected;
+                            if (selected == true) {
+                              setState(() {
+                                _isRestaurant = !selected;
+                                role = "Shelter";
+                                checkBoxLabelText =
+                                "Shelter Name";
+                              });
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  /*Row(
+                    children: <Widget>[
                       Container(
                         //color: Colors.black38,
                         child: Row(
@@ -97,7 +155,8 @@ class RegisterPageState extends State<RegisterPage> {
                                     setState(() {
                                       _isShelter = !val;
                                       role = "Restaurant";
-                                      labelText = "Restaurant/Organization Name";
+                                      checkBoxLabelText =
+                                          "Restaurant/Organization Name";
                                     });
                                   }
                                 });
@@ -120,7 +179,7 @@ class RegisterPageState extends State<RegisterPage> {
                                     setState(() {
                                       _isRestaurant = !val;
                                       role = "Shelter";
-                                      labelText = "Shelter Name";
+                                      checkBoxLabelText = "Shelter Name";
                                     });
                                   }
                                 });
@@ -130,10 +189,10 @@ class RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ],
-                  ),
+                  ),*/
                   TextField(
                     decoration: InputDecoration(
-                      labelText: labelText,
+                      labelText: checkBoxLabelText,
                       labelStyle: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.bold,
@@ -224,7 +283,8 @@ class RegisterPageState extends State<RegisterPage> {
                             user = (await _auth.createUserWithEmailAndPassword(
                               email: _email,
                               password: _password,
-                            )).user;
+                            ))
+                                .user;
                             //user.sendEmailVerification();
                           } catch (e) {
                             showError(e.toString(), true);
@@ -235,23 +295,35 @@ class RegisterPageState extends State<RegisterPage> {
                               newInfo.displayName = role;
                               user.updateProfile(newInfo);
                               switch (role) {
-                                case 'Shelter': Firestore.instance.collection(role).document(user.uid).setData({
-                                  'displayName': _name,
-                                  'email': _email,
-                                  'role': role,
-                                }).then((onValue) {});
-                                break;
-                                case 'Restaurant': Firestore.instance.collection(role).document(user.uid).setData({
-                                  'displayName': _name,
-                                  'email': _email,
-                                  'role': role,
-                                }).then((onValue) {});
-                                break;
-                                default: Firestore.instance.collection(role).document(user.uid).setData({
-                                  'displayName': _name,
-                                  'email': _email,
-                                  'role': role,
-                                }).then((onValue) {});
+                                case 'Shelter':
+                                  Firestore.instance
+                                      .collection(role)
+                                      .document(user.uid)
+                                      .setData({
+                                    'displayName': _name,
+                                    'email': _email,
+                                    'role': role,
+                                  }).then((onValue) {});
+                                  break;
+                                case 'Restaurant':
+                                  Firestore.instance
+                                      .collection(role)
+                                      .document(user.uid)
+                                      .setData({
+                                    'displayName': _name,
+                                    'email': _email,
+                                    'role': role,
+                                  }).then((onValue) {});
+                                  break;
+                                default:
+                                  Firestore.instance
+                                      .collection(role)
+                                      .document(user.uid)
+                                      .setData({
+                                    'displayName': _name,
+                                    'email': _email,
+                                    'role': role,
+                                  }).then((onValue) {});
                               }
                               Navigator.pop(context, role);
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(user: user), fullscreenDialog: true),);
