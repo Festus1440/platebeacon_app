@@ -1,36 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
-import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ShelterMain extends StatelessWidget {
-  //const ShelterMain({Key key, this.user}) : super(key: key);
-  //final FirebaseUser user;
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
+class RestaurantMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Material",
       home: Home(),
-      routes: <String, WidgetBuilder>{
-        '/restaurant': (BuildContext context) => RestaurantDetails(),
-        '/main': (BuildContext context) => MaterialDesign(),
-      },
     );
   }
-}
-
-List<Widget> makeListWidget(AsyncSnapshot snapshot) {
-  return snapshot.data.documents.map<Widget>((document) {
-    return ListTile(
-      onTap: () {},
-      leading: Icon(Icons.person_pin),
-      title: Text(document['displayName']),
-      //subtitle: Text(document['LastName']),
-    );
-  }).toList();
 }
 
 Widget fetch(data) {
@@ -42,7 +21,7 @@ Widget fetch(data) {
         } else {
           return StreamBuilder<DocumentSnapshot>(
               stream: Firestore.instance
-                  .collection("Shelter")
+                  .collection("Restaurant")
                   .document(user.data.uid)
                   .snapshots(),
               builder: (BuildContext context,
@@ -54,7 +33,6 @@ Widget fetch(data) {
                   case ConnectionState.waiting:
                     return Text("Loading");
                   default:
-                    //String s = Text(snapshot.data[data]).data;
                     return Text(snapshot.data[data]);
                 }
               });
@@ -62,29 +40,12 @@ Widget fetch(data) {
       });
 }
 
-Widget fireStoreSnap() {
-  return Container(
-    child: StreamBuilder(
-        stream: Firestore.instance.collection("users").snapshots(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return CircularProgressIndicator();
-            default:
-              return ListView(
-                children: makeListWidget(snapshot),
-              );
-          }
-        }),
-  );
-}
-
 class Home extends StatefulWidget {
   @override
-  _MaterialHomeState createState() => _MaterialHomeState();
+  RestaurantState createState() => RestaurantState();
 }
 
-class _MaterialHomeState extends State<Home> {
+class RestaurantState extends State<Home> {
   final bottomBarItems = [
     Container(
       child: Center(child: fetch("email")),
@@ -111,10 +72,16 @@ class _MaterialHomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: bottomBarItems[_bottomBarIndex],
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Text("displayName"),
+        backgroundColor: Colors.blue,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0.0,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.blue,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -137,19 +104,13 @@ class _MaterialHomeState extends State<Home> {
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
-      body: bottomBarItems[_bottomBarIndex],
-      appBar: AppBar(
-        elevation: 0.0,
-        title: Text("displayName"),
-        backgroundColor: Colors.black38,
-      ),
       drawer: Drawer(
         child: Column(
           children: <Widget>[
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(20.0),
-              color: Colors.black38,
+              color: Colors.blue,
               child: Center(
                 child: Column(
                   children: <Widget>[
@@ -170,7 +131,7 @@ class _MaterialHomeState extends State<Home> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "Shelter Name",
+                            "Restaurant Name",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 15.0,
@@ -193,7 +154,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/restaurant');
+                //Navigator.of(context).pushNamed('/restaurant');
               },
               leading: Icon(Icons.restaurant),
               title: Text("Restaurant Details"),
@@ -201,9 +162,6 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                setState(() {
-                  _bottomBarIndex = 1;
-                });
               },
               leading: Icon(Icons.insert_chart),
               title: Text("Analytics"),

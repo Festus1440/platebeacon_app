@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'RestaurantMain.dart';
 import 'ShelterMain.dart';
 import 'login.dart';
 import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(MaterialDesign());
+
 
 class MaterialDesign extends StatelessWidget {
   @override
@@ -22,26 +24,40 @@ class MaterialDesign extends StatelessWidget {
   }
 }
 
-Widget userLoggedIn(){
+Widget userLoggedIn() {
   return StreamBuilder(
     stream: FirebaseAuth.instance.onAuthStateChanged,
-    builder: (BuildContext context,snapshot){
-        if(snapshot.connectionState == ConnectionState.waiting){
-          return Scaffold(
-            body:
-            Center(
-                child: Text("Loading")
-            ),
+    builder: (BuildContext context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Scaffold(
+          body: Center(child: Text("Loading")),
+        );
+      } else {
+        if (snapshot.hasData) {
+          return FutureBuilder<FirebaseUser>(
+            future: FirebaseAuth.instance.currentUser(),
+            builder:
+                (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                switch (snapshot.data.displayName) {
+                  case 'Shelter':
+                    return ShelterMain();
+                    break;
+                  case 'Restaurant':
+                    return RestaurantMain();
+                    break;
+                  default:
+                    return ShelterMain();
+                }
+              } else {
+                return Scaffold(body: Center(child: Text('Loading...')));
+              }
+            },
           );
+        } else {
+          return MaterialHome();
         }
-        else {
-          if(snapshot.hasData){
-            return ShelterMain();
-          }
-          else {
-            return MaterialHome();
-          }
-        }
+      }
     },
   );
 }
@@ -52,6 +68,7 @@ class MaterialHome extends StatefulWidget {
 }
 
 class _MaterialHomeState extends State<MaterialHome> {
+  String role = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,12 +109,17 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledColor: Colors.grey,
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        role = await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginPage(), fullscreenDialog: true),
+                              builder: (context) => LoginPage(),
+                              fullscreenDialog: true),
                         );
+                        //userLoggedIn(role);
+                        //print(role);
+                        //_secondPage(context);
+                        //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(), fullscreenDialog: true),);
                         //Navigator.of(context).pushNamed('/login');
                       },
                       child: Container(
@@ -131,12 +153,14 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledColor: Colors.grey,
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        role = await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegisterPage(), fullscreenDialog: true),
+                              builder: (context) => RegisterPage(),
+                              fullscreenDialog: true),
                         );
+                        //userLoggedIn(role);
                         //Navigator.of(context).pushNamed('/register');
                       },
                       child: Container(

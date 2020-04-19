@@ -22,8 +22,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
-  bool _isChecked = true;
+  String labelText = "Restaurant/Organization Name";
+  bool _isRestaurant = true;
+  bool _isShelter = false;
   String _name, _email, _password;
+  String role = "";
   bool errorVisible = false;
   String loginError = "";
   void showError(error, show) {
@@ -81,17 +84,44 @@ class RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: <Widget>[
                       Container(
-                        color: Colors.black38,
+                        //color: Colors.black38,
                         child: Row(
                           children: <Widget>[
-                            Text("Checkbox"),
+                            Text("Restaurant"),
                             Checkbox(
-                              value: _isChecked,
+                              value: _isRestaurant,
                               onChanged: (val) {
                                 setState(() {
-                                  _isChecked = val;
+                                  _isRestaurant = val;
                                   if (val == true) {
-                                    //_currText = t;
+                                    setState(() {
+                                      _isShelter = !val;
+                                      role = "Restaurant";
+                                      labelText = "Restaurant/Organization Name";
+                                    });
+                                  }
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        //color: Colors.black38,
+                        child: Row(
+                          children: <Widget>[
+                            Text("Shelter"),
+                            Checkbox(
+                              value: _isShelter,
+                              onChanged: (val) {
+                                setState(() {
+                                  _isShelter = val;
+                                  if (val == true) {
+                                    setState(() {
+                                      _isRestaurant = !val;
+                                      role = "Shelter";
+                                      labelText = "Shelter Name";
+                                    });
                                   }
                                 });
                               },
@@ -103,7 +133,7 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      labelText: 'Shelter Name',
+                      labelText: labelText,
                       labelStyle: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.bold,
@@ -201,16 +231,29 @@ class RegisterPageState extends State<RegisterPage> {
                             print(e.toString());
                           } finally {
                             if (user != null) {
-                              //showError(user.uid, true);
-                              Firestore.instance
-                                  .collection('users')
-                                  .document(user.uid)
-                                  .setData({
-                                'displayName': _name,
-                                'email': _email,
-                                'type': "shelter",
-                              }).then((onValue) {});
-                              Navigator.of(context).pop();
+                              UserUpdateInfo newInfo = UserUpdateInfo();
+                              newInfo.displayName = role;
+                              user.updateProfile(newInfo);
+                              switch (role) {
+                                case 'Shelter': Firestore.instance.collection(role).document(user.uid).setData({
+                                  'displayName': _name,
+                                  'email': _email,
+                                  'role': role,
+                                }).then((onValue) {});
+                                break;
+                                case 'Restaurant': Firestore.instance.collection(role).document(user.uid).setData({
+                                  'displayName': _name,
+                                  'email': _email,
+                                  'role': role,
+                                }).then((onValue) {});
+                                break;
+                                default: Firestore.instance.collection(role).document(user.uid).setData({
+                                  'displayName': _name,
+                                  'email': _email,
+                                  'role': role,
+                                }).then((onValue) {});
+                              }
+                              Navigator.pop(context, role);
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(user: user), fullscreenDialog: true),);
                             } else {
                               showError("Error signing up", true);

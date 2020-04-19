@@ -158,8 +158,10 @@ class _LoginPageState extends State<LoginPage> {
                               .signInWithEmailAndPassword(
                                   email: _email, password: _password)
                               .then((value) {
+                            Navigator.pop(context, value.user.displayName);
+                                //print(value);
                             //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(), fullscreenDialog: true),);
-                            Navigator.of(context).pop();
+                            //Navigator.of(context).pop();
                           }).catchError((error) {
                             showError(error.message, true);
                             print("Error: " + error.message);
