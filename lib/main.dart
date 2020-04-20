@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'RestaurantMain.dart';
@@ -28,10 +27,9 @@ _goToRegister(BuildContext context) async {
   String role = await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => RegisterPage(),
-        fullscreenDialog: true),
+        builder: (context) => RegisterPage(), fullscreenDialog: true),
   );
-  if(role != null){
+  if (role != null) {
     await authorizeAccess(role);
     print(role);
   }
@@ -41,10 +39,9 @@ _goToLogin(BuildContext context) async {
   FirebaseUser role = await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => LoginPage(),
-        fullscreenDialog: true),
+        builder: (context) => LoginPage(), fullscreenDialog: true),
   );
-  if(role != null){
+  if (role != null) {
     print(role.displayName);
     //authorizeAccess(role);
   }
@@ -76,13 +73,11 @@ Widget userLoggedIn() {
                 if (user.connectionState == ConnectionState.waiting) {
                   return Scaffold(body: Center(child: Text("Please wait...")));
                 } else {
-                  if(user.data.displayName == "Shelter") {
+                  if (user.data.displayName == "Shelter") {
                     return ShelterMain();
-                  }
-                  else if(user.data.displayName == "Restaurant") {
+                  } else if (user.data.displayName == "Restaurant") {
                     return RestaurantMain();
-                  }
-                  else {
+                  } else {
                     return userLoggedIn();
                   }
                 }
