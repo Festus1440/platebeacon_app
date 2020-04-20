@@ -88,7 +88,7 @@ class _MaterialHomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0.0,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.blue,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -115,7 +115,7 @@ class _MaterialHomeState extends State<Home> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text("displayName"),
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.blue,
       ),
       drawer: Drawer(
         child: Column(
@@ -123,7 +123,7 @@ class _MaterialHomeState extends State<Home> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(20.0),
-              color: Colors.black38,
+              color: Colors.blue,
               child: Center(
                 child: Column(
                   children: <Widget>[
@@ -206,7 +206,7 @@ class _MaterialHomeState extends State<Home> {
             Divider(
               height: 15.0,
               thickness: 0.5,
-              color: Colors.black38,
+              color: Colors.blue,
               indent: 20.0,
               endIndent: 20.0,
             ),

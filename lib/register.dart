@@ -22,7 +22,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
-  String dropdownValue = 'One';
+  Color mainColor = Colors.green;
   String checkBoxLabelText = "Restaurant/Organization Name";
   bool _isRestaurant = true;
   bool _isShelter = false;
@@ -36,7 +36,6 @@ class RegisterPageState extends State<RegisterPage> {
       errorVisible = show;
     });
   }
-  //final GlobalKey<FormState> _formKey = GlobalKey<FormState>():
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +44,13 @@ class RegisterPageState extends State<RegisterPage> {
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color: Colors.black38,
+          color: mainColor,
         ),
       ),
       appBar: AppBar(
-        elevation: 0.0,
-        leading: InkWell(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.close),
-          ),
-        ),
+        elevation: 10.0,
         title: Text("Register"),
-        backgroundColor: Colors.black38,
+        backgroundColor: mainColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -86,7 +77,7 @@ class RegisterPageState extends State<RegisterPage> {
                     children: <Widget>[
                       FilterChip(
                         backgroundColor: Colors.black12,
-                        selectedColor: Colors.blue,
+                        selectedColor: Colors.green,
                         labelStyle: TextStyle(color: Colors.black),
                         padding: EdgeInsets.all(6.0),
                         label: Row(
@@ -101,6 +92,7 @@ class RegisterPageState extends State<RegisterPage> {
                             _isRestaurant = selected;
                             if (selected == true) {
                               setState(() {
+                                mainColor = Colors.green;
                                 _isShelter = !selected;
                                 role = "Restaurant";
                                 checkBoxLabelText =
@@ -128,6 +120,7 @@ class RegisterPageState extends State<RegisterPage> {
                             _isShelter = selected;
                             if (selected == true) {
                               setState(() {
+                                mainColor = Colors.blue;
                                 _isRestaurant = !selected;
                                 role = "Shelter";
                                 checkBoxLabelText =
@@ -192,6 +185,9 @@ class RegisterPageState extends State<RegisterPage> {
                   ),*/
                   TextField(
                     decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: mainColor),
+                      ),
                       labelText: checkBoxLabelText,
                       labelStyle: TextStyle(
                         fontSize: 15.0,
@@ -212,6 +208,9 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   TextField(
                     decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: mainColor),
+                      ),
                       labelText: 'Email',
                       labelStyle: TextStyle(
                         fontSize: 15.0,
@@ -261,9 +260,9 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 40.0),
                   Container(
-                    child: FlatButton(
-                      //elevation: 0.0,
-                      color: Colors.black38,
+                    child: RaisedButton(
+                      elevation: 10.0,
+                      color: mainColor,
                       textColor: Colors.white,
                       disabledColor: Colors.grey,
                       disabledTextColor: Colors.black,
@@ -284,7 +283,6 @@ class RegisterPageState extends State<RegisterPage> {
                               email: _email,
                               password: _password,
                             )).user;
-
                             //user.sendEmailVerification();
                           } catch (e) {
                             showError(e.toString(), true);
@@ -334,7 +332,7 @@ class RegisterPageState extends State<RegisterPage> {
                         alignment: Alignment.center,
                         height: 50.0,
                         child: Text(
-                          "Create account",
+                          "Register",
                           style: TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.bold,

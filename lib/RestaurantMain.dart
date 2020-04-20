@@ -84,12 +84,12 @@ class RestaurantState extends State<Home> {
       appBar: AppBar(
         elevation: 0.0,
         title: roleTitle,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
       ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0.0,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -118,7 +118,7 @@ class RestaurantState extends State<Home> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(20.0),
-              color: Colors.blue,
+              color: Colors.green,
               child: Center(
                 child: Column(
                   children: <Widget>[
@@ -198,7 +198,7 @@ class RestaurantState extends State<Home> {
             Divider(
               height: 15.0,
               thickness: 0.5,
-              color: Colors.black38,
+              color: Colors.green,
               indent: 20.0,
               endIndent: 20.0,
             ),
