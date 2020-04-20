@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'ShelterDrawer/restaurantDetails.dart';
+import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
+import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'main.dart';
 
 class RestaurantMain extends StatelessWidget {
@@ -12,7 +12,7 @@ class RestaurantMain extends StatelessWidget {
       title: "Material",
       home: Home(),
       routes: <String, WidgetBuilder>{
-        '/restaurant': (BuildContext context) => RestaurantDetails(),
+        '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
       },
     );
@@ -53,7 +53,6 @@ class Home extends StatefulWidget {
 }
 
 class RestaurantState extends State<Home> {
-  Widget roleTitle = fetch("displayName");
   final bottomBarItems = [
     Container(
       child: Center(child: fetch("email")),
@@ -66,14 +65,26 @@ class RestaurantState extends State<Home> {
     Container(
       child: Center(child: fetch("displayName")),
     ),
-    Container(
-      child: Center(child: fetch("role")),
-    ),
+    RestaurantAccount(),
   ];
+  Color mainColor = Colors.green;
+  Widget roleTitle = fetch("displayName");
+  String appBarTitle = "Home";
   int _bottomBarIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _bottomBarIndex = index;
+      switch(index){
+        case 0: appBarTitle = "Home";
+        break;
+        case 1: appBarTitle = "Search";
+        break;
+        case 2: appBarTitle = "Orders";
+        break;
+        case 3: appBarTitle = "Account";
+        break;
+        default: appBarTitle = "Home";
+      }
     });
   }
 
@@ -83,29 +94,29 @@ class RestaurantState extends State<Home> {
       body: bottomBarItems[_bottomBarIndex],
       appBar: AppBar(
         elevation: 0.0,
-        title: roleTitle,
-        backgroundColor: Colors.green,
+        title: Text(appBarTitle),
+        backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        elevation: 0.0,
+        elevation: 10.0,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.green,
+        backgroundColor: mainColor,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text(appBarTitle),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text('Search'),
+            title: Text(appBarTitle),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_border),
-            title: Text('Orders'),
+            title: Text(appBarTitle),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text('Account'),
+            title: Text(appBarTitle),
           ),
         ],
         currentIndex: _bottomBarIndex,
@@ -118,7 +129,7 @@ class RestaurantState extends State<Home> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(20.0),
-              color: Colors.green,
+              color: mainColor,
               child: Center(
                 child: Column(
                   children: <Widget>[
@@ -162,10 +173,10 @@ class RestaurantState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                //Navigator.of(context).pushNamed('/restaurant');
+                Navigator.of(context).pushNamed('/shelter');
               },
-              leading: Icon(Icons.restaurant),
-              title: Text("Restaurant Details"),
+              leading: Icon(Icons.home),
+              title: Text("Shelter Details"),
             ),
             ListTile(
               onTap: () {

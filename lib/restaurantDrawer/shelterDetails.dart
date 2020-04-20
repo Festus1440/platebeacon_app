@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-Color mainColor = Colors.blue;
+Color mainColor = Colors.green;
 
-class RestaurantDetails extends StatelessWidget {
+class ShelterDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Restaurant Details"),
+        title: Text("Shelter Details"),
         backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
@@ -25,12 +25,12 @@ class RestaurantDetails extends StatelessWidget {
               height: 200,
               //margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
               decoration: BoxDecoration(
-                  //borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                  //border: Border.all(width: 1.0, color: mainColor),
-                  //shape: BoxShape.circle,
+                //borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                //border: Border.all(width: 1.0, color: mainColor),
+                //shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/food.jpg'),
+                    image: AssetImage('assets/shelter.jpg'),
                   )),
             ),
           ),
@@ -47,7 +47,7 @@ class RestaurantDetails extends StatelessWidget {
                           Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Restaurant Name",
+                              "Shelter Name",
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class RestaurantDetails extends StatelessWidget {
                           Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Restaurant info",
+                              "Shelter info",
                               style: TextStyle(
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.bold,

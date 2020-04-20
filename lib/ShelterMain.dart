@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
+import 'shelterBottomBarPages/shelterAccount.dart';
 import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,7 +59,6 @@ class Home extends StatefulWidget {
 }
 
 class _MaterialHomeState extends State<Home> {
-
   final bottomBarItems = [
     Container(
       child: Center(child: fetch("email")),
@@ -71,14 +71,25 @@ class _MaterialHomeState extends State<Home> {
     Container(
       child: Center(child: Text("")),
     ),
-    Container(
-      child: Center(child: fetch("role")),
-    ),
+    ShelterAccount(),
   ];
+  Color mainColor = Colors.blue;
   int _bottomBarIndex = 0;
+  String appBarTitle = "Home";
   void _onItemTapped(int index) {
     setState(() {
       _bottomBarIndex = index;
+      switch(index){
+        case 0: appBarTitle = "Home";
+        break;
+        case 1: appBarTitle = "Search";
+        break;
+        case 2: appBarTitle = "Orders";
+        break;
+        case 3: appBarTitle = "Account";
+        break;
+        default: appBarTitle = "Home";
+      }
     });
   }
 
@@ -92,19 +103,19 @@ class _MaterialHomeState extends State<Home> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text("Home"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text('Search'),
+            title: Text("Search"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_border),
-            title: Text('Orders'),
+            title: Text("Orders"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text('Account'),
+            title: Text("Account"),
           ),
         ],
         currentIndex: _bottomBarIndex,
@@ -113,8 +124,8 @@ class _MaterialHomeState extends State<Home> {
       ),
       body: bottomBarItems[_bottomBarIndex],
       appBar: AppBar(
-        elevation: 0.0,
-        title: Text("displayName"),
+        elevation: 10.0,
+        title: Text(appBarTitle),
         backgroundColor: Colors.blue,
       ),
       drawer: Drawer(
@@ -206,7 +217,7 @@ class _MaterialHomeState extends State<Home> {
             Divider(
               height: 15.0,
               thickness: 0.5,
-              color: Colors.blue,
+              color: mainColor,
               indent: 20.0,
               endIndent: 20.0,
             ),
