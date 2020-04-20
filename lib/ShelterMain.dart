@@ -32,6 +32,21 @@ List<Widget> makeListWidget(AsyncSnapshot snapshot) {
     );
   }).toList();
 }
+void getName(){
+  FirebaseAuth.instance.currentUser().then((user) {
+    print("Name" + user.displayName);
+  });
+
+}
+getData(doc) {
+  Firestore.instance
+      .collection('Shelter')
+      .document(doc)
+      .get()
+      .then((DocumentSnapshot ds) {
+        print(ds.data["displayName"]);
+  });
+}
 
 Widget fetch(data) {
   return FutureBuilder(
@@ -85,6 +100,7 @@ class Home extends StatefulWidget {
 }
 
 class _MaterialHomeState extends State<Home> {
+  
   final bottomBarItems = [
     Container(
       child: Center(child: fetch("email")),
@@ -95,7 +111,7 @@ class _MaterialHomeState extends State<Home> {
       ),
     ),
     Container(
-      child: Center(child: fetch("displayName")),
+      child: Center(child: Text("")),
     ),
     Container(
       child: Center(child: fetch("role")),

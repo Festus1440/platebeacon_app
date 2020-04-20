@@ -27,7 +27,7 @@ class RegisterPageState extends State<RegisterPage> {
   bool _isRestaurant = true;
   bool _isShelter = false;
   String _name, _email, _password;
-  String role = "";
+  String role = "Restaurant";
   bool errorVisible = false;
   String loginError = "";
   void showError(error, show) {
@@ -84,7 +84,7 @@ class RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      ChoiceChip(
+                      FilterChip(
                         backgroundColor: Colors.black12,
                         selectedColor: Colors.blue,
                         labelStyle: TextStyle(color: Colors.black),
@@ -111,7 +111,7 @@ class RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       SizedBox(width: 10.0),
-                      ChoiceChip(
+                      FilterChip(
                         backgroundColor: Colors.black12,
                         selectedColor: Colors.blue,
                         labelStyle: TextStyle(color: Colors.black),
@@ -283,17 +283,14 @@ class RegisterPageState extends State<RegisterPage> {
                             user = (await _auth.createUserWithEmailAndPassword(
                               email: _email,
                               password: _password,
-                            ))
-                                .user;
+                            )).user;
+
                             //user.sendEmailVerification();
                           } catch (e) {
                             showError(e.toString(), true);
                             print(e.toString());
                           } finally {
                             if (user != null) {
-                              UserUpdateInfo newInfo = UserUpdateInfo();
-                              newInfo.displayName = role;
-                              user.updateProfile(newInfo);
                               switch (role) {
                                 case 'Shelter':
                                   Firestore.instance

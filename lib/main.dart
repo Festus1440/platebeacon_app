@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'RestaurantMain.dart';
@@ -7,7 +8,6 @@ import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(MaterialDesign());
-
 
 class MaterialDesign extends StatelessWidget {
   @override
@@ -24,36 +24,69 @@ class MaterialDesign extends StatelessWidget {
   }
 }
 
+_goToRegister(BuildContext context) async {
+  String role = await Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => RegisterPage(),
+        fullscreenDialog: true),
+  );
+  if(role != null){
+    await authorizeAccess(role);
+    print(role);
+  }
+}
+
+_goToLogin(BuildContext context) async {
+  FirebaseUser role = await Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => LoginPage(),
+        fullscreenDialog: true),
+  );
+  if(role != null){
+    print(role.displayName);
+    //authorizeAccess(role);
+  }
+}
+
+authorizeAccess(role) {
+  FirebaseAuth.instance.currentUser().then((user) {
+    UserUpdateInfo updateUser = UserUpdateInfo();
+    updateUser.displayName = role;
+    user.updateProfile(updateUser);
+    //print(user.displayName);
+  });
+}
+
 Widget userLoggedIn() {
   return StreamBuilder(
     stream: FirebaseAuth.instance.onAuthStateChanged,
     builder: (BuildContext context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Scaffold(
-          body: Center(child: Text("Loading")),
+          body: Center(child: Text("Please wait...")),
         );
       } else {
         if (snapshot.hasData) {
-          return FutureBuilder<FirebaseUser>(
-            future: FirebaseAuth.instance.currentUser(),
-            builder:
-                (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                switch (snapshot.data.displayName) {
-                  case 'Shelter':
+          //logged in
+          return FutureBuilder(
+              future: FirebaseAuth.instance.currentUser(),
+              builder: (BuildContext context, AsyncSnapshot user) {
+                if (user.connectionState == ConnectionState.waiting) {
+                  return Scaffold(body: Center(child: Text("Please wait...")));
+                } else {
+                  if(user.data.displayName == "Shelter") {
                     return ShelterMain();
-                    break;
-                  case 'Restaurant':
+                  }
+                  else if(user.data.displayName == "Restaurant") {
                     return RestaurantMain();
-                    break;
-                  default:
-                    return ShelterMain();
+                  }
+                  else {
+                    return userLoggedIn();
+                  }
                 }
-              } else {
-                return Scaffold(body: Center(child: Text('Loading...')));
-              }
-            },
-          );
+              });
         } else {
           return MaterialHome();
         }
@@ -68,7 +101,6 @@ class MaterialHome extends StatefulWidget {
 }
 
 class _MaterialHomeState extends State<MaterialHome> {
-  String role = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,15 +142,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () async {
-                        role = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                              fullscreenDialog: true),
-                        );
-                        //userLoggedIn(role);
-                        //print(role);
-                        //_secondPage(context);
+                        _goToLogin(context);
                         //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(), fullscreenDialog: true),);
                         //Navigator.of(context).pushNamed('/login');
                       },
@@ -154,14 +178,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () async {
-                        role = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage(),
-                              fullscreenDialog: true),
-                        );
-                        //userLoggedIn(role);
-                        //Navigator.of(context).pushNamed('/register');
+                        _goToRegister(context);
                       },
                       child: Container(
                         alignment: Alignment.center,

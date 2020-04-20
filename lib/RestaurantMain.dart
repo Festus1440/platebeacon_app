@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'ShelterDrawer/restaurantDetails.dart';
+import 'main.dart';
+
 class RestaurantMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Material",
       home: Home(),
+      routes: <String, WidgetBuilder>{
+        '/restaurant': (BuildContext context) => RestaurantDetails(),
+        '/main': (BuildContext context) => MaterialDesign(),
+      },
     );
   }
 }
@@ -46,6 +53,7 @@ class Home extends StatefulWidget {
 }
 
 class RestaurantState extends State<Home> {
+  Widget roleTitle = fetch("displayName");
   final bottomBarItems = [
     Container(
       child: Center(child: fetch("email")),
@@ -75,7 +83,7 @@ class RestaurantState extends State<Home> {
       body: bottomBarItems[_bottomBarIndex],
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("displayName"),
+        title: roleTitle,
         backgroundColor: Colors.blue,
       ),
       bottomNavigationBar: BottomNavigationBar(
