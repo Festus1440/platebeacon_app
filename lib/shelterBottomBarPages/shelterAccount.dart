@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'main.dart';
 
 Color mainColor = Colors.blue;
 

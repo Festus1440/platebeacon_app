@@ -104,19 +104,19 @@ class RestaurantState extends State<Home> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text(appBarTitle),
+            title: Text("Home"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text(appBarTitle),
+            title: Text("Search"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_border),
-            title: Text(appBarTitle),
+            title: Text("Orders"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text(appBarTitle),
+            title: Text("Account"),
           ),
         ],
         currentIndex: _bottomBarIndex,
