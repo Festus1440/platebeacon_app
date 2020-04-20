@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ShelterMain extends StatelessWidget {
   //const ShelterMain({Key key, this.user}) : super(key: key);
   //final FirebaseUser user;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -20,32 +21,6 @@ class ShelterMain extends StatelessWidget {
       },
     );
   }
-}
-
-List<Widget> makeListWidget(AsyncSnapshot snapshot) {
-  return snapshot.data.documents.map<Widget>((document) {
-    return ListTile(
-      onTap: () {},
-      leading: Icon(Icons.person_pin),
-      title: Text(document['displayName']),
-      //subtitle: Text(document['LastName']),
-    );
-  }).toList();
-}
-void getName(){
-  FirebaseAuth.instance.currentUser().then((user) {
-    print("Name" + user.displayName);
-  });
-
-}
-getData(doc) {
-  Firestore.instance
-      .collection('Shelter')
-      .document(doc)
-      .get()
-      .then((DocumentSnapshot ds) {
-        print(ds.data["displayName"]);
-  });
 }
 
 Widget fetch(data) {
@@ -77,30 +52,13 @@ Widget fetch(data) {
       });
 }
 
-Widget fireStoreSnap() {
-  return Container(
-    child: StreamBuilder(
-        stream: Firestore.instance.collection("users").snapshots(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return CircularProgressIndicator();
-            default:
-              return ListView(
-                children: makeListWidget(snapshot),
-              );
-          }
-        }),
-  );
-}
-
 class Home extends StatefulWidget {
   @override
   _MaterialHomeState createState() => _MaterialHomeState();
 }
 
 class _MaterialHomeState extends State<Home> {
-  
+
   final bottomBarItems = [
     Container(
       child: Center(child: fetch("email")),
