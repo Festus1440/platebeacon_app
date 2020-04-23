@@ -13,6 +13,7 @@ class ShelterAccount extends StatelessWidget {
               ListTile(
                 //contentPadding: EdgeInsets.only(left: 15.0, right: 5.0, top: 5.0, bottom: 10.0,),
                 onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterAccountDetails()));
                 },
                 leading: Container(
                   width: 50,
@@ -76,6 +77,26 @@ class ShelterAccount extends StatelessWidget {
             title: Text("About"),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ShelterAccountDetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 20.0,
+          color: mainColor,
+        ),
+      ),
+      appBar: AppBar(
+        centerTitle: false,
+        elevation: 10.0,
+        title: Text("Account"),
+        backgroundColor: mainColor,
       ),
     );
   }

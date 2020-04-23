@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
+import 'package:flutterapp/restaurantDrawer/restaurantSettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'main.dart';
 
@@ -33,14 +34,12 @@ Widget fetch(data) {
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text("Error");
+                //print(snapshot.data);
+                if (snapshot.data != null) {
+                  return Text(snapshot.data[data]);
                 }
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return Text("Loading");
-                  default:
-                    return Text(snapshot.data[data]);
+                else {
+                  return Text("Error");
                 }
               });
         }
@@ -67,6 +66,7 @@ class RestaurantState extends State<Home> {
     ),
     RestaurantAccount(),
   ];
+  //String restaurantName = fetch("displayName");
   Color mainColor = Colors.green;
   Widget roleTitle = fetch("displayName");
   String appBarTitle = "Home";
@@ -93,7 +93,7 @@ class RestaurantState extends State<Home> {
     return Scaffold(
       body: bottomBarItems[_bottomBarIndex],
       appBar: AppBar(
-        elevation: 0.0,
+        elevation: 10.0,
         title: Text(appBarTitle),
         backgroundColor: mainColor,
       ),
@@ -150,7 +150,7 @@ class RestaurantState extends State<Home> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "Restaurant Name",
+                            "Restaraunt Name",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 15.0,
@@ -216,6 +216,7 @@ class RestaurantState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantSettings()));
               },
               leading: Icon(Icons.settings),
               title: Text("Settings"),

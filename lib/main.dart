@@ -42,7 +42,7 @@ _goToLogin(BuildContext context) async {
         builder: (context) => LoginPage(), fullscreenDialog: true),
   );
   if (role != null) {
-    print(role.displayName);
+    //print(role.displayName);
     //authorizeAccess(role);
   }
 }
@@ -60,6 +60,7 @@ Widget userLoggedIn() {
   return StreamBuilder(
     stream: FirebaseAuth.instance.onAuthStateChanged,
     builder: (BuildContext context, snapshot) {
+      //print(snapshot.data);
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Scaffold(
           body: Center(child: Text("Please wait...")),
@@ -70,6 +71,7 @@ Widget userLoggedIn() {
           return FutureBuilder(
               future: FirebaseAuth.instance.currentUser(),
               builder: (BuildContext context, AsyncSnapshot user) {
+                //print(user.data);
                 if (user.connectionState == ConnectionState.waiting) {
                   return Scaffold(body: Center(child: Text("Please wait...")));
                 } else {

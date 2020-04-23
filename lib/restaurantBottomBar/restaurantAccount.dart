@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'main.dart';
 
@@ -14,6 +15,7 @@ class RestaurantAccount extends StatelessWidget {
               ListTile(
                 //contentPadding: EdgeInsets.only(left: 15.0, right: 5.0, top: 5.0, bottom: 10.0,),
                 onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantAccountDetails()));
                 },
                 leading: Container(
                   width: 50,
@@ -77,6 +79,31 @@ class RestaurantAccount extends StatelessWidget {
             title: Text("About"),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class RestaurantAccountDetails extends StatefulWidget {
+  @override
+  _RestaurantAccountDetailsState createState() => _RestaurantAccountDetailsState();
+}
+
+class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 20.0,
+          color: mainColor,
+        ),
+      ),
+      appBar: AppBar(
+        centerTitle: false,
+        elevation: 10.0,
+        title: Text("Account"),
+        backgroundColor: mainColor,
       ),
     );
   }

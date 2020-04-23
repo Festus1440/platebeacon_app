@@ -255,10 +255,15 @@ class RegisterPageState extends State<RegisterPage> {
                     child: Container(
                       margin: EdgeInsets.only(top: 10.0),
                       alignment: Alignment(-1.0, 0.0),
-                      child: Text(loginError),
+                      child: Text(
+                          loginError,
+                        style: TextStyle(
+                          color: mainColor,
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 25.0),
                   Container(
                     child: RaisedButton(
                       elevation: 10.0,
@@ -276,7 +281,7 @@ class RegisterPageState extends State<RegisterPage> {
                         } else if (_name == null || _name == "") {
                           showError("Name can't be empty", true);
                         } else {
-                          showError("", false);
+                          showError("Please wait ...", true);
                           FirebaseUser user;
                           try {
                             user = (await _auth.createUserWithEmailAndPassword(
@@ -285,7 +290,7 @@ class RegisterPageState extends State<RegisterPage> {
                             )).user;
                             //user.sendEmailVerification();
                           } catch (e) {
-                            showError(e.toString(), true);
+                            showError(e.message, true);
                             print(e.toString());
                           } finally {
                             if (user != null) {
@@ -323,7 +328,7 @@ class RegisterPageState extends State<RegisterPage> {
                               Navigator.pop(context, role);
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(user: user), fullscreenDialog: true),);
                             } else {
-                              showError("Error signing up", true);
+                              //showError("Error signing up", true);
                             }
                           }
                         }
