@@ -105,6 +105,132 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
         title: Text("Account"),
         backgroundColor: mainColor,
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 170,
+              width: double.infinity,
+              //padding: EdgeInsets.all(20.0),
+              color: mainColor,
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: 100,
+                      height: 100,
+                      margin: EdgeInsets.only(top: 35.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage('assets/PB.jpg'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0, bottom: 5.0),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.info),
+                  SizedBox(width: 30.0,),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Restaurant Name",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15.0, top: 10, right: 15.0, bottom: 5.0),
+              //color: Colors.green,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.location_on),
+                  SizedBox(width: 30.0,),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        TextField(
+                          decoration: InputDecoration(
+                            hintText: "Street",
+                          ),
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                            hintText: "City",
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: "State",
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10.0,),
+                            Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: "Zip",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15.0, top: 10, right: 15.0, bottom: 5.0),
+              //color: Colors.green,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.email),
+                  SizedBox(width: 30.0,),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Email",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 5.0),
+              //color: Colors.green,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.phone),
+                  SizedBox(width: 30.0,),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Phone Number",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.0,),
+          ],
+        ),
+      ),
     );
   }
 }

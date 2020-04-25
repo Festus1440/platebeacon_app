@@ -75,7 +75,7 @@ class _MaterialHomeState extends State<Home> {
     ShelterAccount(),
   ];
   Color mainColor = Colors.blue;
-  int _bottomBarIndex = 0;
+  int _bottomBarIndex = 3;
   String appBarTitle = "Home";
   void _onItemTapped(int index) {
     setState(() {
@@ -135,7 +135,7 @@ class _MaterialHomeState extends State<Home> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(20.0),
-              color: Colors.blue,
+              color: mainColor,
               child: Center(
                 child: Column(
                   children: <Widget>[
