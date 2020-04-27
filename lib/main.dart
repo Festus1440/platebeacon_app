@@ -133,9 +133,12 @@ class _MaterialHomeState extends State<MaterialHome> {
                   SizedBox(height: 80.0),
                   Container(
                     child: FlatButton(
-                      color: Colors.black38,
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+
+
+                      color: Colors.green,
                       textColor: Colors.white,
-                      disabledColor: Colors.grey,
+
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () async {
@@ -157,21 +160,19 @@ class _MaterialHomeState extends State<MaterialHome> {
                     ),
                   ),
                   SizedBox(height: 15.0),
+
                   Container(
-                    child: Text(
-                      "OR",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 10.0,
+                    child: OutlineButton(
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      //color: Colors.green,
+                      //textColor: Colors.white,
+                      borderSide: BorderSide(
+                        color: Colors.green,
+                        style: BorderStyle.solid,
+                        width: 0.8,
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 15.0),
-                  Container(
-                    child: FlatButton(
-                      color: Colors.black38,
-                      textColor: Colors.white,
-                      disabledColor: Colors.grey,
+
+
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () async {
@@ -181,7 +182,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                         alignment: Alignment.center,
                         height: 50.0,
                         child: Text(
-                          "Register",
+                          "Sign Up",
                           style: TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,
@@ -190,7 +191,16 @@ class _MaterialHomeState extends State<MaterialHome> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30.0),
+                  SizedBox(height: 20.0),
+                  Container(
+                    child: Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
