@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
+import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'main.dart';
@@ -16,6 +17,7 @@ class RestaurantMain extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
+        '/restaurantAnalytics': (BuildContext context) => RestaurantAnalytics(),
       },
     );
   }
@@ -177,9 +179,10 @@ class RestaurantState extends State<Home> {
               leading: Icon(Icons.home),
               title: Text("Shelter Details"),
             ),
-            ListTile(
+            ListTile(             //Creates the Analytics section.
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/restaurantAnalytics');
               },
               leading: Icon(Icons.insert_chart),
               title: Text("Analytics"),
