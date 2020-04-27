@@ -192,15 +192,7 @@ class _MaterialHomeState extends State<MaterialHome> {
                     ),
                   ),
                   SizedBox(height: 20.0),
-                  Container(
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
+
                 ],
               ),
             )
