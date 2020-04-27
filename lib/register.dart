@@ -95,6 +95,7 @@ class RegisterPageState extends State<RegisterPage> {
                                 mainColor = Colors.green;
                                 _isShelter = !selected;
                                 role = "Restaurant";
+                                print(role);
                                 checkBoxLabelText =
                                 "Restaurant/Organization Name";
                               });
@@ -123,6 +124,7 @@ class RegisterPageState extends State<RegisterPage> {
                                 mainColor = Colors.blue;
                                 _isRestaurant = !selected;
                                 role = "Shelter";
+                                print(role);
                                 checkBoxLabelText =
                                 "Shelter Name";
                               });
