@@ -75,62 +75,66 @@ class RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      FilterChip(
-                        backgroundColor: Colors.black12,
-                        selectedColor: Colors.green,
-                        labelStyle: TextStyle(color: Colors.black),
-                        padding: EdgeInsets.all(6.0),
-                        label: Row(
-                          children: <Widget>[
-                            Icon(Icons.restaurant),
-                            Text(' Restaurant'),
-                          ],
+                      Expanded(
+                        child: FilterChip(
+                          backgroundColor: Colors.black12,
+                          selectedColor: Colors.green,
+                          labelStyle: TextStyle(color: Colors.black),
+                          padding: EdgeInsets.all(6.0),
+                          label: Row(
+                            children: <Widget>[
+                              Icon(Icons.restaurant),
+                              Text(' Restaurant'),
+                            ],
+                          ),
+                          selected: _isRestaurant,
+                          onSelected: (selected) {
+                            setState(() {
+                              _isRestaurant = selected;
+                              if (selected == true) {
+                                setState(() {
+                                  mainColor = Colors.green;
+                                  _isShelter = !selected;
+                                  role = "Restaurant";
+                                  print(role);
+                                  checkBoxLabelText =
+                                  "Restaurant/Organization Name";
+                                });
+                              }
+                            });
+                          },
                         ),
-                        selected: _isRestaurant,
-                        onSelected: (selected) {
-                          setState(() {
-                            _isRestaurant = selected;
-                            if (selected == true) {
-                              setState(() {
-                                mainColor = Colors.green;
-                                _isShelter = !selected;
-                                role = "Restaurant";
-                                print(role);
-                                checkBoxLabelText =
-                                "Restaurant/Organization Name";
-                              });
-                            }
-                          });
-                        },
                       ),
                       SizedBox(width: 10.0),
-                      FilterChip(
-                        backgroundColor: Colors.black12,
-                        selectedColor: Colors.blue,
-                        labelStyle: TextStyle(color: Colors.black),
-                        padding: EdgeInsets.all(6.0),
-                        label: Row(
-                          children: <Widget>[
-                            Icon(Icons.home),
-                            Text(' Shelter'),
-                          ],
+                      Expanded(
+                        child: FilterChip(
+                          backgroundColor: Colors.black12,
+                          selectedColor: Colors.blue,
+                          labelStyle: TextStyle(color: Colors.black),
+                          padding: EdgeInsets.all(6.0),
+                          label: Row(
+                            children: <Widget>[
+                              Icon(Icons.home),
+                              Text(' Shelter'),
+                            ],
+                          ),
+                          selected: _isShelter,
+                          onSelected: (selected) {
+                            setState(() {
+                              _isShelter = selected;
+                              if (selected == true) {
+                                setState(() {
+                                  mainColor = Colors.blue;
+                                  _isRestaurant = !selected;
+                                  role = "Shelter";
+                                  print(role);
+                                  checkBoxLabelText =
+                                  "Shelter Name";
+                                });
+                              }
+                            });
+                          },
                         ),
-                        selected: _isShelter,
-                        onSelected: (selected) {
-                          setState(() {
-                            _isShelter = selected;
-                            if (selected == true) {
-                              setState(() {
-                                mainColor = Colors.blue;
-                                _isRestaurant = !selected;
-                                role = "Shelter";
-                                print(role);
-                                checkBoxLabelText =
-                                "Shelter Name";
-                              });
-                            }
-                          });
-                        },
                       ),
                     ],
                   ),
