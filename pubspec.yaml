@@ -3,7 +3,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -12,6 +12,10 @@ dependencies:
   firebase_analytics: ^5.0.2
   firebase_auth: ^0.14.0+5
   cloud_firestore: ^0.12.9+5
+  google_maps_flutter: ^0.5.11
+  location: ^3.0.2
+  flutter_polyline_points: ^0.1.0
+  google_map_polyline: ^0.2.0+1
 
 
 
@@ -26,3 +30,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/destination_map_marker.png
+    - assets/driving_pin.png
+    - assets/friend1.jpg
+    - assets/friend2.jpg

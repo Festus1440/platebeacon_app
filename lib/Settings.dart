@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 Color mainColor = Colors.green;
 
-class  Settings extends StatelessWidget {
+class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +48,20 @@ class  Settings extends StatelessWidget {
               color: mainColor,
               indent: 0.0,
               endIndent: 0.0,
+            ),
+            Column(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  width: 100,
+                  height: 200,
+                  color: Colors.green,
+                  child: Text("Text1"),
+                ),
+                Container(
+                  child: Text("Text2"),
+                ),
+              ],
             ),
           ],
         ),

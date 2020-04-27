@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
-import 'package:flutterapp/restaurantDrawer/restaurantSettings.dart';
+import 'package:flutterapp/Settings.dart';
 import 'ShelterDrawer/shelterSettings.dart';
+import 'map.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
 import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -65,18 +66,14 @@ class _MaterialHomeState extends State<Home> {
     Container(
       child: Center(child: fetch("email")),
     ),
-    Container(
-      child: Center(
-        child: Text("Search Page"),
-      ),
-    ),
+    MapSample(),
     Container(
       child: Center(child: Text("")),
     ),
     ShelterAccount(),
   ];
   Color mainColor = Colors.blue;
-  int _bottomBarIndex = 3;
+  int _bottomBarIndex = 0; // the first page
   String appBarTitle = "Home";
   void _onItemTapped(int index) {
     setState(() {
@@ -84,7 +81,7 @@ class _MaterialHomeState extends State<Home> {
       switch(index){
         case 0: appBarTitle = "Home";
         break;
-        case 1: appBarTitle = "Search";
+        case 1: appBarTitle = "Map";
         break;
         case 2: appBarTitle = "Orders";
         break;
@@ -108,8 +105,8 @@ class _MaterialHomeState extends State<Home> {
             title: Text("Home"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text("Search"),
+            icon: Icon(Icons.map),
+            title: Text("Map"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_border),
