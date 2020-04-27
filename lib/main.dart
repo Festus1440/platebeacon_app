@@ -85,7 +85,7 @@ Widget userLoggedIn() {
                 }
               });
         } else {
-          return MaterialHome();
+          return MaterialHome(); //go to home
         }
       }
     },
