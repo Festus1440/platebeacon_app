@@ -150,7 +150,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: FlatButton(
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       color: Colors.green,
-
                       textColor: Colors.white,
                       disabledColor: Colors.grey,
                       disabledTextColor: Colors.black,
@@ -167,7 +166,6 @@ class _LoginPageState extends State<LoginPage> {
                                   email: _email, password: _password)
                               .then((value) {
                             Navigator.pop(context, value.user);
-                                //print(value);
                             //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(), fullscreenDialog: true),);
                             //Navigator.of(context).pop();
                           }).catchError((error) {
