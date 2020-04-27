@@ -210,6 +210,7 @@ class MapSampleState extends State<MapSample> {
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
+                    onPressed: (){},
                     icon: Icon(CupertinoIcons.location_solid),
                   ),
                 ),
