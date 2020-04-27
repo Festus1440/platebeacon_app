@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Log in"),
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
         child: Column(
