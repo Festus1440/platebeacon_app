@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Log in"),
-        backgroundColor: Colors.black38,
+        backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -75,47 +75,53 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Username or Email',
-                      labelStyle: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+
+                  ListTile(
+                    leading: Icon(
+                      Icons.email,
+                      color: Colors.green,
                     ),
-                    onChanged: (value) {
-                      this.setState(() {
-                        _email = value;
-                        if (_email == "") {
-                          showError("Email can't be empty", true);
-                        } else {
-                          showError("", false);
-                        }
-                      });
-                    },
-                  ),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                    title: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Email",
+
+                        ),
+                      onChanged: (value) {
+                        this.setState(() {
+                          _email = value;
+                          if (_email == "") {
+                            showError("Email can't be empty", true);
+                          } else {
+                            showError("", false);
+                          }
+                        });
+                      },
+
                     ),
-                    onChanged: (value) {
-                      this.setState(() {
-                        _password = value;
-                        if (_password == "") {
-                          showError("Password can't be empty", true);
-                        } else {
-                          showError("", false);
-                        }
-                      });
-                    },
                   ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.lock,
+                      color: Colors.green,
+                    ),
+                    title: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                        ),
+                      onChanged: (value) {
+                        this.setState(() {
+                          _password = value;
+                          if (_password == "") {
+                            showError("Password can't be empty", true);
+                          } else {
+                            showError("", false);
+                          }
+                        });
+                      },
+                    ),
+                  ),
+
+
                   SizedBox(height: 5.0),
                   Container(
                     alignment: Alignment(1.0, 0.0),
@@ -142,7 +148,9 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 30.0),
                   Container(
                     child: FlatButton(
-                      color: Colors.black38,
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      color: Colors.green,
+
                       textColor: Colors.white,
                       disabledColor: Colors.grey,
                       disabledTextColor: Colors.black,
@@ -191,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(loginError),
                     ),
                   ),
-                  SizedBox(height: 30.0),
+                  //SizedBox(height: 30.0),
                 ],
               ),
             )

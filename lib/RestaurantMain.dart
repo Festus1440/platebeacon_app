@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
-import 'package:flutterapp/restaurantDrawer/restaurantSettings.dart';
+import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'main.dart';
 
@@ -35,11 +36,11 @@ Widget fetch(data) {
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
                 //print(snapshot.data);
-                if (snapshot.data != null) {
+                if (snapshot.hasData) {
                   return Text(snapshot.data[data]);
                 }
                 else {
-                  return Text("Error");
+                  return Text("");
                 }
               });
         }
@@ -54,13 +55,11 @@ class Home extends StatefulWidget {
 class RestaurantState extends State<Home> {
   final bottomBarItems = [
     Container(
-      child: Center(child: fetch("email")),
-    ),
-    Container(
       child: Center(
-        child: Text("Search Page"),
+        child: Text("Home"),
       ),
     ),
+    MapSample(),
     Container(
       child: Center(child: fetch("displayName")),
     ),
@@ -77,7 +76,7 @@ class RestaurantState extends State<Home> {
       switch(index){
         case 0: appBarTitle = "Home";
         break;
-        case 1: appBarTitle = "Search";
+        case 1: appBarTitle = "Map";
         break;
         case 2: appBarTitle = "Orders";
         break;
@@ -107,8 +106,8 @@ class RestaurantState extends State<Home> {
             title: Text("Home"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text("Search"),
+            icon: Icon(Icons.map),
+            title: Text("Map"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_border),
