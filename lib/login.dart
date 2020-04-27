@@ -199,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(loginError),
                     ),
                   ),
-                  SizedBox(height: 30.0),
+                  //SizedBox(height: 30.0),
                 ],
               ),
             )
