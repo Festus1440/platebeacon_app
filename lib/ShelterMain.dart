@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
-import 'package:flutterapp/restaurantDrawer/restaurantSettings.dart';
+import 'Settings.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
 import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
