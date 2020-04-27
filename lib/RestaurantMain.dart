@@ -216,7 +216,7 @@ class RestaurantState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantSettings()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
               },
               leading: Icon(Icons.settings),
               title: Text("Settings"),
