@@ -16,7 +16,7 @@ dependencies:
   location: ^3.0.2
   flutter_polyline_points: ^0.1.0
   google_map_polyline: ^0.2.0+1
-  custom_switch: ^0.0.1
+
 
 
   cupertino_icons: ^0.1.2
