@@ -28,7 +28,7 @@ class ShelterMain extends StatelessWidget {
       home: Home(),
       routes: <String, WidgetBuilder>{
         '/restaurant': (BuildContext context) => RestaurantDetails(),
-        '/restaurant': (BuildContext context) => Notifications(),
+        '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
       },
     );
