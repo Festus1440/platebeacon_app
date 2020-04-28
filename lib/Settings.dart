@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutterapp/AccountSettings.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -42,7 +43,7 @@ class Settings extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    RestaurantAccountDetails()));
+                                    AccountSettingsDetails()));
                       },
                     ),
                   ),
@@ -112,16 +113,17 @@ class DatabaseService {
 
   final CollectionReference sheltercollection =
       Firestore.instance.collection('Shelter');
-  Future updateUserData(String ShelterName, String Email, String Password) async {
+  Future updateUserData(
+      String ShelterName, String Email, String Password) async {
     return await sheltercollection.document(uid).setData({
       'ShelterName': ShelterName,
       'Email': Email,
-      'Password':Password,
-
+      'Password': Password,
     });
   }
+
   //get Shelter stream
-    Stream<QuerySnapshot> get shelter{
+  Stream<QuerySnapshot> get shelter {
     return sheltercollection.snapshots();
-    }
+  }
 }
