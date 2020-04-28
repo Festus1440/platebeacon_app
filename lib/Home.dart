@@ -112,7 +112,6 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             title: Text("Schedule Pickup"),
             trailing: IconButton(
               onPressed: () {
-
                 showDatePicker(context: context,
                     // the helptext: below wasn't working for everyone revisit
                     //helpText: "Please Pick a date to Schedule Pickup",
