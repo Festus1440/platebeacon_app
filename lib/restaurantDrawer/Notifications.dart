@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:custom_switch/custom_switch.dart';
 
-Color mainColor = Colors.blue;
+Color mainColor = Colors.green;
 // slide bar code
 //
 //----- Code comitted-----//
@@ -58,7 +58,7 @@ class _NotificationsState extends State<Notifications> {
                   ),
                   Spacer(),
                   Switch(
-                    activeColor: Colors.pinkAccent,
+                    activeColor: Colors.greenAccent,
                     value: status,
                     onChanged: (value) {
                       print("VALUE : $value");
@@ -94,9 +94,16 @@ class _NotificationsState extends State<Notifications> {
                     Icons.email,
                     size: 50.0,
                   ),
+                  Text(
+                    "  Mail",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Spacer(),
                   Switch(
-                      activeColor: Colors.pinkAccent,
+                      activeColor: Colors.greenAccent,
                       value: emailStatus,
                       onChanged: (value) {
                         print("VALUE : $value");
@@ -128,9 +135,16 @@ class _NotificationsState extends State<Notifications> {
                             alignment: Alignment.topLeft,
                             child: Row(children: [
                               const Icon(Icons.message, size: 50.00),
+                              Text(
+                                "  Messages",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               Spacer(),
                               Switch(
-                                  activeColor: Colors.pinkAccent,
+                                  activeColor: Colors.greenAccent,
                                   value: msgStatus,
                                   onChanged: (value) {
                                     print("VALUE : $value");
@@ -166,9 +180,16 @@ class _NotificationsState extends State<Notifications> {
                                 Icons.call,
                                 size: 50.00,
                               ),
+                              Text(
+                                "  Calls",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               Spacer(),
                               Switch(
-                                  activeColor: Colors.pinkAccent,
+                                  activeColor: Colors.blueAccent,
                                   value: callStatus,
                                   onChanged: (value) {
                                     print("VALUE : $value");
