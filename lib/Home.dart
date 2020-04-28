@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 var _controller = TextEditingController();
@@ -24,12 +25,7 @@ Widget whatUser() {
       });
 }
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,7 +63,8 @@ class RestaurantHome extends StatefulWidget {
 }
 
 class _RestaurantHomeState extends State<RestaurantHome> {
-  DateTime _date;
+  DateTime _dateTime;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -97,43 +94,29 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             title: Text("Schedule Pickup"),
             trailing: IconButton(
               onPressed: () {
-                showDatePicker(
-                  context: context,
-                  initialDate: _date == null ? DateTime.now(): _date,
-                  firstDate: DateTime(2018),
-                  lastDate: DateTime(2030),
-                  builder: (BuildContext context, Widget child) {
-                    return Theme(
-                      data: ThemeData.dark(),
-                      child: child,
-                    );
-                  },
-                ).then((date){
-                  if(date != null){
-                    setState(() {
-                      _date = date;
-                      print(date);
-                    });
-                  }
-                  return date;
+                showDatePicker(context: context,
+                    //helpText: "Please Pick a date to Schedule Pickup",
+                    initialDate: _dateTime == null ? DateTime.now() :
+                    _dateTime,
+                    firstDate: DateTime(2019),
+                    lastDate: DateTime(2222)).then((date){
+                  print(date);
+                  setState((){
+                    _dateTime = date;
+                  });
                 });
               },
               icon: Icon(Icons.calendar_today),
-            ),
+            ),  //
           ),
         ),
         Container(
           child: ListTile(
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.location_on),
-            title: Text("Next Pickup"),
+            title: Text(_dateTime.toString()),
             trailing: IconButton(
-              onPressed: () {
-                Future<TimeOfDay> selectedTime = showTimePicker(
-                  initialTime: TimeOfDay.now(),
-                  context: context,
-                );
-              },
+              onPressed: () {},
               icon: Icon(Icons.calendar_today),
             ),
           ),
