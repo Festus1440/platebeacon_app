@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
-import 'package:flutterapp/restaurantDrawer/Stories.dart';
+import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
 import 'package:flutterapp/Settings.dart';
