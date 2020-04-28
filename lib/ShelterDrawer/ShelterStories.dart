@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 //import 'package:share/share.dart';
 
@@ -11,6 +13,13 @@ class ShelterStories extends StatefulWidget{
 }
 
 class ShelterStoriesState extends State<ShelterStories> {
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.run(() => _showDialog());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,9 +133,31 @@ class ShelterStoriesState extends State<ShelterStories> {
 
         ],
       ),
-
-
     );
-
+  }
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+          backgroundColor: Colors.white,
+          title: new Text("About Our Stroy"),
+          content: new Text("Coming Soon...."),
+          actions: <Widget>[
+            new FlatButton(
+              child: new
+              Text("is it sounds good?") ,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
+
