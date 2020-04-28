@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
+import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
@@ -62,9 +63,7 @@ class RestaurantState extends State<Home> {
   final bottomBarItems = [
     HomeScreen(),
     MapSample(),
-    Container(
-      child: Center(child: fetch("displayName")),
-    ),
+    Pickup(),
     RestaurantAccount(),
   ];
   //String restaurantName = fetch("displayName");
@@ -80,7 +79,7 @@ class RestaurantState extends State<Home> {
         break;
         case 1: appBarTitle = "Map";
         break;
-        case 2: appBarTitle = "Orders";
+        case 2: appBarTitle = "Pickups";
         break;
         case 3: appBarTitle = "Account";
         break;
@@ -112,8 +111,8 @@ class RestaurantState extends State<Home> {
             title: Text("Map"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark_border),
-            title: Text("Orders"),
+            icon: Icon(Icons.shopping_basket),
+            title: Text("Pickups"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

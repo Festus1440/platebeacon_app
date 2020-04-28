@@ -4,7 +4,6 @@ import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 
-
 import 'Settings.dart';
 import 'ShelterDrawer/ShelterStories.dart';
 import 'map.dart';
@@ -89,7 +88,7 @@ class _MaterialHomeState extends State<Home> {
         break;
         case 1: appBarTitle = "Map";
         break;
-        case 2: appBarTitle = "Orders";
+        case 2: appBarTitle = "Pickups";
         break;
         case 3: appBarTitle = "Account";
         break;
@@ -115,8 +114,8 @@ class _MaterialHomeState extends State<Home> {
             title: Text("Map"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark_border),
-            title: Text("Orders"),
+            icon: Icon(Icons.shopping_basket),
+            title: Text("Pickups"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

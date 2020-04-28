@@ -27,8 +27,10 @@ class MapSampleState extends State<MapSample> {
   Set<Polyline> _polyline = {}; //ignore for future
   List<LatLng> polylineCoordinates = []; //ignore for future
   PolylinePoints polylinePoints; // ignore for future
-  String googleAPIKey = 'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck'; //key from google
-  GoogleMapPolyline googleMapPolyline = GoogleMapPolyline(apiKey: 'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck');
+  String googleAPIKey =
+      'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck'; //key from google
+  GoogleMapPolyline googleMapPolyline =
+      GoogleMapPolyline(apiKey: 'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck');
   BitmapDescriptor currentLocIcon; // initialise custom markers
   BitmapDescriptor shelterIcon; // ""
   BitmapDescriptor restaurantIcon; // ""
@@ -39,28 +41,30 @@ class MapSampleState extends State<MapSample> {
   String mainCollection;
 
   @override
-  void initState() { // this function is called when the page starts
+  void initState() {
+    // this function is called when the page starts
     super.initState();
+    getUser();
+    init(); // get user location and ask for permission
+  }
+
+  getUser() {
     FirebaseAuth.instance.currentUser().then((user) {
-      if (user.displayName == "Shelter"){
+      if (user.displayName == "Shelter") {
         userType = "Shelter";
         mainColor = Colors.blue;
         mainCollection = "Shelter"; //ignore
         print(mainCollection);
-      }
-      else {
+      } else {
         userType = "Restaurant";
         mainColor = Colors.green;
         mainCollection = "Shelter"; //ignore
         print(mainCollection);
       }
     });
-    init(); // get user location and ask for permission
-
   }
 
   init() async {
-
     PermissionStatus _permissionGranted;
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
@@ -141,8 +145,8 @@ class MapSampleState extends State<MapSample> {
       "latitude": DEST_LOCATION.latitude,
       "longitude": DEST_LOCATION.longitude
     });
-    return Scaffold(
-      body: Stack(
+    return Container(
+      child: Stack(
         children: <Widget>[
           GoogleMap(
               myLocationButtonEnabled: false,
@@ -169,7 +173,7 @@ class MapSampleState extends State<MapSample> {
               margin: EdgeInsets.symmetric(vertical: 20.0),
               height: 150,
               child: StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance.collection("Shelter").snapshots(),
+                stream: Firestore.instance.collection(mainCollection ?? "Shelter").snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return Text('Loading...');
@@ -206,10 +210,13 @@ class MapSampleState extends State<MapSample> {
                 child: IconButton(
                   onPressed: () {
                     //show current location
-                    _showCurrentLoc(currentLocation.latitude, currentLocation.longitude);
+                    _showCurrentLoc(
+                        currentLocation.latitude, currentLocation.longitude);
                   },
-                  icon: Icon(Icons.my_location,
-                  color: Colors.white,),
+                  icon: Icon(
+                    Icons.my_location,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -262,7 +269,8 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Widget myDetailsContainer(String restaurantName, String role, double lat, double long) {
+  Widget myDetailsContainer(
+      String restaurantName, String role, double lat, double long) {
     return Column(
       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
@@ -396,7 +404,7 @@ class MapSampleState extends State<MapSample> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
     // do this inside the setState() so Flutter gets notified
-    // that a widget update is due
+    if (!mounted) return; // make sure not to run if its not mounted aka available saves memory
     setState(() {
       // updated position
       var pinPosition =
