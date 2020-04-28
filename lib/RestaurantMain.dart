@@ -6,6 +6,7 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
+import 'Home.dart';
 import 'main.dart';
 
 class RestaurantMain extends StatelessWidget {
@@ -56,11 +57,7 @@ class Home extends StatefulWidget {
 
 class RestaurantState extends State<Home> {
   final bottomBarItems = [
-    Container(
-      child: Center(
-        child: Text("Home"),
-      ),
-    ),
+    HomeScreen(),
     MapSample(),
     Container(
       child: Center(child: fetch("displayName")),
