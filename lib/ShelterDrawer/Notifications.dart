@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Color mainColor = Colors.blue;
 // slide bar code
-//
+//committed code
 class Notifications extends StatefulWidget {
   @override
   _NotificationsState createState() => _NotificationsState();

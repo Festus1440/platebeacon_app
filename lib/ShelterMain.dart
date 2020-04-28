@@ -15,6 +15,7 @@ import 'package:flutterapp/ShelterDrawer/Notifications.dart';
 class ShelterMain extends StatelessWidget {
   //const ShelterMain({Key key, this.user}) : super(key: key);
   //final FirebaseUser user;
+  // committed code
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
