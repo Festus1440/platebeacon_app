@@ -48,7 +48,7 @@ class RestaurantDetails extends StatelessWidget {
                           Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Sushi San",
+                              "California Pizza Kitchen",
                               style: TextStyle(
                                 fontSize: 25.0,
                                 fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class RestaurantDetails extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             padding: EdgeInsets.only(bottom: 10.0, top: 5.0),
                             child: Text(
-                              "Stylish spot with a long sushi bar specializing in sashimi, plus cocktails served in soda cans.",
+                              "California Pizza Kitchen is a casual dining restaurant chain that specializes in California-style pizza. ",
                               style: TextStyle(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class RestaurantDetails extends StatelessWidget {
                             padding: EdgeInsets.only(top: 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              '773-565-4544'
+                              '847-897-5106'
                             ),
                           ),
                           Container(
@@ -99,9 +99,118 @@ class RestaurantDetails extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Column(
                               children: <Widget>[
-                                Text(
-                                  'Hours: Monday 11:00AM '
-                                )
+                                Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'Hours: '
+                                    ),
+                                    Text(
+                                        'Monday '
+                                    ),
+                                    Text(
+                                        '11AM-8PM'
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Opacity(
+                                      opacity: 0.0,
+                                      child: Text(
+                                          'Hours: '
+                                      ),
+                                    ),
+                                    Text(
+                                        'Tuesday '
+                                    ),
+                                    Text(
+                                      '11AM-8PM'
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Opacity(
+                                      opacity: 0.0,
+                                      child: Text(
+                                          'Hours: '
+                                      ),
+                                    ),
+                                    Text(
+                                        'Wednesday '
+                                    ),
+                                    Text(
+                                        '11AM-8PM'
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Opacity(
+                                      opacity: 0.0,
+                                      child: Text(
+                                          'Hours: '
+                                      ),
+                                    ),
+                                    Text(
+                                        'Thursday '
+                                    ),
+                                    Text(
+                                        '11AM-8PM'
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Opacity(
+                                      opacity: 0.0,
+                                      child: Text(
+                                          'Hours: '
+                                      ),
+                                    ),
+                                    Text(
+                                        'Friday '
+                                    ),
+                                    Text(
+                                        '11AM-8PM'
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Opacity(
+                                      opacity: 0.0,
+                                      child: Text(
+                                          'Hours: '
+                                      ),
+                                    ),
+                                    Text(
+                                        'Saturday '
+                                    ),
+                                    Text(
+                                        '11AM-8PM'
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Opacity(
+                                      opacity: 0.0,
+                                      child: Text(
+                                          'Hours: '
+                                      ),
+                                    ),
+                                    Text(
+                                        'Sunday '
+                                    ),
+                                    Text(
+                                        '11AM-8PM'
+                                    ),
+                                  ],
+                                ),
+
+
+
                               ],
                             ),
                           ),
