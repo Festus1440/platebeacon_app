@@ -6,8 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'components/map_pin_pill.dart';
-import 'models/pin_pill_info.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 0;

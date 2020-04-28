@@ -18,7 +18,7 @@ class RestaurantMain extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
-        '/restaurantAnalytics': (BuildContext context) => RestaurantAnalytics(),
+        '/restaurantAnalytics': (BuildContext context) => AnalyticsBody(),
       },
     );
   }
