@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 var _controller = TextEditingController();
 Color mainColor = Colors.green;
@@ -64,6 +65,22 @@ class RestaurantHome extends StatefulWidget {
 
 class _RestaurantHomeState extends State<RestaurantHome> {
   DateTime _dateTime;
+  TimeOfDay _timeOfDay = new TimeOfDay(hour: 12, minute: 00);
+  String selectedDate = "No Scheduled Pickups";
+  String selectedTime = "";
+
+  Future<Null> selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(context: context,
+        initialTime: _timeOfDay);
+
+    if(picked != null && picked != _timeOfDay){
+      setState(() {
+        _timeOfDay = picked;
+      });
+      selectedTime = " at: " + picked.hour.toString() + ":" + picked.minute.toString();
+     // print("Time selected: " + _timeOfDay.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,15 +111,21 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             title: Text("Schedule Pickup"),
             trailing: IconButton(
               onPressed: () {
+
                 showDatePicker(context: context,
-                    helpText: "Please Pick a date to Schedule Pickup",
+                    // the helptext: below wasn't working for everyone revisit
+                    //helpText: "Please Pick a date to Schedule Pickup",
                     initialDate: _dateTime == null ? DateTime.now() :
-                    _dateTime,
+                _dateTime,
                     firstDate: DateTime(2019),
                     lastDate: DateTime(2222)).then((date){
-                  print(date);
+                  //print(date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString());
                   setState((){
-                    _dateTime = date;
+                    if(date != null) {
+                      _dateTime = date;
+                      selectedDate = date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString();
+                      selectTime(context);
+                    }
                   });
                 });
               },
@@ -114,7 +137,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
           child: ListTile(
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.location_on),
-            title: Text(_dateTime.toString()),
+            title: Text(selectedDate + selectedTime),
             trailing: IconButton(
               onPressed: () {},
               icon: Icon(Icons.calendar_today),
