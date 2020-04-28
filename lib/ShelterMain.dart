@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/Settings.dart';
+import 'package:flutterapp/restaurantDrawer/Stories.dart';
+
 
 import 'Settings.dart';
 import 'map.dart';
@@ -196,6 +198,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Stories()));
               },
               leading: Icon(Icons.library_books),
               title: Text("Stories"),
