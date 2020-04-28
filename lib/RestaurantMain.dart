@@ -5,6 +5,7 @@ import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
+import 'restaurantDrawer/Notifications.dart';
 import 'main.dart';
 
 class RestaurantMain extends StatelessWidget {
@@ -15,6 +16,7 @@ class RestaurantMain extends StatelessWidget {
       home: Home(),
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
+        '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
       },
     );
@@ -194,6 +196,7 @@ class RestaurantState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/notifications');
               },
               leading: Icon(Icons.notifications),
               title: Text("Notifications"),
