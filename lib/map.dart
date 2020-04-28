@@ -210,7 +210,9 @@ class MapSampleState extends State<MapSample> {
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      _showCurrentLoc(currentLocation.latitude, currentLocation.longitude);
+                    },
                     icon: Icon(CupertinoIcons.location_solid),
                   ),
                 ),

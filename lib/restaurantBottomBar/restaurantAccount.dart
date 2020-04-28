@@ -15,7 +15,7 @@ class RestaurantAccount extends StatelessWidget {
               ListTile(
                 //contentPadding: EdgeInsets.only(left: 15.0, right: 5.0, top: 5.0, bottom: 10.0,),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantAccountDetails()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantAccountDetails()));
                 },
                 leading: Container(
                   width: 50,
