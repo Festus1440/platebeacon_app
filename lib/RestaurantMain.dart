@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
+import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
@@ -62,9 +63,7 @@ class RestaurantState extends State<Home> {
   final bottomBarItems = [
     HomeScreen(),
     MapSample(),
-    Container(
-      child: Center(child: fetch("displayName")),
-    ),
+    Pickup(),
     RestaurantAccount(),
   ];
   //String restaurantName = fetch("displayName");
@@ -80,7 +79,7 @@ class RestaurantState extends State<Home> {
         break;
         case 1: appBarTitle = "Map";
         break;
-        case 2: appBarTitle = "Orders";
+        case 2: appBarTitle = "Pickups";
         break;
         case 3: appBarTitle = "Account";
         break;
@@ -112,8 +111,8 @@ class RestaurantState extends State<Home> {
             title: Text("Map"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark_border),
-            title: Text("Orders"),
+            icon: Icon(Icons.shopping_basket),
+            title: Text("Pickups"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -171,78 +170,85 @@ class RestaurantState extends State<Home> {
                 ),
               ),
             ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/shelter');
-              },
-              leading: Icon(Icons.home),
-              title: Text("Shelter Details"),
-            ),
-            ListTile(             //Creates the Analytics section.
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/restaurantAnalytics');
-              },
-              leading: Icon(Icons.insert_chart),
-              title: Text("Analytics"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Stories()));
-              },
-              leading: Icon(Icons.library_books),
-              title: Text("Stories"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
-              },
-              leading: Icon(Icons.notifications),
-              title: Text("Notifications"),
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed('/shelter');
+                    },
+                    leading: Icon(Icons.home),
+                    title: Text("Shelter Details"),
+                  ),
+                  ListTile(
+                    //Creates the Analytics section.
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed('/restaurantAnalytics');
+                    },
+                    leading: Icon(Icons.insert_chart),
+                    title: Text("Analytics"),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Stories()));
+                    },
+                    leading: Icon(Icons.library_books),
+                    title: Text("Stories"),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+                    },
+                    leading: Icon(Icons.notifications),
+                    title: Text("Notifications"),
 
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              leading: Icon(Icons.event),
-              title: Text("Events"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Subscriptions()));
-              },
-              leading: Icon(Icons.subscriptions),
-              title: Text("Subscriptions"),
-            ),
-            Divider(
-              height: 15.0,
-              thickness: 0.5,
-              color: Colors.green,
-              indent: 20.0,
-              endIndent: 20.0,
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
-              },
-              leading: Icon(Icons.settings),
-              title: Text("Settings"),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.pop(context);
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.of(context).pushReplacementNamed('/main');
-                });
-              },
-              leading: Icon(Icons.arrow_back),
-              title: Text("Log out"),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    leading: Icon(Icons.event),
+                    title: Text("Events"),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Subscriptions()));
+                    },
+                    leading: Icon(Icons.subscriptions),
+                    title: Text("Subscriptions"),
+                  ),
+                  Divider(
+                    height: 15.0,
+                    thickness: 0.5,
+                    color: Colors.green,
+                    indent: 20.0,
+                    endIndent: 20.0,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+                    },
+                    leading: Icon(Icons.settings),
+                    title: Text("Settings"),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.pop(context);
+                      FirebaseAuth.instance.signOut().then((value) {
+                        Navigator.of(context).pushReplacementNamed('/main');
+                      });
+                    },
+                    leading: Icon(Icons.arrow_back),
+                    title: Text("Log out"),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

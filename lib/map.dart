@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutterapp/main.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -11,7 +12,7 @@ import 'dart:async';
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 0;
 const double CAMERA_BEARING = 0;
-const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
+const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889); //ignore
 const LatLng DEST_LOCATION = LatLng(41.878113, -87.629799);
 
 class MapSample extends StatefulWidget {
@@ -19,41 +20,48 @@ class MapSample extends StatefulWidget {
   State<MapSample> createState() => MapSampleState();
 }
 
-getUser() {
-  FutureOr Function(FirebaseUser value) user;
-  FirebaseAuth.instance.currentUser().then(user);
-  print(user);
-}
-
 class MapSampleState extends State<MapSample> {
+  Color mainColor;
   Completer<GoogleMapController> _controller = Completer();
-  Set<Marker> _markers = Set<Marker>();
-
-// for my drawn routes on the map
-  Set<Polyline> _polyline = {};
-  List<LatLng> polylineCoordinates = [];
-  PolylinePoints polylinePoints;
-  String googleAPIKey = 'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck';
-
+  Set<Marker> _markers = Set<Marker>(); // initialise a list of markers
+  Set<Polyline> _polyline = {}; //ignore for future
+  List<LatLng> polylineCoordinates = []; //ignore for future
+  PolylinePoints polylinePoints; // ignore for future
+  String googleAPIKey =
+      'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck'; //key from google
   GoogleMapPolyline googleMapPolyline =
       GoogleMapPolyline(apiKey: 'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck');
-
-  BitmapDescriptor currentLocIcon;
-  BitmapDescriptor shelterIcon;
-  BitmapDescriptor restaurantIcon;
-  // the user's initial location and current location
-  // as it moves
-  LocationData currentLocation;
-  // a reference to the destination location
-  LocationData destinationLocation;
-  // wrapper around the location API
-  Location location;
+  BitmapDescriptor currentLocIcon; // initialise custom markers
+  BitmapDescriptor shelterIcon; // ""
+  BitmapDescriptor restaurantIcon; // ""
+  LocationData currentLocation; // important for setting current location
+  LocationData destinationLocation; // ignore
+  Location location; //idk
+  String userType;
+  String mainCollection;
 
   @override
   void initState() {
+    // this function is called when the page starts
     super.initState();
-    init();
-    //getUser();
+    getUser();
+    init(); // get user location and ask for permission
+  }
+
+  getUser() {
+    FirebaseAuth.instance.currentUser().then((user) {
+      if (user.displayName == "Shelter") {
+        userType = "Shelter";
+        mainColor = Colors.blue;
+        mainCollection = "Shelter"; //ignore
+        print(mainCollection);
+      } else {
+        userType = "Restaurant";
+        mainColor = Colors.green;
+        mainCollection = "Shelter"; //ignore
+        print(mainCollection);
+      }
+    });
   }
 
   init() async {
@@ -137,8 +145,8 @@ class MapSampleState extends State<MapSample> {
       "latitude": DEST_LOCATION.latitude,
       "longitude": DEST_LOCATION.longitude
     });
-    return Scaffold(
-      body: Stack(
+    return Container(
+      child: Stack(
         children: <Widget>[
           GoogleMap(
               myLocationButtonEnabled: false,
@@ -159,14 +167,13 @@ class MapSampleState extends State<MapSample> {
                 showPinsOnMap();
               }),
           Align(
-            //firebase.firestore.GeoPoint(latitude, longitude)
             alignment: Alignment.bottomCenter,
             child: Container(
               //color: Colors.blue,
               margin: EdgeInsets.symmetric(vertical: 20.0),
               height: 150,
               child: StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance.collection('Shelter').snapshots(),
+                stream: Firestore.instance.collection(mainCollection ?? "Shelter").snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return Text('Loading...');
@@ -180,8 +187,8 @@ class MapSampleState extends State<MapSample> {
                             "https://media.timeout.com/images/105239239/image.jpg",
                             37.33233141,
                             122.0312186,
-                            document['displayName'],
-                            document['role'],
+                            document['displayName'] ?? "Null",
+                            document['role'] ?? "Null",
                             shelterIcon),
                       );
                     }).toList(),
@@ -197,15 +204,19 @@ class MapSampleState extends State<MapSample> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(width: 1.0, color: Colors.grey),
-                  color: Colors.white,
+                  color: mainColor,
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
                   onPressed: () {
                     //show current location
-                    _showCurrentLoc(currentLocation.latitude, currentLocation.longitude);
+                    _showCurrentLoc(
+                        currentLocation.latitude, currentLocation.longitude);
                   },
-                  icon: Icon(Icons.my_location),
+                  icon: Icon(
+                    Icons.my_location,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -224,7 +235,7 @@ class MapSampleState extends State<MapSample> {
       child: Container(
         child: FittedBox(
           child: Material(
-            color: Colors.lightBlue,
+            color: mainColor,
             elevation: 7.0,
             borderRadius: BorderRadius.circular(18.0),
             shadowColor: Color(0x802196F3),
@@ -258,7 +269,8 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Widget myDetailsContainer(String restaurantName, String role, double lat, double long) {
+  Widget myDetailsContainer(
+      String restaurantName, String role, double lat, double long) {
     return Column(
       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
@@ -269,7 +281,7 @@ class MapSampleState extends State<MapSample> {
               restaurantName,
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.normal),
             ),
           ),
@@ -282,11 +294,12 @@ class MapSampleState extends State<MapSample> {
             "" + role + " in Chicago, IL",
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 15.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.normal),
           )),
         ),
         SizedBox(height: 10.0),
+        /*
         Padding(
           padding: EdgeInsets.only(left: 8.0),
           child: Container(
@@ -294,11 +307,12 @@ class MapSampleState extends State<MapSample> {
                 lat.toString()+", "+long.toString(),
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 15.0,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.normal),
               )),
         ),
         SizedBox(height: 10.0),
+        */
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -308,7 +322,7 @@ class MapSampleState extends State<MapSample> {
                   "4.1 ",
                   style: TextStyle(
                     color: Colors.black54,
-                    fontSize: 18.0,
+                    fontSize: 20.0,
                   ),
                 ),
               ),
@@ -316,21 +330,21 @@ class MapSampleState extends State<MapSample> {
                 child: Icon(
                   Icons.star,
                   color: Colors.amber,
-                  size: 15.0,
+                  size: 20.0,
                 ),
               ),
               Container(
                 child: Icon(
                   Icons.star,
                   color: Colors.amber,
-                  size: 15.0,
+                  size: 20.0,
                 ),
               ),
               Container(
                 child: Icon(
                   Icons.star,
                   color: Colors.amber,
-                  size: 15.0,
+                  size: 20.0,
                 ),
               ),
             ],
@@ -390,7 +404,7 @@ class MapSampleState extends State<MapSample> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
     // do this inside the setState() so Flutter gets notified
-    // that a widget update is due
+    if (!mounted) return; // make sure not to run if its not mounted aka available saves memory
     setState(() {
       // updated position
       var pinPosition =
