@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+//import 'package:share/share.dart';
 
 
 Color mainColor = Colors.green;
@@ -33,7 +33,6 @@ class _StoriesState extends State<Stories> {
                 image: DecorationImage (
                   fit: BoxFit.cover,
                   image: AssetImage('assets/Stories.jpg'),
-
                 )
               ),
             )

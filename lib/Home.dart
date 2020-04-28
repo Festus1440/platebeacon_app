@@ -65,13 +65,14 @@ class RestaurantHome extends StatefulWidget {
 
 class _RestaurantHomeState extends State<RestaurantHome> {
   DateTime _dateTime;
-  TimeOfDay _timeOfDay = new TimeOfDay(hour: 12, minute: 00);
+  TimeOfDay _timeOfDay = TimeOfDay(hour: 10, minute: 47);
   String selectedDate = "No Scheduled Pickups";
   String selectedTime = "";
 
   Future<Null> selectTime(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(context: context,
         initialTime: _timeOfDay);
+
 
     if(picked != null && picked != _timeOfDay){
       setState(() {
