@@ -34,7 +34,7 @@ class ShelterDetails extends StatelessWidget {
                   )),
             ),
           ),
-          Container(
+         Container(
             //color: Colors.black12,
             child: Column(
               children: <Widget>[
