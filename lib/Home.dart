@@ -95,7 +95,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             trailing: IconButton(
               onPressed: () {
                 showDatePicker(context: context,
-                    helpText: "Please Pick a date to Schedule Pickup",
+                    //helpText: "Please Pick a date to Schedule Pickup",
                     initialDate: _dateTime == null ? DateTime.now() :
                     _dateTime,
                     firstDate: DateTime(2019),
