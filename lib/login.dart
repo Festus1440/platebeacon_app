@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/ShelterDrawer/loading.dart';
 import 'forgotPass.dart';
 import 'register.dart';
 import 'ShelterMain.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatelessWidget {
+  get loading => false;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return loading ? Loading() : MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/register': (BuildContext context) => RegisterPage(),
@@ -24,9 +27,11 @@ class Login extends StatelessWidget {
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
+  bool loading=false;
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool loading=false;
   String _email, _password;
   bool errorVisible = false;
   String loginError = "";
@@ -157,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
                       onPressed: () {
+                        setState(() => loading = true);
                         if (_email == null || _email == "") {
                           showError("Email can't be empty", true);
                         } else if (_password == null || _password == "") {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/Stories.dart';
@@ -54,7 +55,7 @@ Widget fetch(data) {
                   case ConnectionState.waiting:
                     return Text("Loading");
                   default:
-                    //String s = Text(snapshot.data[data]).data;
+                  //String s = Text(snapshot.data[data]).data;
                     return Text(snapshot.data[data]);
                 }
               });
@@ -69,9 +70,7 @@ class Home extends StatefulWidget {
 
 class _MaterialHomeState extends State<Home> {
   final bottomBarItems = [
-    Container(
-      child: Center(child: fetch("email")),
-    ),
+    HomeScreen(),
     MapSample(),
     Container(
       child: Center(child: Text("")),

@@ -4,13 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'ShelterDrawer/loading.dart';
+
 
 //import 'ShelterMain.dart';
 
 class Register extends StatelessWidget {
+  get loading => bool;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return loading ? Loading() : MaterialApp(
       title: "Material",
       home: RegisterPage(),
     );
@@ -18,13 +22,13 @@ class Register extends StatelessWidget {
 }
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
 class RegisterPage extends StatefulWidget {
   @override
   RegisterPageState createState() => RegisterPageState();
 }
 
 class RegisterPageState extends State<RegisterPage> {
+  bool loading = false;
   Color mainColor = Colors.green;
   String checkBoxLabelText = "Restaurant/Organization Name";
   bool _isRestaurant = true;
@@ -93,6 +97,7 @@ class RegisterPageState extends State<RegisterPage> {
                             selected: _isRestaurant,
                             onSelected: (selected) {
                               setState(() {
+                                loading = true;
                                 _isRestaurant = selected;
                                 if (selected == true) {
                                   setState(() {
@@ -124,6 +129,7 @@ class RegisterPageState extends State<RegisterPage> {
                             selected: _isShelter,
                             onSelected: (selected) {
                               setState(() {
+                                loading = true;
                                 _isShelter = selected;
                                 if (selected == true) {
                                   setState(() {
@@ -165,6 +171,7 @@ class RegisterPageState extends State<RegisterPage> {
                             _name = value;
                             if (_name == "") {
                               showError("Name can't be empty", true);
+                              loading = false;
                             } else {
                               showError("", false);
                             }
@@ -187,6 +194,7 @@ class RegisterPageState extends State<RegisterPage> {
                             _email = value;
                             if (_email == "") {
                               showError("Email can't be empty", true);
+                              loading  = false;
                             } else {
                               showError("", false);
                             }
@@ -212,6 +220,7 @@ class RegisterPageState extends State<RegisterPage> {
                             _password = value;
                             if (_password == "") {
                               showError("Password can't be empty", true);
+                              loading = false;
                             } else {
                               showError("", false);
                             }
@@ -244,14 +253,18 @@ class RegisterPageState extends State<RegisterPage> {
                         //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
                         //splashColor: Colors.blueAccent,
                         onPressed: () async {
+                          setState(() => loading = false );
                           if (_email == null || _email == "") {
+
                             showError("Email can't be empty", true);
                           } else if (_password == null || _password == "") {
                             showError("Password can't be empty", true);
                           } else if (_name == null || _name == "") {
                             showError("Name can't be empty", true);
                           } else {
+
                             showError("Please wait ...", true);
+                            setState(() => loading = true );
                             FirebaseUser user;
                             try {
                               user = (await _auth.createUserWithEmailAndPassword(
