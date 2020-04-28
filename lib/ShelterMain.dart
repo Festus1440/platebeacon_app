@@ -200,6 +200,7 @@ class _MaterialHomeState extends State<Home> {
               title: Text("Stories"),
             ),
             ListTile(
+
               onTap: () {
                 Navigator.of(context).pop();
               },
