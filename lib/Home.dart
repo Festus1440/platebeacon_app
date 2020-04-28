@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 var _controller = TextEditingController();
@@ -56,7 +57,14 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class RestaurantHome extends StatelessWidget {
+class RestaurantHome extends StatefulWidget {
+  @override
+  _RestaurantHomeState createState() => _RestaurantHomeState();
+}
+
+class _RestaurantHomeState extends State<RestaurantHome> {
+  DateTime _dateTime;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -85,7 +93,19 @@ class RestaurantHome extends StatelessWidget {
             leading: Icon(Icons.location_on),
             title: Text("Schedule Pickup"),
             trailing: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDatePicker(context: context,
+                    helpText: "Please Pick a date to Schedule Pickup",
+                    initialDate: _dateTime == null ? DateTime.now() :
+                    _dateTime,
+                    firstDate: DateTime(2019),
+                    lastDate: DateTime(2222)).then((date){
+                  print(date);
+                  setState((){
+                    _dateTime = date;
+                  });
+                });
+              },
               icon: Icon(Icons.calendar_today),
             ),
           ),
@@ -94,7 +114,7 @@ class RestaurantHome extends StatelessWidget {
           child: ListTile(
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.location_on),
-            title: Text("Next Pickup"),
+            title: Text(_dateTime.toString()),
             trailing: IconButton(
               onPressed: () {},
               icon: Icon(Icons.calendar_today),
