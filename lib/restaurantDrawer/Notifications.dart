@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:custom_switch/custom_switch.dart';
+//import 'package:custom_switch/custom_switch.dart';
 
 Color mainColor = Colors.blue;
 // slide bar code
@@ -57,7 +57,7 @@ class _NotificationsState extends State<Notifications> {
                     ),
                   ),
                   Spacer(),
-                  CustomSwitch(
+                  Switch(
                     activeColor: Colors.pinkAccent,
                     value: status,
                     onChanged: (value) {
