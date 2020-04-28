@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutterapp/AccountSettings.dart';
+//import 'package:flutterapp/AccountSettings.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ShelterDrawer/accountsettings.dart';
-import 'accountsettings.dart';
+//import 'accountsettings.dart';
 
 Color mainColor = Colors.green;
 
