@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
-import 'package:flutterapp/restaurantDrawer/Notifications.dart';
+//import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
@@ -195,7 +195,7 @@ class RestaurantState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+               // Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
               },
               leading: Icon(Icons.notifications),
               title: Text("Notifications"),
