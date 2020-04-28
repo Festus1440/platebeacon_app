@@ -5,6 +5,7 @@ import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
+import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
 import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
@@ -209,6 +210,14 @@ class RestaurantState extends State<Home> {
               },
               leading: Icon(Icons.event),
               title: Text("Events"),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Subscriptions()));
+              },
+              leading: Icon(Icons.subscriptions),
+              title: Text("Subscriptions"),
             ),
             Divider(
               height: 15.0,

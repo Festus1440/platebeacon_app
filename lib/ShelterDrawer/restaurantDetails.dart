@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 Color mainColor = Colors.blue;
 
@@ -25,9 +26,9 @@ class RestaurantDetails extends StatelessWidget {
               height: 200,
               //margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
               decoration: BoxDecoration(
-                  //borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                  //border: Border.all(width: 1.0, color: mainColor),
-                  //shape: BoxShape.circle,
+                //borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                //border: Border.all(width: 1.0, color: mainColor),
+                //shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: AssetImage('assets/food.jpg'),
@@ -41,180 +42,77 @@ class RestaurantDetails extends StatelessWidget {
                 Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0, bottom: 10.0),
                       child: Column(
                         children: <Widget>[
                           Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Restaurant Name",
+                              "Sushi San",
                               style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 25.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                           Container(
                             alignment: Alignment.topLeft,
-                            padding: EdgeInsets.only(top: 5.0),
+                            padding: EdgeInsets.only(bottom: 10.0, top: 5.0),
                             child: Text(
-                              "The Mayfair Supper Club - Bellagio ",
+                              "Stylish spot with a long sushi bar specializing in sashimi, plus cocktails served in soda cans.",
                               style: TextStyle(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.grey[600],
                               ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            //padding: EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Open until 11 PM",
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                Text(
+                                  '2.6 miles away'
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 10.0),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              '773-565-4544'
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 10.0),
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Hours: Monday 11:00AM '
+                                )
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Divider(
-                      height: 20.0,
-                      thickness: 0.5,
-                      color: mainColor,
-                      indent: 0.0,
-                      endIndent: 0.0,
-                    ),
+
                   ],
                 ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 0.0, left: 15.0, right: 15.0),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Open Hours",
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: EdgeInsets.only(top: 5.0),
-                            child: Text(
-                              "Open 24 Hours",
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      height: 20.0,
-                      thickness: 0.5,
-                      color: mainColor,
-                      indent: 0.0,
-                      endIndent: 0.0,
-                    ),
-
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(top: 0.0, left: 15.0, right: 15.0),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  "Restaurant Info",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                padding: EdgeInsets.only(top: 5.0),
-                                child: Text(
-                                  "Address: 3600 Las Vegas Blvd S, Las Vegas, NV 89109",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                padding: EdgeInsets.only(top: 5.0),
-                                child: Text(
-                                  "Phone: (702) 693-8876",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                padding: EdgeInsets.only(top: 5.0),
-                                child: Text(
-                                  "Number of Employee: 22",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              /*Container(
-                                alignment: Alignment.topLeft,
-                                padding: EdgeInsets.only(top: 5.0),
-                                child: Text(
-                                  "Volunteers Request: Receptionist",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),*/
-                              /*Container(
-                                alignment: Alignment.topLeft,
-                                padding: EdgeInsets.only(top: 3.0),
-                                child: Text(
-                                  "Donation Request: Foods, Beds",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),*/
-                              Container(
-                                alignment: Alignment.topLeft,
-                                padding: EdgeInsets.only(top: 3.0),
-                                child: Text(
-                                  "Reviews: 4.7/5",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Divider(
-                          height: 20.0,
-                          thickness: 0.5,
-                          color: mainColor,
-                          indent: 0.0,
-                          endIndent: 0.0,
-                        ),
-
-                      ],
-                    ),
-                  ],
-                ),
-              ]
-            )
+              ],
+            ),
           ),
         ],
       ),

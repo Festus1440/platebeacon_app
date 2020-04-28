@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
@@ -11,10 +12,12 @@ import 'shelterBottomBarPages/shelterAccount.dart';
 import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutterapp/ShelterDrawer/Notifications.dart';
 
 class ShelterMain extends StatelessWidget {
   //const ShelterMain({Key key, this.user}) : super(key: key);
   //final FirebaseUser user;
+  // committed code
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -25,6 +28,7 @@ class ShelterMain extends StatelessWidget {
       home: Home(),
       routes: <String, WidgetBuilder>{
         '/restaurant': (BuildContext context) => RestaurantDetails(),
+        '/restaurant': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
       },
     );
@@ -52,7 +56,7 @@ Widget fetch(data) {
                   case ConnectionState.waiting:
                     return Text("Loading");
                   default:
-                    //String s = Text(snapshot.data[data]).data;
+                  //String s = Text(snapshot.data[data]).data;
                     return Text(snapshot.data[data]);
                 }
               });
@@ -67,9 +71,7 @@ class Home extends StatefulWidget {
 
 class _MaterialHomeState extends State<Home> {
   final bottomBarItems = [
-    Container(
-      child: Center(child: fetch("email")),
-    ),
+    HomeScreen(),
     MapSample(),
     Container(
       child: Center(child: Text("")),
@@ -208,6 +210,7 @@ class _MaterialHomeState extends State<Home> {
 
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
               },
               leading: Icon(Icons.notifications),
               title: Text("Notifications"),
@@ -219,6 +222,7 @@ class _MaterialHomeState extends State<Home> {
               leading: Icon(Icons.event),
               title: Text("Events"),
             ),
+
             Divider(
               height: 15.0,
               thickness: 0.5,

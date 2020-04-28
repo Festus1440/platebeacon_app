@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 //import 'package:custom_switch/custom_switch.dart';
 
-Color mainColor = Colors.green;
+Color mainColor = Colors.blue;
 // slide bar code
-//
-//----- Code comitted-----//
+//committed code
 class Notifications extends StatefulWidget {
   @override
   _NotificationsState createState() => _NotificationsState();
@@ -58,7 +57,7 @@ class _NotificationsState extends State<Notifications> {
                   ),
                   Spacer(),
                   Switch(
-                    activeColor: Colors.greenAccent,
+                    activeColor: Colors.blueAccent,
                     value: status,
                     onChanged: (value) {
                       print("VALUE : $value");
@@ -103,7 +102,7 @@ class _NotificationsState extends State<Notifications> {
                   ),
                   Spacer(),
                   Switch(
-                      activeColor: Colors.greenAccent,
+                      activeColor: Colors.blueAccent,
                       value: emailStatus,
                       onChanged: (value) {
                         print("VALUE : $value");
@@ -128,7 +127,7 @@ class _NotificationsState extends State<Notifications> {
                   children: <Widget>[
                     Container(
                       margin:
-                          EdgeInsets.only(top: 30.0, left: 30.0, right: 15.0),
+                      EdgeInsets.only(top: 30.0, left: 30.0, right: 15.0),
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -144,7 +143,7 @@ class _NotificationsState extends State<Notifications> {
                               ),
                               Spacer(),
                               Switch(
-                                  activeColor: Colors.greenAccent,
+                                  activeColor: Colors.blueAccent,
                                   value: msgStatus,
                                   onChanged: (value) {
                                     print("VALUE : $value");
@@ -170,7 +169,7 @@ class _NotificationsState extends State<Notifications> {
                   children: <Widget>[
                     Container(
                       margin:
-                          EdgeInsets.only(top: 30.0, left: 30.0, right: 15.0),
+                      EdgeInsets.only(top: 30.0, left: 30.0, right: 15.0),
                       child: Column(
                         children: <Widget>[
                           Container(

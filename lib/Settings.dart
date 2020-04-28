@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Color mainColor = Colors.green;
 
@@ -36,7 +37,6 @@ class Settings extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                       onTap: () {
                         Navigator.push(
                             context,
@@ -44,7 +44,6 @@ class Settings extends StatelessWidget {
                                 builder: (context) =>
                                     RestaurantAccountDetails()));
                       },
-
                     ),
                   ),
                   Container(
@@ -107,3 +106,22 @@ class Settings extends StatelessWidget {
   }
 }
 
+class DatabaseService {
+  final String uid;
+  DatabaseService({this.uid});
+
+  final CollectionReference sheltercollection =
+      Firestore.instance.collection('Shelter');
+  Future updateUserData(String ShelterName, String Email, String Password) async {
+    return await sheltercollection.document(uid).setData({
+      'ShelterName': ShelterName,
+      'Email': Email,
+      'Password':Password,
+
+    });
+  }
+  //get Shelter stream
+    Stream<QuerySnapshot> get shelter{
+    return sheltercollection.snapshots();
+    }
+}
