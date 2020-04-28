@@ -31,7 +31,7 @@ class RestaurantDetails extends StatelessWidget {
                 //shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/food.jpg'),
+                    image: AssetImage('assets/californiaPizza.jpeg'),
                   )),
             ),
           ),
@@ -102,7 +102,10 @@ class RestaurantDetails extends StatelessWidget {
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                      'Hours: '
+                                      'Hours: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     Text(
                                         'Monday '
