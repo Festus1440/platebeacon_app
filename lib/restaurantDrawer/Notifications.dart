@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:custom_switch/custom_switch.dart';
 
-Color mainColor = Colors.blue;
+Color mainColor = Colors.green;
 // slide bar code
 //
 //----- Code comitted-----//
