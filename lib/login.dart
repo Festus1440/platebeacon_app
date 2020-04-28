@@ -107,7 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                     title: TextField(
                         decoration: InputDecoration(
                           hintText: "Password",
+
                         ),
+                      obscureText:true,
                       onChanged: (value) {
                         this.setState(() {
                           _password = value;

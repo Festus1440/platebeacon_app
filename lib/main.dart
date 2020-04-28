@@ -5,23 +5,26 @@ import 'ShelterMain.dart';
 import 'login.dart';
 import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MaterialDesign());
 
 class MaterialDesign extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: <String, WidgetBuilder>{
-        '/login': (BuildContext context) => LoginPage(),
-        '/register': (BuildContext context) => RegisterPage(),
-      },
-      title: "Material",
-      home: userLoggedIn(),
-    );
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          routes: <String, WidgetBuilder>{
+            '/login': (BuildContext context) => LoginPage(),
+            '/register': (BuildContext context) => RegisterPage(),
+          },
+          title: "Material",
+          home: userLoggedIn(),
+        );
+      }
   }
-}
+
+
 
 _goToRegister(BuildContext context) async {
   String role = await Navigator.push(
