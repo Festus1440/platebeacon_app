@@ -5,7 +5,7 @@ import 'ShelterMain.dart';
 import 'login.dart';
 import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 void main() => runApp(MaterialDesign());
 
