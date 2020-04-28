@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutterapp/AccountSettings.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'ShelterDrawer/accountsettings.dart';
+import 'accountsettings.dart';
 
 Color mainColor = Colors.green;
 
@@ -43,13 +45,13 @@ class Settings extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    AccountSettingsDetails()));
+                                    RestaurantAccountDetails()));
                       },
                     ),
                   ),
                   Container(
                     alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(top: 3.0),
+                    padding: EdgeInsets.only(top: 5.0),
                     child: Text(
                       "Change your name,description and profile photo.",
                       style: TextStyle(
@@ -76,21 +78,28 @@ class Settings extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          "Account Settings",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+                        child: GestureDetector(
+                          child: Text(
+                            "Account Settings",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+
+                            ),
                           ),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AccountSettingsDetails()));
+                          },
                         ),
                       )
+
                     ],
                   ),
                 ),
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(top: 3.0),
-                  child: Text(
+                  padding: EdgeInsets.only(top: 5.0,left: 15.0),
+                  child:Text(
                     "Change your email or delete your account.",
                     style: TextStyle(
                       fontSize: 10.0,
@@ -103,9 +112,16 @@ class Settings extends StatelessWidget {
           ],
         ),
       ),
+
+
+
     );
   }
 }
+
+
+
+
 
 class DatabaseService {
   final String uid;
@@ -127,3 +143,4 @@ class DatabaseService {
     return sheltercollection.snapshots();
   }
 }
+

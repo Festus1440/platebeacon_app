@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:custom_switch/custom_switch.dart';
 
 Color mainColor = Colors.green;
+
 // slide bar code
 //
 //----- Code comitted-----//
@@ -44,47 +45,6 @@ class _NotificationsState extends State<Notifications> {
                 ),
               ),
             ),
-          ),
-          Center(
-            child: Container(
-                margin: EdgeInsets.only(top: 30.0, left: 30.0, right: 15.0),
-                child: Row(children: [
-                  Text(
-                    "All Apps",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Spacer(),
-                  Switch(
-                    activeColor: Colors.greenAccent,
-                    value: status,
-                    onChanged: (value) {
-                      print("VALUE : $value");
-                      setState(() {
-                        status = value;
-                        if (value == true) {
-                          emailStatus = true;
-                          msgStatus = true;
-                          callStatus = true;
-                        } else {
-                          emailStatus = false;
-                          msgStatus = false;
-                          callStatus = false;
-                        }
-                      });
-                      print("EmailStatus : $emailStatus");
-                    },
-                  ),
-                ])),
-          ),
-          Divider(
-            height: 20.0,
-            thickness: 0.5,
-            color: mainColor,
-            indent: 0.0,
-            endIndent: 0.0,
           ),
           Center(
             child: Container(
@@ -219,5 +179,3 @@ class _NotificationsState extends State<Notifications> {
     );
   }
 }
-
-
