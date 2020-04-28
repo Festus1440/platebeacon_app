@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/Settings.dart';
-import 'package:flutterapp/restaurantDrawer/Stories.dart';
+import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 
 
 import 'Settings.dart';
+import 'ShelterDrawer/ShelterStories.dart';
 import 'map.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
 import 'main.dart';
@@ -27,7 +28,7 @@ class ShelterMain extends StatelessWidget {
       home: Home(),
       routes: <String, WidgetBuilder>{
         '/restaurant': (BuildContext context) => RestaurantDetails(),
-        '/restaurant': (BuildContext context) => Notifications(),
+        '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
       },
     );
@@ -200,7 +201,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Stories()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterStories()));
               },
               leading: Icon(Icons.library_books),
               title: Text("Stories"),
@@ -251,5 +252,6 @@ class _MaterialHomeState extends State<Home> {
         ),
       ),
     );
+
   }
 }
