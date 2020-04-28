@@ -58,20 +58,9 @@ class ShelterDetails extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             padding: EdgeInsets.only(top: 5.0),
                             child: Text(
-                              "Chicago, IL",
+                              "A Harvest Shelter",
                               style: TextStyle(
                                 fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: EdgeInsets.only(top: 3.0),
-                            child: Text(
-                              "Open 24 Hours",
-                              style: TextStyle(
-                                fontSize: 10.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -97,9 +86,9 @@ class ShelterDetails extends StatelessWidget {
                           Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Shelter info",
+                              "Open Hours",
                               style: TextStyle(
-                                fontSize: 15.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -108,20 +97,9 @@ class ShelterDetails extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             padding: EdgeInsets.only(top: 5.0),
                             child: Text(
-                              "Address: 123 Main St",
+                              "Open 24 Hours",
                               style: TextStyle(
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: EdgeInsets.only(top: 3.0),
-                            child: Text(
-                              "Phone: (123)-456-7890",
-                              style: TextStyle(
-                                fontSize: 10.0,
+                                fontSize: 12.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -136,10 +114,107 @@ class ShelterDetails extends StatelessWidget {
                       indent: 0.0,
                       endIndent: 0.0,
                     ),
+
+                    Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 0.0, left: 15.0, right: 15.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Shelter Info",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              "Address: 123 Main St,Chicago, IL",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              "Phone: (123)-456-7890",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              "Number of People: 22",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              "Volunteers Request: Receptionist",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.only(top: 3.0),
+                            child: Text(
+                              "Donation Request: Foods, Beds",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.only(top: 3.0),
+                            child: Text(
+                              "Description: Provides Food, Shelter",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Divider(
+                      height: 20.0,
+                      thickness: 0.5,
+                      color: mainColor,
+                      indent: 0.0,
+                      endIndent: 0.0,
+                    ),
+
                   ],
                 ),
               ],
             ),
+              ]
+            )
           ),
         ],
       ),

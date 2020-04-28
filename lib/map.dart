@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
@@ -18,7 +19,11 @@ class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
 }
-
+getUser() {
+  FutureOr Function(FirebaseUser value) user;
+  FirebaseAuth.instance.currentUser().then(user);
+  print(user);
+}
 class MapSampleState extends State<MapSample> {
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = Set<Marker>();
@@ -47,11 +52,11 @@ class MapSampleState extends State<MapSample> {
   void initState() {
     super.initState();
     init();
+    //getUser();
   }
 
   init() async {
     PermissionStatus _permissionGranted;
-    //_permissionGranted = await location.hasPermission();
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
@@ -128,7 +133,8 @@ class MapSampleState extends State<MapSample> {
     }
     else {
       currentLocation = destinationLocation;
-      print("No");
+      updatePinOnMap();
+      //print(_permissionGranted);
     }
     destinationLocation = LocationData.fromMap({
       "latitude": DEST_LOCATION.latitude,
@@ -138,7 +144,7 @@ class MapSampleState extends State<MapSample> {
       body: Stack(
         children: <Widget>[
           GoogleMap(
-              myLocationButtonEnabled: false,
+              myLocationButtonEnabled: true,
               myLocationEnabled: false,
               compassEnabled: true,
               tiltGesturesEnabled: false,
@@ -169,27 +175,24 @@ class MapSampleState extends State<MapSample> {
                     padding: EdgeInsets.all(8.0),
                     child: _boxes(
                         "https://media.timeout.com/images/105239239/image.jpg",
-                        37.329889,
-                        -122.034798,
-                        "Shelter Name"),
+                        37.329889, -122.034798,
+                        "Caring Hands", "Shelter", shelterIcon),
                   ),
                   SizedBox(width: 10.0),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: _boxes(
                         "https://media.timeout.com/images/105239239/image.jpg",
-                        37.319879,
-                        -122.034798,
-                        "Another Shelter"),
+                        37.329817, -122.029888,
+                        "We Homeless Bro", "Shelter", shelterIcon),
                   ),
                   SizedBox(width: 10.0),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: _boxes(
                         "https://media.timeout.com/images/105239239/image.jpg",
-                        0,
-                        0,
-                        "Shelter 3"),
+                        37.329779, -122.027155,
+                        "McDonalds", "Restaurant", restaurantIcon),
                   ),
                 ],
               ),
@@ -199,22 +202,18 @@ class MapSampleState extends State<MapSample> {
             padding: EdgeInsets.all(10.0),
             child: Align(
               alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: (){
-                  print(currentLocation);
-                  _showCurrentLoc(currentLocation.latitude, currentLocation.longitude);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    onPressed: (){
-                      _showCurrentLoc(currentLocation.latitude, currentLocation.longitude);
-                    },
-                    icon: Icon(CupertinoIcons.location_solid),
-                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1.0, color: Colors.grey),
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: (){
+                    //show current location
+                    _showCurrentLoc(currentLocation.latitude, currentLocation.longitude);
+                  },
+                  icon: Icon(Icons.my_location),
                 ),
               ),
             ),
@@ -224,10 +223,10 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Widget _boxes(String _image, double lat, double long, String restaurantName) {
+  Widget _boxes(String _image, double lat, double long, String restaurantName, String type, BitmapDescriptor icon) {
     return GestureDetector(
       onTap: () {
-        _goToArea(lat, long);
+        _goToArea(lat, long, restaurantName, type, icon);
       },
       child: Container(
         child: FittedBox(
@@ -241,7 +240,7 @@ class MapSampleState extends State<MapSample> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(18.0),
-                  width: 200,
+                  width: 210,
                   height: 200,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
@@ -252,9 +251,11 @@ class MapSampleState extends State<MapSample> {
                   ),
                 ),
                 Container(
+                  height: 100,
+                  //color: Colors.green,
                   padding: EdgeInsets.only(top: 0.0, right: 20.0),
                   //color: Colors.blue,
-                  child: myDetailsContainer1(restaurantName),
+                  child: myDetailsContainer(restaurantName, type),
                 ),
               ],
             ),
@@ -264,9 +265,9 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Widget myDetailsContainer1(String restaurantName) {
+  Widget myDetailsContainer(String restaurantName, String type) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(left: 8.0),
@@ -274,13 +275,25 @@ class MapSampleState extends State<MapSample> {
             child: Text(
               restaurantName,
               style: TextStyle(
-                  color: Color(0xff6200ee),
-                  fontSize: 24.0,
+                  color: Colors.blue,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.normal),
             ),
           ),
         ),
-        SizedBox(height: 5.0),
+        SizedBox(height: 10.0),
+        Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Container(
+              child: Text(
+                ""+type+ " in Chicago, IL",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.normal),
+              )),
+        ),
+        SizedBox(height: 10.0),
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -317,17 +330,6 @@ class MapSampleState extends State<MapSample> {
               ),
             ],
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 8.0),
-          child: Container(
-              child: Text(
-            "Chicago, IL",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 15.0,
-                fontWeight: FontWeight.normal),
-          )),
         ),
       ],
     );
@@ -400,7 +402,7 @@ class MapSampleState extends State<MapSample> {
     });
   }
 
-  void _goToArea(double lat, double long) async {
+  void _goToArea(double lat, double long, String name, String type, BitmapDescriptor icon) async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(lat, long),
@@ -409,11 +411,12 @@ class MapSampleState extends State<MapSample> {
       bearing: CAMERA_BEARING,
     )));
     setState(() {
-      _markers.removeWhere((m) => m.markerId.value == "Shelter");
+      _markers.removeWhere((m) => m.markerId.value == type);
       _markers.add(Marker(
-          markerId: MarkerId("Shelter"),
+          markerId: MarkerId(type),
           position: LatLng(lat, long),
-          icon: shelterIcon));
+          infoWindow: InfoWindow(title: name, snippet: type),
+          icon: icon));
     });
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/Settings.dart';
+
 import 'Settings.dart';
 import 'map.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
@@ -182,15 +183,15 @@ class _MaterialHomeState extends State<Home> {
               leading: Icon(Icons.restaurant),
               title: Text("Restaurant Details"),
             ),
-            ListTile(
+            ListTile(   //Creates the link to the analytics page.
               onTap: () {
                 Navigator.of(context).pop();
-                setState(() {
-                  _bottomBarIndex = 1;
-                });
+//                setState(() {
+//                  _bottomBarIndex = 1;
+//                });
               },
               leading: Icon(Icons.insert_chart),
-              title: Text("Analytics"),
+              title: Text("My Analytics"),
             ),
             ListTile(
               onTap: () {
@@ -200,6 +201,7 @@ class _MaterialHomeState extends State<Home> {
               title: Text("Stories"),
             ),
             ListTile(
+
               onTap: () {
                 Navigator.of(context).pop();
               },

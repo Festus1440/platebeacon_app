@@ -75,182 +75,146 @@ class RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      FilterChip(
-                        backgroundColor: Colors.black12,
-                        selectedColor: Colors.green,
-                        labelStyle: TextStyle(color: Colors.black),
-                        padding: EdgeInsets.all(6.0),
-                        label: Row(
-                          children: <Widget>[
-                            Icon(Icons.restaurant),
-                            Text(' Restaurant'),
-                          ],
+                      Expanded(
+                        child: FilterChip(
+                          backgroundColor: Colors.black12,
+                          selectedColor: Colors.green,
+                          labelStyle: TextStyle(color: Colors.black),
+                          padding: EdgeInsets.all(6.0),
+                          label: Row(
+                            children: <Widget>[
+                              Icon(Icons.restaurant),
+                              Text(' Restaurant'),
+                            ],
+                          ),
+                          selected: _isRestaurant,
+                          onSelected: (selected) {
+                            setState(() {
+                              _isRestaurant = selected;
+                              if (selected == true) {
+                                setState(() {
+                                  mainColor = Colors.green;
+                                  _isShelter = !selected;
+                                  role = "Restaurant";
+                                  print(role);
+                                  checkBoxLabelText =
+                                  "Restaurant/Organization Name";
+                                });
+                              }
+                            });
+                          },
                         ),
-                        selected: _isRestaurant,
-                        onSelected: (selected) {
-                          setState(() {
-                            _isRestaurant = selected;
-                            if (selected == true) {
-                              setState(() {
-                                mainColor = Colors.green;
-                                _isShelter = !selected;
-                                role = "Restaurant";
-                                print(role);
-                                checkBoxLabelText =
-                                "Restaurant/Organization Name";
-                              });
-                            }
-                          });
-                        },
                       ),
                       SizedBox(width: 10.0),
-                      FilterChip(
-                        backgroundColor: Colors.black12,
-                        selectedColor: Colors.blue,
-                        labelStyle: TextStyle(color: Colors.black),
-                        padding: EdgeInsets.all(6.0),
-                        label: Row(
-                          children: <Widget>[
-                            Icon(Icons.home),
-                            Text(' Shelter'),
-                          ],
+                      Expanded(
+                        child: FilterChip(
+                          backgroundColor: Colors.black12,
+                          selectedColor: Colors.blue,
+                          labelStyle: TextStyle(color: Colors.black),
+                          padding: EdgeInsets.all(6.0),
+                          label: Row(
+                            children: <Widget>[
+                              Icon(Icons.home),
+                              Text(' Shelter'),
+                            ],
+                          ),
+                          selected: _isShelter,
+                          onSelected: (selected) {
+                            setState(() {
+                              _isShelter = selected;
+                              if (selected == true) {
+                                setState(() {
+                                  mainColor = Colors.blue;
+                                  _isRestaurant = !selected;
+                                  role = "Shelter";
+                                  print(role);
+                                  checkBoxLabelText =
+                                  "Shelter Name";
+                                });
+                              }
+                            });
+                          },
                         ),
-                        selected: _isShelter,
-                        onSelected: (selected) {
-                          setState(() {
-                            _isShelter = selected;
-                            if (selected == true) {
-                              setState(() {
-                                mainColor = Colors.blue;
-                                _isRestaurant = !selected;
-                                role = "Shelter";
-                                print(role);
-                                checkBoxLabelText =
-                                "Shelter Name";
-                              });
-                            }
-                          });
-                        },
                       ),
                     ],
                   ),
-                  /*Row(
-                    children: <Widget>[
-                      Container(
-                        //color: Colors.black38,
-                        child: Row(
-                          children: <Widget>[
-                            Text("Restaurant"),
-                            Checkbox(
-                              value: _isRestaurant,
-                              onChanged: (val) {
-                                setState(() {
-                                  _isRestaurant = val;
-                                  if (val == true) {
-                                    setState(() {
-                                      _isShelter = !val;
-                                      role = "Restaurant";
-                                      checkBoxLabelText =
-                                          "Restaurant/Organization Name";
-                                    });
-                                  }
-                                });
-                              },
-                            ),
-                          ],
+
+                  ListTile(
+                    leading: Icon(
+                      Icons.account_box,
+                      color: mainColor,
+                    ),
+                    title: TextField(
+                      decoration: InputDecoration(
+                        hintText: checkBoxLabelText,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: mainColor),
+                        ),
+                        //labelText: checkBoxLabelText,
+                        labelStyle: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                      Container(
-                        //color: Colors.black38,
-                        child: Row(
-                          children: <Widget>[
-                            Text("Shelter"),
-                            Checkbox(
-                              value: _isShelter,
-                              onChanged: (val) {
-                                setState(() {
-                                  _isShelter = val;
-                                  if (val == true) {
-                                    setState(() {
-                                      _isRestaurant = !val;
-                                      role = "Shelter";
-                                      checkBoxLabelText = "Shelter Name";
-                                    });
-                                  }
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),*/
-                  TextField(
-                    decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: mainColor),
-                      ),
-                      labelText: checkBoxLabelText,
-                      labelStyle: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      onChanged: (value) {
+                        this.setState(() {
+                          _name = value;
+                          if (_name == "") {
+                            showError("Name can't be empty", true);
+                          } else {
+                            showError("", false);
+                          }
+                        });
+                      },
                     ),
-                    onChanged: (value) {
-                      this.setState(() {
-                        _name = value;
-                        if (_name == "") {
-                          showError("Name can't be empty", true);
-                        } else {
-                          showError("", false);
-                        }
-                      });
-                    },
                   ),
-                  TextField(
-                    decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: mainColor),
-                      ),
-                      labelText: 'Email',
-                      labelStyle: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.email,
+                      color: mainColor,
                     ),
-                    onChanged: (value) {
-                      this.setState(() {
-                        _email = value;
-                        if (_email == "") {
-                          showError("Email can't be empty", true);
-                        } else {
-                          showError("", false);
-                        }
-                      });
-                    },
+                    title: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Email",
+
+                      ),
+                      onChanged: (value) {
+                        this.setState(() {
+                          _email = value;
+                          if (_email == "") {
+                            showError("Email can't be empty", true);
+                          } else {
+                            showError("", false);
+                          }
+                        });
+                      },
+
+                    ),
                   ),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+
+
+
+                  ListTile(
+                    leading: Icon(
+                      Icons.lock,
+                      color: mainColor,
                     ),
-                    onChanged: (value) {
-                      this.setState(() {
-                        _password = value;
-                        if (_password == "") {
-                          showError("Password can't be empty", true);
-                        } else {
-                          showError("", false);
-                        }
-                      });
-                    },
+                    title: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Password",
+                      ),
+                      onChanged: (value) {
+                        this.setState(() {
+                          _password = value;
+                          if (_password == "") {
+                            showError("Password can't be empty", true);
+                          } else {
+                            showError("", false);
+                          }
+                        });
+                      },
+                    ),
                   ),
                   Visibility(
                     visible: errorVisible,
@@ -267,8 +231,9 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 25.0),
                   Container(
-                    child: RaisedButton(
-                      elevation: 10.0,
+                    child: FlatButton(
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      //elevation: 10.0,
                       color: mainColor,
                       textColor: Colors.white,
                       disabledColor: Colors.grey,

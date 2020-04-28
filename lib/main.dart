@@ -85,7 +85,7 @@ Widget userLoggedIn() {
                 }
               });
         } else {
-          return MaterialHome();
+          return MaterialHome(); //go to home
         }
       }
     },
@@ -171,7 +171,6 @@ class _MaterialHomeState extends State<MaterialHome> {
                         style: BorderStyle.solid,
                         width: 0.8,
                       ),
-
 
                       disabledTextColor: Colors.black,
                       //splashColor: Colors.blueAccent,
