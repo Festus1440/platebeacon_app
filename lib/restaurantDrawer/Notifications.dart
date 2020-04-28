@@ -136,7 +136,7 @@ class _NotificationsState extends State<Notifications> {
                             child: Row(children: [
                               const Icon(Icons.message, size: 50.00),
                               Text(
-                                "  Messages",//new text
+                                "  Messages",
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
