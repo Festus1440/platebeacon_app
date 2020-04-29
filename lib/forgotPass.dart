@@ -59,13 +59,20 @@ class PassRecoverPage extends StatefulWidget {
 
 class _PassRecoverPageState extends State<PassRecoverPage> {
   //AuthFormType authFormType;
-
   _PassRecoverPageState(); //{this.authFormType}
 
   //final formKey = GlobalKey<FormState>();
-  String _email, warning;
+
+  String _email, warning = "";
 
   bool viewVisible = false;
+  bool errorVisible = false;
+  void showError(error, show) {
+    setState(() {
+      warning = error;
+      errorVisible = show;
+    });
+  }
 
   get child => null;
   void showWidget() {
@@ -135,6 +142,17 @@ class _PassRecoverPageState extends State<PassRecoverPage> {
                 child: Column(
                   children: <Widget>[
                     TextField(
+                      onChanged: (value) {
+                        this.setState(() {
+                          _email = value;
+                          if (_email == "" || _email == null) {
+                            print("Empty");
+                            showError("Email can't be empty", true);
+                          } else {
+                            showError("", false);
+                          }
+                        });
+                      },
                       decoration: InputDecoration(
                           labelText: 'Enter email or Phone No',
                           labelStyle: TextStyle(
@@ -152,11 +170,15 @@ class _PassRecoverPageState extends State<PassRecoverPage> {
                         disabledTextColor: Colors.black,
                         //splashColor: Colors.blueAccent,
                         onPressed: () {
-                          setState(() {
-                            FirebaseAuth.instance
-                                .sendPasswordResetEmail(email: _email);
-                            Navigator.of(context).pop();
-                          });
+                          setState(() {});
+                            if (_email == "" || _email == null) {
+                              showError("Email cant be empty", true);
+                            }
+                            else{
+                              showError("", false);
+                              FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
+                              Navigator.of(context).pop();
+                            }
                           //showWidget();
                         },
                         child: Container(
@@ -170,6 +192,14 @@ class _PassRecoverPageState extends State<PassRecoverPage> {
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: errorVisible,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10.0),
+                        alignment: Alignment(-1.0, 0.0),
+                        child: Text(warning),
                       ),
                     ),
                   ],

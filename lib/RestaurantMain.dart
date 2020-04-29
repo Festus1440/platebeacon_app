@@ -111,8 +111,8 @@ class RestaurantState extends State<Home> {
             title: Text("Map"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            title: Text("Pickups"),
+            icon: Icon(Icons.directions_car),
+            title: Text("Deliveries"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
