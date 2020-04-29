@@ -12,6 +12,7 @@ import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/ShelterDrawer/Notifications.dart';
+import 'package:flutterapp/ShelterDrawer/Events.dart';
 
 class ShelterMain extends StatelessWidget {
   //const ShelterMain({Key key, this.user}) : super(key: key);
@@ -29,6 +30,7 @@ class ShelterMain extends StatelessWidget {
         '/restaurant': (BuildContext context) => RestaurantDetails(),
         '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
+        '/events': (BuildContext context) => Events(),
       },
     );
   }
@@ -224,6 +226,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
               },
               leading: Icon(Icons.event),
               title: Text("Events"),
