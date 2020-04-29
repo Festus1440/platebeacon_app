@@ -9,10 +9,10 @@ enum DialogAction { Yes, abort }
 
 class Dialogs {
   static Future<DialogAction> yesAbortDialog(
-      BuildContext context,
-      String title,
-      String body,
-      ) async {
+    BuildContext context,
+    String title,
+    String body,
+  ) async {
     final action = await showDialog(
       context: context,
       barrierDismissible: true,
@@ -26,7 +26,7 @@ class Dialogs {
           actions: <Widget>[
             FlatButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.abort),
-              child: const Text('No',style: TextStyle(color: Colors.black)),
+              child: const Text('No', style: TextStyle(color: Colors.black)),
             ),
             RaisedButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.Yes),
@@ -40,18 +40,11 @@ class Dialogs {
   }
 }
 
-var _firebaseAuth = FirebaseAuth.instance;
-String role;
 /*
-deleteData(docId){
-  _firebaseAuth = Firestore.instance.collection(role).document(docId).delete().catchError((e) {
-    print(e);
-  }) as FirebaseAuth;
-  _firebaseAuth = Firestore.instance.collection(role).document(docId).delete().catchError((e){
-    print(e);
-  }) as FirebaseAuth;
-}
+bool _isRestaurant = true;
+bool _isShelter = false;
 */
+String role;
 
 class AccountSettingsDetails extends StatefulWidget {
   @override
@@ -61,7 +54,6 @@ class AccountSettingsDetails extends StatefulWidget {
 class _AccountDetailsState extends State<AccountSettingsDetails> {
   bool tappedYes = false;
 
-  String get docId => null;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -97,7 +89,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                   ),
                   Container(
                     alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(top: 3.0,left: 0.0,right: 15.0),
+                    padding: EdgeInsets.only(top: 3.0, left: 0.0, right: 15.0),
                     child: GestureDetector(
                       child: Text(
                         "Delete Account",
@@ -109,10 +101,30 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                       ),
                       onTap: () async {
                         final action = await Dialogs.yesAbortDialog(
-                            context, 'Do you want to Delete Your Account?', 'Your data will be deleted and can\'t be retrieve after 30 days' );
+                            context,
+                            'Do you want to Delete Your Account?',
+                            'Your data will be deleted and can\'t be retrieve after 30 days');
+                        FirebaseUser user;
                         var DialogActions;
                         if (action == DialogActions.yes) {
-                          Firestore.instance.collection(role).document(docId).delete();
+                          switch (role) {
+                            case 'Shelter':
+                              Firestore.instance
+                                  .collection(role)
+                                  .document(user.uid)
+                                  .delete();
+                              break;
+                            case 'Restaurant':
+                              Firestore.instance
+                                  .collection(role)
+                                  .document(user.uid)
+                                  .delete();
+                              break;
+                          }
+                          Navigator.pop(context);
+                          FirebaseAuth.instance.signOut().then((value) {
+                            Navigator.of(context).pushReplacementNamed('/main');
+                          });
                         } else {
                           setState(() => tappedYes = true);
                         }
@@ -122,7 +134,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                   Divider(
                     height: 20.0,
                     thickness: 0.5,
-                    color:Colors.black,
+                    color: Colors.black,
                     indent: 0.0,
                     endIndent: 0.0,
                   ),
