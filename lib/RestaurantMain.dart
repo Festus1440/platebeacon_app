@@ -60,6 +60,43 @@ class Home extends StatefulWidget {
 }
 
 class RestaurantState extends State<Home> {
+  int size = 0;
+  String userId = "";
+  String mainCollection = "";
+  String subCollection = "";
+  //Color mainColor;
+  @override
+  void initState() {
+    // this function is called when the page starts
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      setState(() {
+        userId = user.uid;
+        if (user.displayName == "Shelter") {
+          mainCollection = "Shelter";
+          subCollection = "pickup";
+          mainColor = Colors.blue;
+        } else {
+          mainCollection = "Restaurant";
+          subCollection = "deliveries";
+          mainColor = Colors.green;
+        }
+        //loading = false;
+      });
+      countDocuments();
+      //sleep(const Duration(seconds: 2));
+    });
+
+  }
+  void countDocuments() async {
+    QuerySnapshot _myDoc = await Firestore.instance.collection("Restaurant").document(userId).collection("deliveries").getDocuments();
+    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+    print(_myDocCount.length);  // Count of Documents in Collection
+    setState(() {
+      size = _myDocCount.length;
+    });
+
+  }
   final bottomBarItems = [
     HomeScreen(), // bottom bar items (0,1,2,3)
     MapSample(),
@@ -134,7 +171,7 @@ class RestaurantState extends State<Home> {
                       minHeight: 12,
                     ),
                     child: Text(
-                      '3',
+                      size.toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 8,
