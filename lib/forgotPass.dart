@@ -54,13 +54,13 @@ class PassRecoverPage extends StatefulWidget {
   //PassRecoverPage({Key key, @required this.authFormType}) : super(key: key);
   @override
   _PassRecoverPageState createState() =>
-      _PassRecoverPageState();//authFormType: this.authFormType
+      _PassRecoverPageState(); //authFormType: this.authFormType
 } //PassRecoverPage ends here
 
 class _PassRecoverPageState extends State<PassRecoverPage> {
   //AuthFormType authFormType;
 
-  _PassRecoverPageState();//{this.authFormType}
+  _PassRecoverPageState(); //{this.authFormType}
 
   //final formKey = GlobalKey<FormState>();
   String _email, warning;
@@ -73,6 +73,7 @@ class _PassRecoverPageState extends State<PassRecoverPage> {
       viewVisible = true;
     });
   }
+
 /*
   void save() async {
     if (validate()) {
@@ -153,9 +154,8 @@ class _PassRecoverPageState extends State<PassRecoverPage> {
                         onPressed: () {
                           setState(() {
                             FirebaseAuth.instance
-                                .sendPasswordResetEmail(
-                                    email: _email);
-                              Navigator.of(context).pop();
+                                .sendPasswordResetEmail(email: _email);
+                            Navigator.of(context).pop();
                           });
                           //showWidget();
                         },
