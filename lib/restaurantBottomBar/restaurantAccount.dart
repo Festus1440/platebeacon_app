@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'main.dart';
@@ -164,12 +166,54 @@ class RestaurantAccount extends StatelessWidget {
   }
 }
 
+//details
 class RestaurantAccountDetails extends StatefulWidget {
   @override
   _RestaurantAccountDetailsState createState() => _RestaurantAccountDetailsState();
 }
 
 class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
+  String userId = "";
+  var personName = TextEditingController();
+  var email = TextEditingController();
+  var role = TextEditingController();
+  String collection = "";
+
+  @override
+  void initState() {
+    // this function is called when the page starts
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      setState(() {
+        userId = user.uid;
+        if (user.displayName == "Shelter") {
+          collection = "Shelter";
+          mainColor = Colors.blue;
+        } else {
+          collection = "Restaurant";
+          mainColor = Colors.green;
+        }
+      });
+      print(userId.toString());
+      getData();
+    });
+  }
+  getData() async {
+    await Firestore.instance
+        .collection(collection)
+        .document(userId)
+        .get()
+        .then((DocumentSnapshot data) {
+      setState(() {
+        personName.text = data["displayName"] ?? "Null";
+        email.text = data["email"] ?? "null";
+        role.text = data["role"] ?? "null";
+      });
+      print(email);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -220,6 +264,7 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                   SizedBox(width: 30.0,),
                   Expanded(
                     child: TextField(
+                      controller: personName,
                       decoration: InputDecoration(
                         hintText: "Restaurant Name",
                       ),
@@ -282,6 +327,7 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                   SizedBox(width: 30.0,),
                   Expanded(
                     child: TextField(
+                      controller: email,
                       decoration: InputDecoration(
                         hintText: "Email",
                       ),

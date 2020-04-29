@@ -6,39 +6,27 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'accountsettings.dart';
 
-Color mainColor = Colors.blue;
-
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
-  String userId;
-  String personName;
-  String email;
-  String role;
+
+  Color mainColor = Colors.blue;
 
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
-      userId = user.uid;
-      print(userId.toString());
-      getData();
-    });
-  }
-  getData() async {
-    await Firestore.instance
-        .collection("Restaurant")
-        .document(userId)
-        .get()
-        .then((DocumentSnapshot data) {
-      personName = data["displayName"] ?? "Null";
-      email = data["email"] ?? "null";
-      role = data["role"] ?? "null";
-      print(email);
+      setState(() {
+        if (user.displayName == "Shelter") {
+          mainColor = Colors.blue;
+        } else {
+          mainColor = Colors.green;
+        }
+      });
     });
   }
 
@@ -67,7 +55,7 @@ class _SettingsState extends State<Settings> {
                     alignment: Alignment.topLeft,
                     child: GestureDetector(
                       child: Text(
-                        "Edit profile",
+                        "Edit account",
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
