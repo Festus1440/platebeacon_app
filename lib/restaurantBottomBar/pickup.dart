@@ -9,7 +9,6 @@ class Pickup extends StatefulWidget {
 class _PickupState extends State<Pickup> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       child: ListTile(
         onTap: (){

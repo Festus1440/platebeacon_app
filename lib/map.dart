@@ -44,11 +44,6 @@ class MapSampleState extends State<MapSample> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    getUser();
-    init(); // get user location and ask for permission
-  }
-
-  getUser() {
     FirebaseAuth.instance.currentUser().then((user) {
       if (user.displayName == "Shelter") {
         userType = "Shelter";
@@ -62,6 +57,7 @@ class MapSampleState extends State<MapSample> {
         print(mainCollection);
       }
     });
+    init(); // get user location and ask for permission
   }
 
   init() async {
