@@ -242,13 +242,13 @@ class RestaurantState extends State<Home> {
                     title: Text("Notifications"),
 
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    leading: Icon(Icons.event),
-                    title: Text("Events"),
-                  ),
+                  //ListTile(
+                   // onTap: () {
+                    //  Navigator.of(context).pop();
+                   // },
+                   // leading: Icon(Icons.event),
+                   // title: Text("Events"),
+                  //),
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();

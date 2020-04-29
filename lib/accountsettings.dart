@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Home.dart';
 
 //import 'Home.dart';
 //import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
@@ -60,6 +61,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Account Settings"),
+        backgroundColor: mainColor,
       ),
       body: Container(
         child: Column(
