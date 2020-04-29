@@ -68,19 +68,26 @@ class _RestaurantHomeState extends State<RestaurantHome> {
   TimeOfDay _timeOfDay = TimeOfDay(hour: 10, minute: 47);
   String selectedDate = "No Scheduled Pickups";
   String selectedTime = "";
+ // TimeOfDay res = TimeOfDay.fromDateTime(DateTime.now());
+
 
   Future<Null> selectTime(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(context: context,
-        initialTime: _timeOfDay);
+        initialTime: _timeOfDay, );
 
 
     if(picked != null && picked != _timeOfDay){
       setState(() {
         _timeOfDay = picked;
       });
-      selectedTime = " at: " + picked.hour.toString() + ":" + picked.minute.toString();
-     // print("Time selected: " + _timeOfDay.toString());
-    }
+      final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+      final String formattedTimeOfDay = localizations.formatTimeOfDay(_timeOfDay);
+      print(formattedTimeOfDay);
+
+
+      selectedTime = " " + formattedTimeOfDay;
+    // print("Time selected: " + _timeOfDay.toString());
+  }
   }
 
   @override
@@ -112,6 +119,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             title: Text("Schedule Pickup"),
             trailing: IconButton(
               onPressed: () {
+
                 showDatePicker(context: context,
                     // the helptext: below wasn't working for everyone revisit
                     //helpText: "Please Pick a date to Schedule Pickup",
