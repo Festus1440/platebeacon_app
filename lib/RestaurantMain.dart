@@ -149,7 +149,7 @@ class RestaurantState extends State<Home> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text("Account"),
+            title: Text("Profile"),
           ),
         ],
         currentIndex: _bottomBarIndex,
@@ -232,16 +232,16 @@ class RestaurantState extends State<Home> {
                     leading: Icon(Icons.library_books),
                     title: Text("Stories"),
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => Notifications()));
-                    },
-                    leading: Icon(Icons.notifications),
-                    title: Text("Notifications"),
+                  //ListTile(
+                    //onTap: () {
+                    //  Navigator.of(context).pop();
+                    //  Navigator.push(context, MaterialPageRoute(
+                      //    builder: (context) => Notifications()));
+                   // },
+                    //leading: Icon(Icons.notifications),
+                    //title: Text("Notifications"),
 
-                  ),
+                  //),
                   //ListTile(
                    // onTap: () {
                     //  Navigator.of(context).pop();

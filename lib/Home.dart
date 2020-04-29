@@ -188,8 +188,10 @@ class ShelterHome extends StatelessWidget {
                   return AlertDialog(
                     shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                     backgroundColor: Colors.white,
-                    title: new Text("Function coming soon!"),
-                    content: new Text("This will be updated to do .."),
+                    title: new Text("Food request coming soon!"),
+                    content: new Text("Getting to many potatoes? Let's go ahead and share that information so we "
+                        "can share the wealth elsewhere, and ensure you get the food you need! This will also "
+                        "provide much needed data to see what foods are scarce, compared to whats easily accessable. "),
                     actions: <Widget>[
                       new FlatButton(
                         child: new
