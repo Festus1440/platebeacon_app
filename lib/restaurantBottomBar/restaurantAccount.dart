@@ -165,6 +165,7 @@ class RestaurantAccount extends StatelessWidget {
 }
 
 class RestaurantAccountDetails extends StatefulWidget {
+
   @override
   _RestaurantAccountDetailsState createState() => _RestaurantAccountDetailsState();
 }
