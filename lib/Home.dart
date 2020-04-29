@@ -85,7 +85,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
       print(formattedTimeOfDay);
 
 
-      selectedTime = " " + formattedTimeOfDay;
+      selectedTime = " at " + formattedTimeOfDay;
     // print("Time selected: " + _timeOfDay.toString());
   }
   }
