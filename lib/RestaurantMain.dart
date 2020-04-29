@@ -149,7 +149,7 @@ class RestaurantState extends State<Home> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text("Account"),
+            title: Text("Profile"),
           ),
         ],
         currentIndex: _bottomBarIndex,
