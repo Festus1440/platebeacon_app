@@ -5,6 +5,7 @@ import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/ShelterScreens/shelterAnalytics.dart';
 import 'Settings.dart';
+import 'package:flutterapp/ShelterDrawer/Events.dart';
 
 import 'ShelterDrawer/ShelterStories.dart';
 import 'map.dart';
@@ -31,6 +32,7 @@ class ShelterMain extends StatelessWidget {
         '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/shelterAnalytics': (BuildContext context) => AnalyticsBody(),
+        '/events': (BuildContext context) => Events(),
       },
     );
   }
@@ -220,6 +222,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
               },
               leading: Icon(Icons.event),
               title: Text("Events"),
