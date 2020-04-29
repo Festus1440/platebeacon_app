@@ -3,8 +3,9 @@ import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
-
+import 'package:flutterapp/ShelterScreens/shelterAnalytics.dart';
 import 'Settings.dart';
+
 import 'ShelterDrawer/ShelterStories.dart';
 import 'map.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
@@ -29,6 +30,7 @@ class ShelterMain extends StatelessWidget {
         '/restaurant': (BuildContext context) => RestaurantDetails(),
         '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
+        '/shelterAnalytics': (BuildContext context) => AnalyticsBody(),
       },
     );
   }
@@ -190,6 +192,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(   //Creates the link to the analytics page.
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/shelterAnalytics');
 //                setState(() {
 //                  _bottomBarIndex = 1;
 //                });
