@@ -180,15 +180,35 @@ class ShelterHome extends StatelessWidget {
             leading: Icon(Icons.location_on),
             title: Text("Request Food"),
             trailing: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.calendar_today),
+              onPressed: () {    showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                    backgroundColor: Colors.white,
+                    title: new Text("Function coming soon!"),
+                    content: new Text("This will be updated to do .."),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new
+                        Text("Sounds good!") ,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );},
+              icon: Icon(Icons.restaurant),
             ),
           ),
         ),
         Container(
           child: ListTile(
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Icon(Icons.location_on),
+            leading: Icon(Icons.access_time),
             title: Text("Drop off Time"),
             trailing: IconButton(
               onPressed: () {},

@@ -6,7 +6,7 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'accountsettings.dart';
 
-Color mainColor = Colors.green;
+Color mainColor = Colors.blue;
 
 class Settings extends StatefulWidget {
   @override
