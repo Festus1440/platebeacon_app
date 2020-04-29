@@ -129,7 +129,7 @@ class _PassRecoverPageState extends State<PassRecoverPage> {
               ),
             ),
             Visibility(
-              visible: !viewVisible,
+              //visible: !viewVisible,
               child: Container(
                 padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
                 child: Column(

@@ -43,7 +43,27 @@ class RestaurantAccount extends StatelessWidget {
             ],
           ),
           ListTile(
-            onTap: () {
+            onTap: () {    showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                // return object of type Dialog
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                  backgroundColor: Colors.white,
+                  title: new Text("Function coming soon!"),
+                  content: new Text("This will be updated to do .."),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new
+                      Text("Sounds good!") ,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
             },
             leading: Container(
                 margin: EdgeInsets.only(left: 10.0),
@@ -52,7 +72,27 @@ class RestaurantAccount extends StatelessWidget {
             title: Text("Favorites"),
           ),
           ListTile(
-            onTap: () {
+            onTap: () {    showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                // return object of type Dialog
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                  backgroundColor: Colors.white,
+                  title: new Text("Function coming soon!"),
+                  content: new Text("This will be updated to do .."),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new
+                      Text("Sounds good!") ,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
             },
             leading: Container(
                 margin: EdgeInsets.only(left: 10.0),
@@ -61,7 +101,27 @@ class RestaurantAccount extends StatelessWidget {
             title: Text("Help"),
           ),
           ListTile(
-            onTap: () {
+            onTap: () {    showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                // return object of type Dialog
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                  backgroundColor: Colors.white,
+                  title: new Text("Function coming soon!"),
+                  content: new Text("This will be updated to do .."),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new
+                      Text("Sounds good!") ,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
             },
             leading: Container(
                 margin: EdgeInsets.only(left: 10.0),
@@ -70,7 +130,27 @@ class RestaurantAccount extends StatelessWidget {
             title: Text("Payment Options"),
           ),
           ListTile(
-            onTap: () {
+            onTap: () {    showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                // return object of type Dialog
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                  backgroundColor: Colors.white,
+                  title: new Text("Function coming soon!"),
+                  content: new Text("This will be updated to do .."),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new
+                      Text("Sounds good!") ,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
             },
             leading: Container(
                 margin: EdgeInsets.only(left: 10.0),

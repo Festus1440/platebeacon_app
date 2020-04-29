@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutterapp/restaurantBottomBar/pickup.dart';
+
 var _controller = TextEditingController();
 Color mainColor = Colors.green;
 
@@ -65,28 +67,23 @@ class RestaurantHome extends StatefulWidget {
 
 class _RestaurantHomeState extends State<RestaurantHome> {
   DateTime _dateTime;
-  TimeOfDay _timeOfDay = TimeOfDay(hour: 10, minute: 47);
+  TimeOfDay _timeOfDay = TimeOfDay.now();
   String selectedDate = "No Scheduled Pickups";
   String selectedTime = "";
+  String formattedTimeOfDay;
  // TimeOfDay res = TimeOfDay.fromDateTime(DateTime.now());
 
 
   Future<Null> selectTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(context: context,
-        initialTime: _timeOfDay, );
-
-
+    final TimeOfDay picked = await showTimePicker(context: context, initialTime: _timeOfDay, );
     if(picked != null && picked != _timeOfDay){
       setState(() {
         _timeOfDay = picked;
       });
       final MaterialLocalizations localizations = MaterialLocalizations.of(context);
-      final String formattedTimeOfDay = localizations.formatTimeOfDay(_timeOfDay);
+      String formattedTimeOfDay = localizations.formatTimeOfDay(_timeOfDay);
       print(formattedTimeOfDay);
-
-
       selectedTime = " at " + formattedTimeOfDay;
-    // print("Time selected: " + _timeOfDay.toString());
   }
   }
 
@@ -98,15 +95,18 @@ class _RestaurantHomeState extends State<RestaurantHome> {
           child: ListTile(
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.menu),
-            title: TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: () => _controller.clear(),
-                  icon: Icon(Icons.close),
+            title: Container(
+              margin: EdgeInsets.only(left:50),
+              child: TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () => _controller.clear(),
+                    icon: Icon(Icons.close),
+                  ),
+                  hintText: "Location",
+                  border: InputBorder.none,
                 ),
-                hintText: "Location",
-                border: InputBorder.none,
               ),
             ),
           ),
@@ -114,42 +114,43 @@ class _RestaurantHomeState extends State<RestaurantHome> {
         SizedBox(height: 10.0),
         Container(
           child: ListTile(
-            contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Icon(Icons.location_on),
-            title: Text("Schedule Pickup"),
-            trailing: IconButton(
-              onPressed: () {
-
-                showDatePicker(context: context,
-                    // the helptext: below wasn't working for everyone revisit
-                    //helpText: "Please Pick a date to Schedule Pickup",
-                    initialDate: _dateTime == null ? DateTime.now() :
-                _dateTime,
-                    firstDate: DateTime(2019),
-                    lastDate: DateTime(2222)).then((date){
-                  //print(date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString());
-                  setState((){
-                    if(date != null) {
-                      _dateTime = date;
-                      selectedDate = date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString();
-                      selectTime(context);
-                    }
-                  });
+            onTap: () {
+              showDatePicker(context: context,
+                  // the helptext: below wasn't working for everyone revisit
+                  //helpText: "Please Pick a date to Schedule Pickup",
+                  initialDate: _dateTime == null ? DateTime.now() :
+                  _dateTime,
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2222)).then((date){
+                //print(date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString());
+                setState((){
+                  if(date != null) {
+                    _dateTime = date;
+                    selectedDate = date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString();
+                    selectTime(context);
+                  }
                 });
-              },
-              icon: Icon(Icons.calendar_today),
-            ),  //
+              });
+            },
+            contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
+            leading: Icon(Icons.calendar_today),
+            title: Container(margin: EdgeInsets.only(left:50,), child: Text("Schedule Delivery")), //
           ),
         ),
         Container(
           child: ListTile(
+            onTap: (){
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => Pickup()));
+            },
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Icon(Icons.location_on),
-            title: Text(selectedDate + selectedTime),
-            trailing: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.calendar_today),
-            ),
+            leading: Container(height: 50, child: Icon(Icons.notifications,)),
+            title: Container(
+                margin: EdgeInsets.only(left:50),
+                child: Text("Next Pickup")),
+            subtitle: Container(
+                margin: EdgeInsets.only(left:50),
+                child: Text(selectedDate + selectedTime)),
+            //trailing:
           ),
         ),
       ],
@@ -180,15 +181,35 @@ class ShelterHome extends StatelessWidget {
             leading: Icon(Icons.location_on),
             title: Text("Request Food"),
             trailing: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.calendar_today),
+              onPressed: () {    showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                    backgroundColor: Colors.white,
+                    title: new Text("Function coming soon!"),
+                    content: new Text("This will be updated to do .."),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new
+                        Text("Sounds good!") ,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );},
+              icon: Icon(Icons.restaurant),
             ),
           ),
         ),
         Container(
           child: ListTile(
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Icon(Icons.location_on),
+            leading: Icon(Icons.access_time),
             title: Text("Drop off Time"),
             trailing: IconButton(
               onPressed: () {},
