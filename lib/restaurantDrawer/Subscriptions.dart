@@ -104,13 +104,13 @@ class _SubscriptionsState extends State<Subscriptions> {
           shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor:Colors.white,
-          title: new Text("Alert Dialog title"),
+          title: new Text("Subscriptions coming soon!"),
 
-          content: new Text("Coming Soon ....."),
+          content: new Text("Feel FREE to use this app as part of our research, no need to pay right now!"),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Ok"),
+              child: new Text("Sounds good!"),
               textColor: Colors.green,
               onPressed: () {
                 Navigator.of(context).pop();

@@ -135,12 +135,14 @@ class _StoriesState extends State<Stories> {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text("Function coming soon!"),
-          content: new Text("This will be updated to do .."),
+          title: new Text("Stories coming soon!"),
+          content: new Text("Soon you'll be able to share your experiences using Plate Beacon to all your fans!"
+              " Be proud of the contributions you've made to help those in need! We Applaud you!"),
           actions: <Widget>[
             new FlatButton(
               child: new
               Text("Sounds good!") ,
+              textColor: Colors.green,
               onPressed: () {
                 Navigator.of(context).pop();
               },
