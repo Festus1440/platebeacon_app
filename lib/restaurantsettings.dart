@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 //import 'package:flutterapp/AccountSettings.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'ShelterDrawer/Notifications.dart';
 import 'accountsettings.dart';
 
@@ -173,7 +174,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                           onTap: (){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder:(context) => Notifications()));
+                                MaterialPageRoute(builder:(context) => RestaurantNotifications()));
 
                           },
 
