@@ -6,6 +6,7 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/shelterBottomBarPages/shelterAccount.dart';
 import '../accountsettings.dart';
+import 'Notifications.dart';
 
 Color mainColor;
 
@@ -133,10 +134,48 @@ class _ShelterSettingsState extends State<ShelterSettings> {
                     ),
                   ),
                 )
+
               ],
             ),
+            Divider(
+              height: 20.0,
+              thickness: 0.5,
+              color: mainColor,
+              indent: 0.0,
+              endIndent: 0.0,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+              alignment: Alignment.topLeft,
+              child: GestureDetector(
+                child: Text(
+                  "Notifications",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => Notifications()));
+                },
+              ),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(top: 5.0, left: 15.0),
+              child: Text(
+                "Define what alerts and notifications you want to see.",
+                style: TextStyle(
+                  fontSize: 10.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
           ],
         ),
+
       ),
     );
   }
