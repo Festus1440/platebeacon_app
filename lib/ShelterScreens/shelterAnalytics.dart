@@ -81,8 +81,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
   //Builds the overall view of the Analytics page
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+      return Scaffold(
         appBar: AppBar( //Top Bar.
           backgroundColor: Colors.blue,
           title: Text("My Analytics"),
@@ -91,7 +90,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar( //Lower navigation.
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.blue,
           items: const <BottomNavigationBarItem>[
             //Contains the lower icons on the screen
             BottomNavigationBarItem(
@@ -114,8 +113,8 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           //Color which indicates selected icon
           onTap: _onItemTapped, //Action
         ),
-      ),
-    );
+      );
+
   }
 
   void _showDialog() {
@@ -129,13 +128,13 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text("My Analytics"),
+          title: new Text("My Analytics coming soon!"),
 
-          content: new Text("Coming Soon ....."),
+          content: new Text("Here is where all analytics will be displayed, please click the bottom buttons for further details!"),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Ok"),
+              child: new Text("Sounds good!"),
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pop();
@@ -158,13 +157,14 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text("Savings"),
+          title: new Text("Savings coming soon!"),
 
-          content: new Text("Coming Soon savings....."),
+          content: new Text("Soon you will be able to see your weekly, monthly, and yearly savings as a result of "
+              "donating rather than disposal! "),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Ok"),
+              child: new Text("Sounds good!"),
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pop();
@@ -187,13 +187,14 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text("Ranking"),
+          title: new Text("Ranking coming soon"),
 
-          content: new Text("Coming Soon Ranking....."),
+          content: new Text("See where you stand out among other restaurant donators! Word is this will "
+              "become a focal point of our rewards program!"),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Ok"),
+              child: new Text("Sounds good"),
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pop();
@@ -216,13 +217,14 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text("Earnings"),
+          title: new Text("Earnings coming soon"),
 
-          content: new Text("Coming Soon Earnings....."),
+          content: new Text("Future versions of this app will allow meal purchases by your clients! This is where you will see"
+              " any earnings gained by this feature! "),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Ok"),
+              child: new Text("Sounds good!"),
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pop();

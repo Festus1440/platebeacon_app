@@ -144,12 +144,13 @@ class ShelterStoriesState extends State<ShelterStories> {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text("About Our Stroy"),
-          content: new Text("Coming Soon...."),
+          title: new Text("Stories coming soon!"),
+          content: new Text("Soon you'll be able to share your experiences using Plate Beacon to all your fans!"
+              " Be proud of the contributions you've made to help those in need! We Applaud you!"),
           actions: <Widget>[
             new FlatButton(
               child: new
-              Text("is it sounds good?") ,
+              Text("Sounds good!") ,
               onPressed: () {
                 Navigator.of(context).pop();
               },
