@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
+import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
 import 'ShelterDrawer/Notifications.dart';
 import 'accountsettings.dart';
 
@@ -188,7 +189,50 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                   child: Text("Define what alerts and notifications you want to see.",style: TextStyle(
                     fontSize: 10.0,fontWeight:FontWeight.bold,
                   ),),
-                )
+                ),
+                Divider(
+                  height: 20.0,
+                  thickness: 0.5,
+                  color: mainColor,
+                  indent: 0.0,
+                  endIndent: 0.0,
+                ),
+                Column(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.topLeft,
+                      margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      child: GestureDetector(
+                        child: Text("Subscriptions",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,
+                        ),
+                        ),
+                        onTap: (){Navigator.push( context,
+                        MaterialPageRoute(builder:(context) => Subscriptions()));
+
+                        },
+
+
+
+    )
+    ),
+
+    ],
+                  ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.only(top: 5.0, left: 15.0),
+                  child: Text("Manage your subscriptions.",style: TextStyle(
+                    fontSize: 10.0,fontWeight:FontWeight.bold,
+                  ),),
+                ),
+                Divider(
+                  height: 20.0,
+                  thickness: 0.5,
+                  color: mainColor,
+                  indent: 0.0,
+                  endIndent: 0.0,
+                ),
+
 
 
               ],
