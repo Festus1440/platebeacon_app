@@ -249,15 +249,15 @@ class RestaurantState extends State<Home> {
                    // leading: Icon(Icons.event),
                    // title: Text("Events"),
                   //),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => Subscriptions()));
-                    },
-                    leading: Icon(Icons.subscriptions),
-                    title: Text("Subscriptions"),
-                  ),
+                  //ListTile(
+                    //onTap: () {
+                     // Navigator.of(context).pop();
+                      //Navigator.push(context, MaterialPageRoute(
+                       //   builder: (context) => Subscriptions()));
+                    //},
+                    //leading: Icon(Icons.subscriptions),
+                   // title: Text("Subscriptions"),
+                  //),
                   Divider(
                     height: 15.0,
                     thickness: 0.5,
