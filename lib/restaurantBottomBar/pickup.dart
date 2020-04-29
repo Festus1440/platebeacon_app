@@ -15,7 +15,6 @@ class _PickupState extends State<Pickup> {
 
         },
         leading: Container(
-          width: 50,
           height: 50,
           child: Icon(Icons.calendar_today),
         ),

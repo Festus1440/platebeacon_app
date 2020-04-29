@@ -61,7 +61,7 @@ class Home extends StatefulWidget {
 
 class RestaurantState extends State<Home> {
   final bottomBarItems = [
-    HomeScreen(),
+    HomeScreen(), // bottom bar items (0,1,2,3)
     MapSample(),
     Pickup(),
     RestaurantAccount(),
