@@ -15,10 +15,6 @@ class ShelterSettings extends StatefulWidget {
 }
 
 class _ShelterSettingsState extends State<ShelterSettings> {
-  String userId;
-  String personName;
-  String email;
-  String role;
 
   Color mainColor;
 
@@ -34,18 +30,6 @@ class _ShelterSettingsState extends State<ShelterSettings> {
           mainColor = Colors.green;
         }
       });
-    });
-  }
-  getData() async {
-    await Firestore.instance
-        .collection("Restaurant")
-        .document(userId)
-        .get()
-        .then((DocumentSnapshot data) {
-      personName = data["displayName"] ?? "Null";
-      email = data["email"] ?? "null";
-      role = data["role"] ?? "null";
-      print(email);
     });
   }
 

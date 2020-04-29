@@ -19,7 +19,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
   String email;
   String role;
 
-  Color mainColor ;
+  Color mainColor;
 
   @override
   void initState() {
@@ -35,6 +35,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
       });
     });
   }
+
   getData() async {
     await Firestore.instance
         .collection("Restaurant")
@@ -59,7 +60,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color:mainColor,
+          color: mainColor,
         ),
       ),
       body: Container(

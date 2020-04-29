@@ -6,6 +6,7 @@ import 'Home.dart';
 
 
 
+
 enum DialogAction { Yes, abort }
 
 class Dialogs {
@@ -42,6 +43,7 @@ class Dialogs {
 }
 
 class AccountSettingsDetails extends StatefulWidget {
+  Color mainColor;
   @override
   _AccountDetailsState createState() => _AccountDetailsState();
 }
@@ -69,6 +71,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainColor,
         title: Text("Account Settings"),
       ),
       body: Container(

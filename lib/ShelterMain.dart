@@ -3,7 +3,6 @@ import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 //import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
-
 import 'ShelterDrawer/ShelterSettings.dart';
 import 'restaurantsettings.dart';
 import 'ShelterDrawer/ShelterStories.dart';
@@ -13,6 +12,7 @@ import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/ShelterDrawer/Notifications.dart';
+import 'package:flutterapp/ShelterDrawer/Events.dart';
 
 class ShelterMain extends StatelessWidget {
   //const ShelterMain({Key key, this.user}) : super(key: key);
@@ -30,6 +30,7 @@ class ShelterMain extends StatelessWidget {
         '/restaurant': (BuildContext context) => RestaurantDetails(),
         '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
+        '/events': (BuildContext context) => Events(),
       },
     );
   }
@@ -56,7 +57,7 @@ Widget fetch(data) {
                   case ConnectionState.waiting:
                     return Text("Loading");
                   default:
-                  //String s = Text(snapshot.data[data]).data;
+                    //String s = Text(snapshot.data[data]).data;
                     return Text(snapshot.data[data]);
                 }
               });
@@ -84,16 +85,21 @@ class _MaterialHomeState extends State<Home> {
   void _onItemTapped(int index) {
     setState(() {
       _bottomBarIndex = index;
-      switch(index){
-        case 0: appBarTitle = "Home";
-        break;
-        case 1: appBarTitle = "Map";
-        break;
-        case 2: appBarTitle = "Pickups";
-        break;
-        case 3: appBarTitle = "Account";
-        break;
-        default: appBarTitle = "Home";
+      switch (index) {
+        case 0:
+          appBarTitle = "Home";
+          break;
+        case 1:
+          appBarTitle = "Map";
+          break;
+        case 2:
+          appBarTitle = "Pickups";
+          break;
+        case 3:
+          appBarTitle = "Account";
+          break;
+        default:
+          appBarTitle = "Home";
       }
     });
   }
@@ -188,7 +194,8 @@ class _MaterialHomeState extends State<Home> {
               leading: Icon(Icons.restaurant),
               title: Text("Restaurant Details"),
             ),
-            ListTile(   //Creates the link to the analytics page.
+            ListTile(
+              //Creates the link to the analytics page.
               onTap: () {
                 Navigator.of(context).pop();
 //                setState(() {
@@ -201,16 +208,17 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterStories()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ShelterStories()));
               },
               leading: Icon(Icons.library_books),
               title: Text("Stories"),
             ),
             ListTile(
-
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Notifications()));
               },
               leading: Icon(Icons.notifications),
               title: Text("Notifications"),
@@ -218,11 +226,11 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
               },
               leading: Icon(Icons.event),
               title: Text("Events"),
             ),
-
             Divider(
               height: 15.0,
               thickness: 0.5,
@@ -233,7 +241,8 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterSettings()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ShelterSettings()));
               },
               leading: Icon(Icons.settings),
               title: Text("Settings"),
@@ -252,6 +261,5 @@ class _MaterialHomeState extends State<Home> {
         ),
       ),
     );
-
   }
 }

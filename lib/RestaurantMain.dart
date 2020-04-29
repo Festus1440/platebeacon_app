@@ -118,7 +118,33 @@ class RestaurantState extends State<Home> {
             title: Text("Map"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
+            icon: Stack(
+              children: <Widget>[
+                Icon(Icons.directions_car),
+                Positioned(
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: Text(
+                      '3',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
+            ),
             title: Text("Deliveries"),
           ),
           BottomNavigationBarItem(
@@ -216,13 +242,13 @@ class RestaurantState extends State<Home> {
                     title: Text("Notifications"),
 
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    leading: Icon(Icons.event),
-                    title: Text("Events"),
-                  ),
+                  //ListTile(
+                   // onTap: () {
+                    //  Navigator.of(context).pop();
+                   // },
+                   // leading: Icon(Icons.event),
+                   // title: Text("Events"),
+                  //),
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
