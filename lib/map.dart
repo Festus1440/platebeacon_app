@@ -50,17 +50,19 @@ class MapSampleState extends State<MapSample> {
 
   getData() async {
     await FirebaseAuth.instance.currentUser().then((user) {
-      if (user.displayName == "Shelter") {
-        userType = "Shelter";
-        mainColor = Colors.blue;
-        mainCollection = "Shelter"; //ignore
-        print(mainCollection);
-      } else {
-        userType = "Restaurant";
-        mainColor = Colors.green;
-        mainCollection = "Shelter"; //ignore
-        print(mainCollection);
-      }
+      setState(() {
+        if (user.displayName == "Shelter") {
+          userType = "Shelter";
+          mainColor = Colors.blue;
+          mainCollection = "Restaurant";
+          //print(mainCollection);
+        } else {
+          userType = "Restaurant";
+          mainColor = Colors.green;
+          mainCollection = "Shelter";
+          //print(mainCollection);
+        }
+      });
     });
   }
 

@@ -29,7 +29,6 @@ class _SettingsState extends State<Settings> {
       getData();
     });
   }
-
   getData() async {
     await Firestore.instance
         .collection("Restaurant")
