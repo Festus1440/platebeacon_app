@@ -74,7 +74,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                   Divider(
                     height: 20.0,
                     thickness: 0.5,
-                    color: mainColor,
+                    color: Colors.black,
                     indent: 0.0,
                     endIndent: 0.0,
                   ),
@@ -105,7 +105,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                   Divider(
                     height: 20.0,
                     thickness: 0.5,
-                    color: mainColor,
+                    color:Colors.black,
                     indent: 0.0,
                     endIndent: 0.0,
                   ),
