@@ -26,8 +26,8 @@ class _SettingsState extends State<Settings> {
     FirebaseAuth.instance.currentUser().then((user) {
       userId = user.uid;
       print(userId.toString());
+      getData();
     });
-    getData();
   }
 
   getData() async {
