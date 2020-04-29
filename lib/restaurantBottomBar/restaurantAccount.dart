@@ -224,7 +224,7 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Restaurant/Shelter Name",
+                        hintText: "Restaurant Name",
                       ),
                     ),
                   ),

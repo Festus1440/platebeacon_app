@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
-import 'package:flutterapp/Settings.dart';
+//import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 
-import 'Settings.dart';
+import 'ShelterDrawer/ShelterSettings.dart';
+import 'restaurantsettings.dart';
 import 'ShelterDrawer/ShelterStories.dart';
 import 'map.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
@@ -232,7 +233,7 @@ class _MaterialHomeState extends State<Home> {
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterSettings()));
               },
               leading: Icon(Icons.settings),
               title: Text("Settings"),

@@ -8,12 +8,12 @@ import 'accountsettings.dart';
 
 Color mainColor = Colors.blueGrey;
 
-class Settings extends StatefulWidget {
+class RestaurantSettings extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _RestaurantSettingsState createState() => _RestaurantSettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _RestaurantSettingsState extends State<RestaurantSettings> {
   String userId;
   String personName;
   String email;
