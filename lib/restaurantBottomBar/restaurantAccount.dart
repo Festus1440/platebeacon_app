@@ -96,15 +96,18 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color: mainColor,
+          color: Colors.grey,
         ),
       ),
+
       appBar: AppBar(
         centerTitle: false,
         elevation: 10.0,
         title: Text("Account"),
-        backgroundColor: mainColor,
+        backgroundColor: Colors.grey,
       ),
+
+
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -112,7 +115,7 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
               height: 170,
               width: double.infinity,
               //padding: EdgeInsets.all(20.0),
-              color: mainColor,
+              color: Colors.green,
               child: Center(
                 child: Column(
                   children: <Widget>[
@@ -141,7 +144,7 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Restaurant Name",
+                        hintText: "Restaurant/Shelter Name",
                       ),
                     ),
                   ),
@@ -227,10 +230,16 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                 ],
               ),
             ),
+
             SizedBox(height: 20.0,),
+
           ],
         ),
+
       ),
+
+
     );
+
   }
 }

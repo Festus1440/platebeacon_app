@@ -49,12 +49,12 @@ class _SettingsState extends State<Settings> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Settings"),
-        backgroundColor: mainColor,
+        backgroundColor: Colors.grey,
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color: mainColor,
+          color: Colors.grey,
         ),
       ),
       body: Container(
@@ -149,26 +149,5 @@ class _SettingsState extends State<Settings> {
         ),
       ),
     );
-  }
-}
-
-class DatabaseService {
-  final String uid;
-  DatabaseService({this.uid});
-
-  final CollectionReference sheltercollection =
-      Firestore.instance.collection('Shelter');
-  Future updateUserData(
-      String ShelterName, String Email, String Password) async {
-    return await sheltercollection.document(uid).setData({
-      'ShelterName': ShelterName,
-      'Email': Email,
-      'Password': Password,
-    });
-  }
-
-  //get Shelter stream
-  Stream<QuerySnapshot> get shelter {
-    return sheltercollection.snapshots();
   }
 }
