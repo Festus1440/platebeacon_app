@@ -175,7 +175,9 @@ class MapSampleState extends State<MapSample> {
               margin: EdgeInsets.symmetric(vertical: 20.0),
               height: 150,
               child: StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance.collection(mainCollection ?? "Shelter").snapshots(),
+                stream: Firestore.instance
+                    .collection(mainCollection ?? "Shelter")
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return Text('Loading...');
@@ -250,9 +252,24 @@ class MapSampleState extends State<MapSample> {
                   height: 200,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
-                    child: Image(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(_image),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network(
+                        _image,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.white,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -406,7 +423,8 @@ class MapSampleState extends State<MapSample> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
     // do this inside the setState() so Flutter gets notified
-    if (!mounted) return; // make sure not to run if its not mounted aka available saves memory
+    if (!mounted)
+      return; // make sure not to run if its not mounted aka available saves memory
     setState(() {
       // updated position
       var pinPosition =
