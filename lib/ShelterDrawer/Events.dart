@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 Color mainColor = Colors.blue;
 
-
+//comitted//
 class Events extends StatefulWidget{
   @override
   EventsState createState() => EventsState();
