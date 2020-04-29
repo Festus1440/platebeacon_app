@@ -44,20 +44,26 @@ class MapSampleState extends State<MapSample> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      if (user.displayName == "Shelter") {
-        userType = "Shelter";
-        mainColor = Colors.blue;
-        mainCollection = "Shelter"; //ignore
-        print(mainCollection);
-      } else {
-        userType = "Restaurant";
-        mainColor = Colors.green;
-        mainCollection = "Shelter"; //ignore
-        print(mainCollection);
-      }
-    });
+    getData();
     init(); // get user location and ask for permission
+  }
+
+  getData() async {
+    await FirebaseAuth.instance.currentUser().then((user) {
+      setState(() {
+        if (user.displayName == "Shelter") {
+          userType = "Shelter";
+          mainColor = Colors.blue;
+          mainCollection = "Restaurant";
+          //print(mainCollection);
+        } else {
+          userType = "Restaurant";
+          mainColor = Colors.green;
+          mainCollection = "Shelter";
+          //print(mainCollection);
+        }
+      });
+    });
   }
 
   init() async {

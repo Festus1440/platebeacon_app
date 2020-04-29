@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 //import 'package:share/share.dart';
 
@@ -11,6 +13,13 @@ class Stories extends StatefulWidget{
 }
 
 class _StoriesState extends State<Stories> {
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.run(() => _showDialog());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,6 +125,32 @@ class _StoriesState extends State<Stories> {
 
 
     );
-
   }
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+          backgroundColor: Colors.white,
+          title: new Text("Function coming soon!"),
+          content: new Text("This will be updated to do .."),
+          actions: <Widget>[
+            new FlatButton(
+              child: new
+              Text("Sounds good!") ,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
 }

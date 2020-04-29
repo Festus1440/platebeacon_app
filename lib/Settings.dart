@@ -6,7 +6,7 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'accountsettings.dart';
 
-Color mainColor = Colors.green;
+Color mainColor = Colors.blueGrey;
 
 class Settings extends StatefulWidget {
   @override
@@ -29,7 +29,6 @@ class _SettingsState extends State<Settings> {
       getData();
     });
   }
-
   getData() async {
     await Firestore.instance
         .collection("Restaurant")

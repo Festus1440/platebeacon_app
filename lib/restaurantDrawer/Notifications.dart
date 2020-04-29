@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 //import 'package:custom_switch/custom_switch.dart';
 
@@ -16,6 +18,12 @@ class _NotificationsState extends State<Notifications> {
   bool emailStatus = false;
   bool msgStatus = false;
   bool callStatus = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.run(() => _showDialog());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,4 +187,33 @@ class _NotificationsState extends State<Notifications> {
       ),
     );
   }
+  void _showDialog() {
+// flutter defined function
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+// return object of type Dialog
+      return AlertDialog(
+        elevation: 0.0,
+        shape:
+        RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+        backgroundColor:Colors.white,
+        title: new Text("Notifications"),
+
+        content: new Text("Coming Soon ....."),
+        actions: <Widget>[
+// usually buttons at the bottom of the dialog
+          new FlatButton(
+            child: new Text("Ok"),
+            textColor: Colors.green,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+    );
 }
+}
+
