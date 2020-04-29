@@ -1,11 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'Home.dart';
+//import 'Home.dart';
 //import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
-
-
-
 
 enum DialogAction { Yes, abort }
 
@@ -42,36 +40,33 @@ class Dialogs {
   }
 }
 
+var _firebaseAuth = FirebaseAuth.instance;
+String role;
+/*
+deleteData(docId){
+  _firebaseAuth = Firestore.instance.collection(role).document(docId).delete().catchError((e) {
+    print(e);
+  }) as FirebaseAuth;
+  _firebaseAuth = Firestore.instance.collection(role).document(docId).delete().catchError((e){
+    print(e);
+  }) as FirebaseAuth;
+}
+*/
+
 class AccountSettingsDetails extends StatefulWidget {
-  Color mainColor;
   @override
   _AccountDetailsState createState() => _AccountDetailsState();
 }
 
 class _AccountDetailsState extends State<AccountSettingsDetails> {
   bool tappedYes = false;
-  Color mainColor;
 
-  @override
-  void initState() {
-    // this function is called when the page starts
-    super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        if (user.displayName == "Shelter") {
-          mainColor = Colors.blue;
-        } else {
-          mainColor = Colors.green;
-        }
-      });
-    });
-  }
+  String get docId => null;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mainColor,
         title: Text("Account Settings"),
       ),
       body: Container(
@@ -114,12 +109,12 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                       ),
                       onTap: () async {
                         final action = await Dialogs.yesAbortDialog(
-                            context, 'My Title', 'my Body');
+                            context, 'Do you want to Delete Your Account?', 'Your data will be deleted and can\'t be retrieve after 30 days' );
                         var DialogActions;
                         if (action == DialogActions.yes) {
-                          setState(() => tappedYes = true);
+                          Firestore.instance.collection(role).document(docId).delete();
                         } else {
-                          setState(() => tappedYes = false);
+                          setState(() => tappedYes = true);
                         }
                       },
                     ),
