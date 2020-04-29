@@ -56,12 +56,12 @@ class ShelterAccount extends StatelessWidget {
                   return AlertDialog(
                     shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                     backgroundColor: Colors.white,
-                    title: new Text("Function coming soon!"),
-                    content: new Text("This will be updated to do .."),
+                    title: new Text("Favorites coming soon!"),
+                    content: new Text("Soon you will be able to favorite Shelters you work with"
+                        " closely and view them all in one place!"),
                     actions: <Widget>[
                       new FlatButton(
-                        child: new
-                        Text("Sounds good!") ,
+                        child: new Text("Sounds good!"),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -85,12 +85,12 @@ class ShelterAccount extends StatelessWidget {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                   backgroundColor: Colors.white,
-                  title: new Text("Function coming soon!"),
-                  content: new Text("This will be updated to do .."),
+                  title: new Text("Help coming soon!"),
+                  content: new Text("Yes, you might have questions and we'll have a help section shortly."
+                      " For now directly ask the team!"),
                   actions: <Widget>[
                     new FlatButton(
-                      child: new
-                      Text("Sounds good!") ,
+                      child: new Text("Sounds good!"),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -111,12 +111,11 @@ class ShelterAccount extends StatelessWidget {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                   backgroundColor: Colors.white,
-                  title: new Text("Function coming soon!"),
-                  content: new Text("This will be updated to do .."),
+                  title: new Text("Payment Options coming soon!"),
+                  content: new Text("Feel FREE to use this app as part of our research, no need to pay right now! "),
                   actions: <Widget>[
                     new FlatButton(
-                      child: new
-                      Text("Sounds good!") ,
+                      child: new Text("Sounds good!"),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -138,12 +137,11 @@ class ShelterAccount extends StatelessWidget {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                   backgroundColor: Colors.white,
-                  title: new Text("Function coming soon!"),
-                  content: new Text("This will be updated to do .."),
+                  title: new Text("About coming soon!"),
+                  content: new Text("Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
                   actions: <Widget>[
                     new FlatButton(
-                      child: new
-                      Text("Sounds good!") ,
+                      child: new Text("Sounds good!"),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },

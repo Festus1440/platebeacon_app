@@ -8,12 +8,12 @@ Color mainColor = Colors.green;
 // slide bar code
 //
 //----- Code comitted-----//
-class Notifications extends StatefulWidget {
+class RestaurantNotifications extends StatefulWidget {
   @override
-  _NotificationsState createState() => _NotificationsState();
+  _RestaurantNotificationsState createState() => _RestaurantNotificationsState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _RestaurantNotificationsState extends State<RestaurantNotifications> {
   bool status = false;
   bool emailStatus = false;
   bool msgStatus = false;

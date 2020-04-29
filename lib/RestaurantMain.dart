@@ -45,7 +45,8 @@ Widget fetch(data) {
                 //print(snapshot.data);
                 if (snapshot.hasData) {
                   return Text(snapshot.data[data]);
-                } else {
+                }
+                else {
                   return Text("");
                 }
               });
@@ -71,8 +72,6 @@ class RestaurantState extends State<Home> {
   Widget roleTitle = fetch("displayName");
   String appBarTitle = "Home";
   int _bottomBarIndex = 0;
-  String userId = "";
-  int size = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -94,27 +93,6 @@ class RestaurantState extends State<Home> {
           appBarTitle = "Home";
       }
     });
-  }
-
-  @override
-  void initState() {
-    // this function is called when the page starts
-    super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        userId = user.uid;
-      });
-      countDocuments();
-    });
-  }
-
-  void countDocuments() async {
-    QuerySnapshot _myDoc = await Firestore.instance.collection('Restaurant').document(userId).collection("deliveries").getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    print(_myDocCount.length);
-    setState(() {
-      size = _myDocCount.length;
-    });// Count of Documents in Collection
   }
 
   @override
@@ -155,12 +133,14 @@ class RestaurantState extends State<Home> {
                       minWidth: 12,
                       minHeight: 12,
                     ),
-                    child: Text(size.toString(),
+                    child: Text(
+                      '3',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 10,
+                        fontSize: 8,
                       ),
-                      textAlign: TextAlign.center),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 )
               ],
@@ -252,17 +232,16 @@ class RestaurantState extends State<Home> {
                     leading: Icon(Icons.library_books),
                     title: Text("Stories"),
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Notifications()));
-                    },
-                    leading: Icon(Icons.notifications),
-                    title: Text("Notifications"),
-                  ),
+                  //ListTile(
+                    //onTap: () {
+                    //  Navigator.of(context).pop();
+                    //  Navigator.push(context, MaterialPageRoute(
+                      //    builder: (context) => Notifications()));
+                   // },
+                    //leading: Icon(Icons.notifications),
+                    //title: Text("Notifications"),
+
+                  //),
                   //ListTile(
                    // onTap: () {
                     //  Navigator.of(context).pop();
@@ -273,10 +252,8 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Subscriptions()));
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => Subscriptions()));
                     },
                     leading: Icon(Icons.subscriptions),
                     title: Text("Subscriptions"),
@@ -291,10 +268,8 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RestaurantSettings()));
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => RestaurantSettings()));
                     },
                     leading: Icon(Icons.settings),
                     title: Text("Settings"),
@@ -317,4 +292,5 @@ class RestaurantState extends State<Home> {
       ),
     );
   }
+
 }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,60 +71,20 @@ class _RestaurantHomeState extends State<RestaurantHome> {
   String selectedDate = "No Scheduled Pickups";
   String selectedTime = "";
   String formattedTimeOfDay;
-  // TimeOfDay res = TimeOfDay.fromDateTime(DateTime.now());
+ // TimeOfDay res = TimeOfDay.fromDateTime(DateTime.now());
+
 
   Future<Null> selectTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime: _timeOfDay,
-    );
-    if (picked != null && picked != _timeOfDay) {
+    final TimeOfDay picked = await showTimePicker(context: context, initialTime: _timeOfDay, );
+    if(picked != null && picked != _timeOfDay){
       setState(() {
         _timeOfDay = picked;
       });
-      final MaterialLocalizations localizations =
-          MaterialLocalizations.of(context);
+      final MaterialLocalizations localizations = MaterialLocalizations.of(context);
       String formattedTimeOfDay = localizations.formatTimeOfDay(_timeOfDay);
       print(formattedTimeOfDay);
       selectedTime = " at " + formattedTimeOfDay;
-      getData();
-
-    }
   }
-
-  @override
-  void initState() {
-    // this function is called when the page starts
-    super.initState();
-
-  }
-
-  getData() async {
-    await FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        if (user.displayName == "Shelter") {
-          mainColor = Colors.blue;
-          Firestore.instance
-              .collection("Shelter")
-              .document(user.uid).collection("pickup").document()
-              .setData({
-            'date': selectedDate+ "" +selectedTime.toString()
-          }).then((onValue) {
-            print("success");
-          });
-        } else {
-          mainColor = Colors.green;
-          Firestore.instance
-              .collection("Restaurant")
-              .document(user.uid).collection("deliveries").document()
-              .setData({
-            'date': selectedTime.toString()
-          }).then((onValue) {
-            print("success");
-          });
-        }
-      });
-    });
   }
 
   @override
@@ -137,7 +96,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.menu),
             title: Container(
-              margin: EdgeInsets.only(left: 50),
+              margin: EdgeInsets.only(left:50),
               child: TextField(
                 controller: _controller,
                 decoration: InputDecoration(
@@ -156,24 +115,18 @@ class _RestaurantHomeState extends State<RestaurantHome> {
         Container(
           child: ListTile(
             onTap: () {
-              showDatePicker(
-                      context: context,
-                      // the helptext: below wasn't working for everyone revisit
-                      //helpText: "Please Pick a date to Schedule Pickup",
-                      initialDate:
-                          _dateTime == null ? DateTime.now() : _dateTime,
-                      firstDate: DateTime(2019),
-                      lastDate: DateTime(2222))
-                  .then((date) {
+              showDatePicker(context: context,
+                  // the helptext: below wasn't working for everyone revisit
+                  //helpText: "Please Pick a date to Schedule Pickup",
+                  initialDate: _dateTime == null ? DateTime.now() :
+                  _dateTime,
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2222)).then((date){
                 //print(date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString());
-                setState(() {
-                  if (date != null) {
+                setState((){
+                  if(date != null) {
                     _dateTime = date;
-                    selectedDate = date.month.toString() +
-                        "/" +
-                        date.day.toString() +
-                        "/" +
-                        date.year.toString();
+                    selectedDate = date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString();
                     selectTime(context);
                   }
                 });
@@ -181,28 +134,21 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             },
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.calendar_today),
-            title: Container(
-                margin: EdgeInsets.only(
-                  left: 50,
-                ),
-                child: Text("Schedule Delivery")), //
+            title: Container(margin: EdgeInsets.only(left:50,), child: Text("Schedule Delivery")), //
           ),
         ),
         Container(
           child: ListTile(
-            onTap: () {
+            onTap: (){
               //Navigator.push(context, MaterialPageRoute(builder: (context) => Pickup()));
             },
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Container(
-                height: 50,
-                child: Icon(
-                  Icons.notifications,
-                )),
+            leading: Container(height: 50, child: Icon(Icons.notifications,)),
             title: Container(
-                margin: EdgeInsets.only(left: 50), child: Text("Next Pickup")),
+                margin: EdgeInsets.only(left:50),
+                child: Text("Next Pickup")),
             subtitle: Container(
-                margin: EdgeInsets.only(left: 50),
+                margin: EdgeInsets.only(left:50),
                 child: Text(selectedDate + selectedTime)),
             //trailing:
           ),
@@ -235,29 +181,29 @@ class ShelterHome extends StatelessWidget {
             leading: Icon(Icons.location_on),
             title: Text("Request Food"),
             trailing: IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    // return object of type Dialog
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(15)),
-                      backgroundColor: Colors.white,
-                      title: new Text("Function coming soon!"),
-                      content: new Text("This will be updated to do .."),
-                      actions: <Widget>[
-                        new FlatButton(
-                          child: new Text("Sounds good!"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
+              onPressed: () {    showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                    backgroundColor: Colors.white,
+                    title: new Text("Food request coming soon!"),
+                    content: new Text("Getting to many potatoes? Let's go ahead and share that information so we "
+                        "can share the wealth elsewhere, and ensure you get the food you need! This will also "
+                        "provide much needed data to see what foods are scarce, compared to whats easily accessable. "),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new
+                        Text("Sounds good!") ,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );},
               icon: Icon(Icons.restaurant),
             ),
           ),

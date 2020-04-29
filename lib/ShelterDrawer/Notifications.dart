@@ -234,12 +234,14 @@ class _NotificationsState extends State<Notifications> {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text("Notifications Page"),
-          content: new Text("Coming Soon...."),
+          title: new Text("Notifications coming soon!"),
+
+          content: new Text("Eventually, you will be able to pick and choose the notification methods you like"
+              " in order to recieve information from Plate Beacon!"),
           actions: <Widget>[
+// usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new
-              Text("is it sounds good?") ,
+              child: new Text("Sounds good!"),
               onPressed: () {
                 Navigator.of(context).pop();
               },

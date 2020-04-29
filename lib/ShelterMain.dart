@@ -32,7 +32,7 @@ class ShelterMain extends StatelessWidget {
         '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/events': (BuildContext context) => Events(),
-        '/shelterAnalytics': (BuildContext context) => shelterAnalytics(),
+        '/shelterAnalytics': (BuildContext context) => AnalyticsBody(),
       },
     );
   }
@@ -201,7 +201,7 @@ class _MaterialHomeState extends State<Home> {
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => shelterAnalytics()));
+                    MaterialPageRoute(builder: (context) => AnalyticsBody()));
 //                setState(() {
 //                  _bottomBarIndex = 1;
 //                });
@@ -218,15 +218,7 @@ class _MaterialHomeState extends State<Home> {
               leading: Icon(Icons.library_books),
               title: Text("Stories"),
             ),
-            ListTile(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Notifications()));
-              },
-              leading: Icon(Icons.notifications),
-              title: Text("Notifications"),
-            ),
+
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();
