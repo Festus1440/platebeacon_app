@@ -39,7 +39,7 @@ class _SettingsState extends State<Settings> {
       personName = data["displayName"] ?? "Null";
       email = data["email"] ?? "null";
       role = data["role"] ?? "null";
-      print(data.toString());
+      print(email);
     });
   }
 
