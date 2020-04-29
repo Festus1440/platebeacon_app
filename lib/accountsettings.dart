@@ -127,7 +127,8 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                             'Your data will be deleted and can\'t be retrieve after 30 days');
                         FirebaseUser user;
                         var DialogActions;
-                        if (action == DialogActions.yes) {
+                        //print(DialogAction);
+                        if (action == DialogActions.Yes) {
                           switch (role) {
                             case 'Shelter':
                               Firestore.instance
