@@ -5,7 +5,7 @@ import 'package:flutterapp/Home.dart';
 
 //import 'Home.dart';
 //import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
-
+/*
 enum DialogAction { Yes, abort }
 
 class Dialogs {
@@ -40,7 +40,7 @@ class Dialogs {
     return (action != null) ? action : DialogAction.abort;
   }
 }
-
+*/
 /*
 bool _isRestaurant = true;
 bool _isShelter = false;
@@ -52,7 +52,7 @@ class AccountSettingsDetails extends StatefulWidget {
 }
 
 class _AccountDetailsState extends State<AccountSettingsDetails> {
-  bool tappedYes = false;
+  //bool tappedYes = false;
   String role;
 
   @override
@@ -114,41 +114,69 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                     child: GestureDetector(
                       child: Text(
                         "Delete Account",
-                        semanticsLabel: tappedYes.toString(),
+                        //semanticsLabel: tappedYes.toString(),
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       onTap: () async {
+                        FirebaseUser user;
+                        switch (role) {
+                          case 'Shelter':
+                            Firestore.instance
+                                .collection(role)
+                                .document(user.uid)
+                                .delete();
+                            print("Deleted Successfully ");
+                            break;
+                          case 'Restaurant':
+                            Firestore.instance
+                                .collection(role)
+                                .document(user.uid)
+                                .delete();
+                            break;
+                            print("Deleted Successfully ");
+                        }
+                        Navigator.pop(context);
+                        FirebaseAuth.instance.signOut().then((value) {
+                          Navigator.of(context).pushReplacementNamed('/main');
+                        });
+
+
+                        /*
                         final action = await Dialogs.yesAbortDialog(
                             context,
                             'Do you want to Delete Your Account?',
                             'Your data will be deleted and can\'t be retrieve after 30 days');
                         FirebaseUser user;
-                        var DialogActions;
-                        if (action == DialogActions.yes) {
-                          switch (role) {
-                            case 'Shelter':
-                              Firestore.instance
-                                  .collection(role)
-                                  .document(user.uid)
-                                  .delete();
-                              break;
-                            case 'Restaurant':
-                              Firestore.instance
-                                  .collection(role)
-                                  .document(user.uid)
-                                  .delete();
-                              break;
-                          }
-                          Navigator.pop(context);
-                          FirebaseAuth.instance.signOut().then((value) {
-                            Navigator.of(context).pushReplacementNamed('/main');
+
+                        var DialogAction;
+                        if (action == DialogAction.yes) {
+                          setState(() =>  {
+                            switch (role){
+                        case 'Shelter':
+                        Firestore.instance
+                            .collection(role)
+                            .document(user.uid)
+                            .delete();
+                        break;
+                        case 'Restaurant':
+                        Firestore.instance
+                            .collection(role)
+                            .document(user.uid)
+                            .delete();
+                        break;
+                        }
                           });
-                        } else {
+
+
+
+
+                         else {
                           setState(() => tappedYes = true);
                         }
+                         */
                       },
                     ),
                   ),
