@@ -78,7 +78,7 @@ class RestaurantAccount extends StatelessWidget {
                 child: Icon(Icons.favorite)),
             title: Text("Favorites"),
           ),
-          
+
           ListTile(
             onTap: () {
               showDialog(
