@@ -11,27 +11,29 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: <String, WidgetBuilder>{
-        '/register': (BuildContext context) => RegisterPage(),
-        '/shelterMain': (BuildContext context) => ShelterMain(),
-        '/recoverPass': (BuildContext context) => PassRecover()
-      },
-      title: "Log in",
-      home: LoginPage(),
-    );
+    return loading
+        ? Loading()
+        : MaterialApp(
+            debugShowCheckedModeBanner: false,
+            routes: <String, WidgetBuilder>{
+              '/register': (BuildContext context) => RegisterPage(),
+              '/shelterMain': (BuildContext context) => ShelterMain(),
+              '/recoverPass': (BuildContext context) => PassRecover()
+            },
+            title: "Log in",
+            home: LoginPage(),
+          );
   }
 }
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
-  bool loading=false;
+  bool loading = false;
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool loading=false;
+  bool loading = false;
   String _email, _password;
   bool errorVisible = false;
   String loginError = "";
@@ -80,17 +82,15 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-
                   ListTile(
                     leading: Icon(
                       Icons.email,
                       color: Colors.green,
                     ),
                     title: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Email",
-
-                        ),
+                      decoration: InputDecoration(
+                        hintText: "Email",
+                      ),
                       onChanged: (value) {
                         this.setState(() {
                           _email = value;
@@ -101,7 +101,6 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         });
                       },
-
                     ),
                   ),
                   ListTile(
@@ -110,11 +109,10 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.green,
                     ),
                     title: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Password",
-
-                        ),
-                      obscureText:true,
+                      decoration: InputDecoration(
+                        hintText: "Password",
+                      ),
+                      obscureText: true,
                       onChanged: (value) {
                         this.setState(() {
                           _password = value;
@@ -128,7 +126,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-
                   SizedBox(height: 5.0),
                   Container(
                     alignment: Alignment(1.0, 0.0),
@@ -139,7 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PassRecoverPage(), fullscreenDialog: true),
+                                builder: (context) => PassRecoverPage(),
+                                fullscreenDialog: true),
                           );
                         },
                         child: Text(
@@ -155,7 +153,8 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 30.0),
                   Container(
                     child: FlatButton(
-                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
                       color: Colors.green,
                       textColor: Colors.white,
                       disabledColor: Colors.grey,

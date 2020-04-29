@@ -61,7 +61,7 @@ class Home extends StatefulWidget {
 
 class RestaurantState extends State<Home> {
   final bottomBarItems = [
-    HomeScreen(),
+    HomeScreen(), // bottom bar items (0,1,2,3)
     MapSample(),
     Pickup(),
     RestaurantAccount(),
@@ -111,8 +111,8 @@ class RestaurantState extends State<Home> {
             title: Text("Map"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            title: Text("Pickups"),
+            icon: Icon(Icons.directions_car),
+            title: Text("Deliveries"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
