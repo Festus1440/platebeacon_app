@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'main.dart';
 
-Color mainColor = Colors.green;
+Color mainColor;
 
 class RestaurantAccount extends StatelessWidget {
   @override
@@ -223,14 +223,14 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color: Colors.grey,
+          color:mainColor,
         ),
       ),
       appBar: AppBar(
         centerTitle: false,
         elevation: 10.0,
         title: Text("Account"),
-        backgroundColor: Colors.grey,
+        backgroundColor:mainColor,
       ),
       body: Stack(
         children: <Widget>[
@@ -241,7 +241,7 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                   height: 170,
                   width: double.infinity,
                   //padding: EdgeInsets.all(20.0),
-                  color: Colors.green,
+                  color:mainColor,
                   child: Center(
                     child: Column(
                       children: <Widget>[
