@@ -4,7 +4,6 @@ import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 //import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 
-
 import 'ShelterDrawer/ShelterSettings.dart';
 import 'restaurantsettings.dart';
 import 'ShelterDrawer/ShelterStories.dart';
