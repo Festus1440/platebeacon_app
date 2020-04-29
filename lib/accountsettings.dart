@@ -45,15 +45,35 @@ class Dialogs {
 bool _isRestaurant = true;
 bool _isShelter = false;
 */
-String role;
 
 class AccountSettingsDetails extends StatefulWidget {
   @override
   _AccountDetailsState createState() => _AccountDetailsState();
+
 }
 
 class _AccountDetailsState extends State<AccountSettingsDetails> {
   bool tappedYes = false;
+  String role;
+
+  @override
+  void initState() {
+    // this function is called when the page starts
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      setState(() {
+        if (user.displayName == "Shelter") {
+          role = "Shelter";
+          mainColor = Colors.blue;
+          //print(mainCollection);
+        } else {
+          role = "Restaurant";
+          mainColor = Colors.green;
+          //print(mainCollection);
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
