@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -72,6 +73,37 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
       _selectedIndex = index;
     });
   }
+  final graphButtonStyle = TextStyle(color: Colors.black, fontStyle: FontStyle.italic, fontSize: 30,);
+
+  //Defines and creates the top bar on the chart.
+  Row _createToolBar(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        new ButtonBar(children: <Widget>[
+          RaisedButton(
+            child: Text('Week',
+              style: graphButtonStyle,
+            ),
+            onPressed: null,
+          ),
+          RaisedButton(
+            child: Text('Month',
+              style: graphButtonStyle,
+            ),
+            onPressed: null,
+          ),
+          RaisedButton(
+            child: Text('Year',
+              style: graphButtonStyle,
+            ),
+            onPressed: null,
+          )
+        ],
+        ),
+      ],
+    );
+  }
 
   //Builds the overall view of the Analytics page
   @override
@@ -83,7 +115,13 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           title: Text("My Analytics"),
         ),
         body: Center( //Body of the screen
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _createToolBar(),
+              _widgetOptions.elementAt(_selectedIndex),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar( //Lower navigation.
           backgroundColor: Colors.grey,
