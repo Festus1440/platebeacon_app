@@ -24,11 +24,11 @@ class AnalyticsBody extends StatefulWidget {
 
 class _AnalyticsBodyState extends State<AnalyticsBody> {
 
-//  @override
-//  void initState() {
-//    super.initState();
-//    Timer.run(() => _showDialog());
-//  }
+  @override
+  void initState() {
+    super.initState();
+    Timer.run(() => _showDialog());
+  }
 
   int _selectedIndex = 0;
 
@@ -56,18 +56,18 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
 
   //Function: Takes on parameter an sets the index of the currently selected widget
   void _onItemTapped(int index) {
-//    switch (index) {
-//      case 0:
-////        _showDialogSavings();
-//        break;
-//      case 1:
-//        _showDialogRanking();
-//        break;
-//      case 2:
-//        _showDialogEarnings();
-//        break;
-//      default:_showDialog();
-//    }
+    switch (index) {
+      case 0:
+        _showDialogSavings();
+        break;
+      case 1:
+        _showDialogRanking();
+        break;
+      case 2:
+        _showDialogEarnings();
+        break;
+      default:_showDialog();
+    }
 
     setState(() {
       _selectedIndex = index;
