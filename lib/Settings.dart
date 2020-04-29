@@ -15,20 +15,31 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   String userId;
+  String personName;
+  String email;
+  String role;
+
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
       userId = user.uid;
+      print(userId.toString());
+      getData();
     });
-    print(userId.toString());
-    Firestore.instance
+  }
+
+  getData() async {
+    await Firestore.instance
         .collection("Restaurant")
         .document(userId)
         .get()
         .then((DocumentSnapshot data) {
-      print(data.toString());
+      personName = data["displayName"] ?? "Null";
+      email = data["email"] ?? "null";
+      role = data["role"] ?? "null";
+      print(email);
     });
   }
 
