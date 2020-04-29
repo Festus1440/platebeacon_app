@@ -49,7 +49,6 @@ bool _isShelter = false;
 class AccountSettingsDetails extends StatefulWidget {
   @override
   _AccountDetailsState createState() => _AccountDetailsState();
-
 }
 
 class _AccountDetailsState extends State<AccountSettingsDetails> {
