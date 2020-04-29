@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'Home.dart';
 //import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 
 enum DialogAction { Yes, abort }
@@ -17,16 +19,16 @@ class Dialogs {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          title: Text(title),
-          content: Text(body),
+          title: Text('Deleting account'),
+          content: Text('Are you sure you want to delete account?'),
           actions: <Widget>[
             FlatButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.abort),
-              child: const Text('No'),
+              child: const Text('No',style: TextStyle(color: Colors.black)),
             ),
             RaisedButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.Yes),
-              child: const Text('Yes', style: TextStyle(color: Colors.white)),
+              child: const Text('Yes', style: TextStyle(color: Colors.black)),
             ),
           ],
         );
@@ -54,7 +56,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+              margin: EdgeInsets.only(top: 15.0, left: 30.0, right: 15.0),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -69,15 +71,22 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                       ),
                     ),
                   ),
+                  Divider(
+                    height: 20.0,
+                    thickness: 0.5,
+                    color: mainColor,
+                    indent: 0.0,
+                    endIndent: 0.0,
+                  ),
                   Container(
                     alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(top: 3.0),
+                    padding: EdgeInsets.only(top: 3.0,left: 0.0,right: 15.0),
                     child: GestureDetector(
                       child: Text(
                         "Delete Account",
                         semanticsLabel: tappedYes.toString(),
                         style: TextStyle(
-                          fontSize: 10.0,
+                          fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -92,6 +101,13 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                         }
                       },
                     ),
+                  ),
+                  Divider(
+                    height: 20.0,
+                    thickness: 0.5,
+                    color: mainColor,
+                    indent: 0.0,
+                    endIndent: 0.0,
                   ),
                 ],
               ),
