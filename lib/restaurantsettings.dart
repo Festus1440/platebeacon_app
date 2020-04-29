@@ -19,14 +19,20 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
   String email;
   String role;
 
+  Color mainColor ;
+
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
-      userId = user.uid;
-      print(userId.toString());
-      getData();
+      setState(() {
+        if (user.displayName == "Shelter") {
+          mainColor = Colors.blue;
+        } else {
+          mainColor = Colors.green;
+        }
+      });
     });
   }
   getData() async {
@@ -48,12 +54,12 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Settings"),
-        backgroundColor: Colors.grey,
+        backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color: Colors.grey,
+          color:mainColor,
         ),
       ),
       body: Container(

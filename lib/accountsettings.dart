@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'Home.dart';
 //import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
+
+
 
 enum DialogAction { Yes, abort }
 
@@ -45,6 +48,22 @@ class AccountSettingsDetails extends StatefulWidget {
 
 class _AccountDetailsState extends State<AccountSettingsDetails> {
   bool tappedYes = false;
+  Color mainColor;
+
+  @override
+  void initState() {
+    // this function is called when the page starts
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      setState(() {
+        if (user.displayName == "Shelter") {
+          mainColor = Colors.blue;
+        } else {
+          mainColor = Colors.green;
+        }
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
