@@ -4,11 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-
-
 class RestaurantAnalytics extends StatelessWidget{
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
