@@ -122,12 +122,15 @@ class EventsState extends State<Events> {
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text(" Events "),
-          content: new Text("Coming Soon...."),
+          title: new Text("Events coming soon!"),
+
+          content: new Text("Plate Beacon wants to be an advocate for all of your future events!"
+              " Soon you can post events showing resturants the perfect time to donate, and even volunteer!"
+              " The more people who know of your needs, the more aid you will recieve! "),
           actions: <Widget>[
+// usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new
-              Text("Sounds good ?"),
+              child: new Text("Sounds good!"),
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pop();
@@ -149,12 +152,12 @@ class EventsState extends State<Events> {
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
-          title: new Text(" Schedule for Volunteer "),
-          content: new Text("Coming Soon...."),
+          title: new Text(" Schedule for Volunteers "),
+          content: new Text("Details of your event will be posted here and sent out!"),
           actions: <Widget>[
             new FlatButton(
               child: new
-              Text("Sounds good ?"),
+              Text("Sounds good!"),
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pop();
@@ -177,11 +180,11 @@ class EventsState extends State<Events> {
               borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
           title: new Text(" Fundraising "),
-          content: new Text("Coming Soon...."),
+          content: new Text("Let's get more awareness of any fundraisers going on too!"),
           actions: <Widget>[
             new FlatButton(
               child: new
-              Text("Sounds good ?"),
+              Text("Sounds good!"),
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pop();
