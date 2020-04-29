@@ -1,14 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 //import 'package:flutterapp/AccountSettings.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'accountsettings.dart';
-import 'accountsettings.dart';
 
 Color mainColor = Colors.green;
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
+  @override
+  _SettingsState createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
+  String userId;
+  @override
+  void initState() {
+    // this function is called when the page starts
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      userId = user.uid;
+    });
+    print(userId.toString());
+    Firestore.instance
+        .collection("Restaurant")
+        .document(userId)
+        .get()
+        .then((DocumentSnapshot data) {
+      print(data.toString());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,22 +107,24 @@ class Settings extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
-
                             ),
                           ),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AccountSettingsDetails()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AccountSettingsDetails()));
                           },
                         ),
                       )
-
                     ],
                   ),
                 ),
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(top: 5.0,left: 15.0),
-                  child:Text(
+                  padding: EdgeInsets.only(top: 5.0, left: 15.0),
+                  child: Text(
                     "Change your email or delete your account.",
                     style: TextStyle(
                       fontSize: 10.0,
@@ -112,16 +137,9 @@ class Settings extends StatelessWidget {
           ],
         ),
       ),
-
-
-
     );
   }
 }
-
-
-
-
 
 class DatabaseService {
   final String uid;
@@ -143,4 +161,3 @@ class DatabaseService {
     return sheltercollection.snapshots();
   }
 }
-
