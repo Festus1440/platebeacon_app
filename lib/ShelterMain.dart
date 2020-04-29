@@ -9,6 +9,7 @@ import 'ShelterDrawer/ShelterStories.dart';
 import 'map.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
 import 'main.dart';
+import 'package:flutterapp/ShelterScreens/shelterAnalytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/ShelterDrawer/Notifications.dart';
@@ -31,6 +32,7 @@ class ShelterMain extends StatelessWidget {
         '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/events': (BuildContext context) => Events(),
+        '/shelterAnalytics': (BuildContext context) => shelterAnalytics(),
       },
     );
   }
@@ -198,6 +200,8 @@ class _MaterialHomeState extends State<Home> {
               //Creates the link to the analytics page.
               onTap: () {
                 Navigator.of(context).pop();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => shelterAnalytics()));
 //                setState(() {
 //                  _bottomBarIndex = 1;
 //                });
