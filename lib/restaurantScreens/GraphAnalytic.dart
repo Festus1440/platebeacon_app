@@ -10,6 +10,14 @@ class Saving {
     @required this.amount,
     @required this.bottom,
     @required this.barColor});
+
+  Saving.fromMap(Map<String, dynamic> map)
+   :assert(map['amount'] != null),
+    assert(map['bottom'] != null),
+    assert(map['barColor'] != null),
+      amount = map['amount'],
+      bottom = map['bottom'],
+      barColor = map['barColor'];
 }
 
 //final list<Saving> data = [

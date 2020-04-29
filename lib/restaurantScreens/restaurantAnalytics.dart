@@ -3,8 +3,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-class RestaurantAnalytics extends StatelessWidget{
+class RestaurantAnalytics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,7 +14,7 @@ class RestaurantAnalytics extends StatelessWidget{
   }
 }
 
-class AnalyticsBody extends StatefulWidget{
+class AnalyticsBody extends StatefulWidget {
   AnalyticsBody({Key key}) : super (key: key);
 
   @override
@@ -22,11 +23,11 @@ class AnalyticsBody extends StatefulWidget{
 
 class _AnalyticsBodyState extends State<AnalyticsBody> {
 
-  @override
-  void initState() {
-    super.initState();
-    Timer.run(() => _showDialog());
-  }
+//  @override
+//  void initState() {
+//    super.initState();
+//    Timer.run(() => _showDialog());
+//  }
 
   int _selectedIndex = 0;
 
@@ -37,12 +38,10 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
       fontWeight: FontWeight.bold
   );
 
-  //Will store data to displayed on the screen when a button icon is selected.
-  //Currently it contains only text
+
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Savings',
-      style: optionStyle,
+    Image(
+      image: AssetImage('assets/barChart3.png'),
     ),
     Text(
       'Coming Soon',
@@ -56,18 +55,18 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
 
   //Function: Takes on parameter an sets the index of the currently selected widget
   void _onItemTapped(int index) {
-    switch (index) {
-      case 0:
-        _showDialogSavings();
-        break;
-      case 1:
-        _showDialogRanking();
-        break;
-      case 2:
-        _showDialogEarnings();
-        break;
-      default:_showDialog();
-    }
+//    switch (index) {
+//      case 0:
+////        _showDialogSavings();
+//        break;
+//      case 1:
+//        _showDialogRanking();
+//        break;
+//      case 2:
+//        _showDialogEarnings();
+//        break;
+//      default:_showDialog();
+//    }
 
     setState(() {
       _selectedIndex = index;
