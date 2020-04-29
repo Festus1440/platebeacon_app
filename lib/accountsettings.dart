@@ -50,7 +50,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text("Account Settings"),
       ),
       body: Container(
         child: Column(
