@@ -4,41 +4,32 @@ import 'package:flutter/cupertino.dart';
 //import 'package:flutterapp/AccountSettings.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'accountsettings.dart';
+import 'package:flutterapp/shelterBottomBarPages/shelterAccount.dart';
+import '../accountsettings.dart';
 
-Color mainColor = Colors.blueGrey;
+Color mainColor;
 
-class Settings extends StatefulWidget {
+class ShelterSettings extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _ShelterSettingsState createState() => _ShelterSettingsState();
 }
 
-class _SettingsState extends State<Settings> {
-  String userId;
-  String personName;
-  String email;
-  String role;
+class _ShelterSettingsState extends State<ShelterSettings> {
+
+  Color mainColor;
 
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
-      userId = user.uid;
-      print(userId.toString());
-      getData();
-    });
-  }
-  getData() async {
-    await Firestore.instance
-        .collection("Restaurant")
-        .document(userId)
-        .get()
-        .then((DocumentSnapshot data) {
-      personName = data["displayName"] ?? "Null";
-      email = data["email"] ?? "null";
-      role = data["role"] ?? "null";
-      print(email);
+      setState(() {
+        if (user.displayName == "Shelter") {
+          mainColor = Colors.blue;
+        } else {
+          mainColor = Colors.green;
+        }
+      });
     });
   }
 
@@ -48,12 +39,12 @@ class _SettingsState extends State<Settings> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Settings"),
-        backgroundColor: Colors.grey,
+        backgroundColor:mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color: Colors.grey,
+          color: mainColor,
         ),
       ),
       body: Container(
@@ -78,7 +69,7 @@ class _SettingsState extends State<Settings> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    RestaurantAccountDetails()));
+                                    ShelterAccountDetails()));
                       },
                     ),
                   ),

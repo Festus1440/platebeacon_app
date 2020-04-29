@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Color mainColor = Colors.blue;
+Color mainColor;
 
 class ShelterAccount extends StatelessWidget {
   @override
@@ -166,6 +168,49 @@ class ShelterAccountDetails extends StatefulWidget {
 }
 
 class _ShelterAccountDetailsState extends State<ShelterAccountDetails> {
+
+  String userId = "";
+  var personName = TextEditingController();
+  var email = TextEditingController();
+  var role = TextEditingController();
+  String collection = "";
+  bool loading = true;
+
+  @override
+  void initState() {
+    // this function is called when the page starts
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      setState(() {
+        userId = user.uid;
+        if (user.displayName == "Shelter") {
+          collection = "Shelter";
+          mainColor = Colors.blue;
+        } else {
+          collection = "Restaurant";
+          mainColor = Colors.green;
+        }
+      });
+      print(userId.toString());
+      getData();
+    });
+  }
+  getData() async {
+    await Firestore.instance
+        .collection(collection)
+        .document(userId)
+        .get()
+        .then((DocumentSnapshot data) {
+      setState(() {
+        loading = false;
+        personName.text = data["displayName"] ?? "Null";
+        email.text = data["email"] ?? "null";
+        role.text = data["role"] ?? "null";
+      });
+      print(email);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

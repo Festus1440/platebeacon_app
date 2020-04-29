@@ -8,7 +8,7 @@ import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
 import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
-import 'package:flutterapp/Settings.dart';
+import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'Home.dart';
 import 'main.dart';
@@ -66,24 +66,31 @@ class RestaurantState extends State<Home> {
     Pickup(),
     RestaurantAccount(),
   ];
+
   //String restaurantName = fetch("displayName");
   Color mainColor = Colors.green;
   Widget roleTitle = fetch("displayName");
   String appBarTitle = "Home";
   int _bottomBarIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _bottomBarIndex = index;
-      switch(index){
-        case 0: appBarTitle = "Home";
-        break;
-        case 1: appBarTitle = "Map";
-        break;
-        case 2: appBarTitle = "Pickups";
-        break;
-        case 3: appBarTitle = "Account";
-        break;
-        default: appBarTitle = "Home";
+      switch (index) {
+        case 0:
+          appBarTitle = "Home";
+          break;
+        case 1:
+          appBarTitle = "Map";
+          break;
+        case 2:
+          appBarTitle = "Pickups";
+          break;
+        case 3:
+          appBarTitle = "Account";
+          break;
+        default:
+          appBarTitle = "Home";
       }
     });
   }
@@ -111,7 +118,33 @@ class RestaurantState extends State<Home> {
             title: Text("Map"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
+            icon: Stack(
+              children: <Widget>[
+                Icon(Icons.directions_car),
+                Positioned(
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: Text(
+                      '3',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
+            ),
             title: Text("Deliveries"),
           ),
           BottomNavigationBarItem(
@@ -193,7 +226,8 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Stories()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Stories()));
                     },
                     leading: Icon(Icons.library_books),
                     title: Text("Stories"),
@@ -201,7 +235,8 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => Notifications()));
                     },
                     leading: Icon(Icons.notifications),
                     title: Text("Notifications"),
@@ -217,7 +252,8 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Subscriptions()));
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => Subscriptions()));
                     },
                     leading: Icon(Icons.subscriptions),
                     title: Text("Subscriptions"),
@@ -232,7 +268,8 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => RestaurantSettings()));
                     },
                     leading: Icon(Icons.settings),
                     title: Text("Settings"),
@@ -255,4 +292,5 @@ class RestaurantState extends State<Home> {
       ),
     );
   }
+
 }
