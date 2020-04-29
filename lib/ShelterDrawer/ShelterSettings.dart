@@ -4,22 +4,23 @@ import 'package:flutter/cupertino.dart';
 //import 'package:flutterapp/AccountSettings.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'accountsettings.dart';
+import 'package:flutterapp/shelterBottomBarPages/shelterAccount.dart';
+import '../accountsettings.dart';
 
 Color mainColor;
 
-class RestaurantSettings extends StatefulWidget {
+class ShelterSettings extends StatefulWidget {
   @override
-  _RestaurantSettingsState createState() => _RestaurantSettingsState();
+  _ShelterSettingsState createState() => _ShelterSettingsState();
 }
 
-class _RestaurantSettingsState extends State<RestaurantSettings> {
+class _ShelterSettingsState extends State<ShelterSettings> {
   String userId;
   String personName;
   String email;
   String role;
 
-  Color mainColor ;
+  Color mainColor;
 
   @override
   void initState() {
@@ -54,12 +55,12 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Settings"),
-        backgroundColor: mainColor,
+        backgroundColor:mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 20.0,
-          color:mainColor,
+          color: mainColor,
         ),
       ),
       body: Container(
@@ -84,7 +85,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    RestaurantAccountDetails()));
+                                    ShelterAccountDetails()));
                       },
                     ),
                   ),
