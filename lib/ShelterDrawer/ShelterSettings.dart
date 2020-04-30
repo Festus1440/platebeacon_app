@@ -48,134 +48,57 @@ class _ShelterSettingsState extends State<ShelterSettings> {
           color: mainColor,
         ),
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      child: Text(
-                        "Edit profile",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ShelterAccountDetails()));
-                      },
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(top: 5.0),
-                    child: Text(
-                      "Change your name,description and profile photo.",
-                      style: TextStyle(
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                ],
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            //contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
+            title: Text(
+              "Edit Profile",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
             ),
-            Divider(
-              height: 20.0,
-              thickness: 0.5,
-              color: mainColor,
-              indent: 0.0,
-              endIndent: 0.0,
+            subtitle: Text("Change your name,description and profile photo."),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RestaurantAccountDetails()));
+            },
+          ),
+          ListTile(
+            //contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
+            title: Text(
+              "Account Settings",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.topLeft,
-                        child: GestureDetector(
-                          child: Text(
-                            "Account Settings",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        AccountSettingsDetails()));
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(top: 5.0, left: 15.0),
-                  child: Text(
-                    "Change your email or delete your account.",
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-
-              ],
+            subtitle: Text("Change your email or delete your account."),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AccountSettingsDetails()));
+            },
+          ),
+          ListTile(
+            //contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
+            title: Text(
+              "Notifications",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            Divider(
-              height: 20.0,
-              thickness: 0.5,
-              color: mainColor,
-              indent: 0.0,
-              endIndent: 0.0,
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-              alignment: Alignment.topLeft,
-              child: GestureDetector(
-                child: Text(
-                  "Notifications",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.push(context, MaterialPageRoute(
+            subtitle: Text("Define what alerts and notifications you want to see"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
                       builder: (context) => Notifications()));
-                },
-              ),
-            ),
-            Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(top: 5.0, left: 15.0),
-              child: Text(
-                "Define what alerts and notifications you want to see.",
-                style: TextStyle(
-                  fontSize: 10.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
-          ],
-        ),
-
+            },
+          ),
+        ],
       ),
     );
   }

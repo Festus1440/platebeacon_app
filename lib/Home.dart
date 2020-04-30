@@ -67,12 +67,14 @@ class RestaurantHome extends StatefulWidget {
 }
 
 class _RestaurantHomeState extends State<RestaurantHome> {
+  int size = 0;
   String userId = "";
   String mainCollection = "";
   String subCollection = "";
   DateTime _dateTime;
   TimeOfDay _timeOfDay = TimeOfDay.now();
   String selectedDate = "No Scheduled Donations";
+  int id = 0;
 
   String formattedTimeOfDay;
   // TimeOfDay res = TimeOfDay.fromDateTime(DateTime.now());
@@ -81,8 +83,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
     // this function is called when the page starts
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
-      if (!mounted)
-        return; // make sure not to run if its not mounted aka available saves memory
+      if (!mounted) return;
       setState(() {
         userId = user.uid;
         if (user.displayName == "Shelter") {
@@ -95,7 +96,19 @@ class _RestaurantHomeState extends State<RestaurantHome> {
           mainColor = Colors.green;
         }
       });
+      countDocuments();
       //sleep(const Duration(seconds: 2));
+    });
+  }
+
+  void countDocuments() async {
+    QuerySnapshot _myDoc = await Firestore.instance.collection("donations").getDocuments();
+    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+    //print(_myDocCount.length);  // Count of Documents in Collection
+    if (!mounted) return;
+    setState(() {
+      size = _myDocCount.length;
+      id = size+1;
     });
   }
 
@@ -103,8 +116,8 @@ class _RestaurantHomeState extends State<RestaurantHome> {
     Firestore.instance
         .collection("donations").document().setData({
       'date': selectedDate + selectedTime,
+      "id": size+1,
         }).then((onValue) {
-
     });
   }
 
@@ -137,7 +150,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.menu),
             title: Container(
-              margin: EdgeInsets.only(left: 50),
+              margin: EdgeInsets.only(left: 0),
               child: TextField(
                 controller: _controller,
                 decoration: InputDecoration(
@@ -185,7 +198,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             leading: Icon(Icons.calendar_today),
             title: Container(
                 margin: EdgeInsets.only(
-                  left: 50,
+                  left: 0,
                 ),
                 child: Text("Schedule Delivery")), //
           ),
@@ -193,7 +206,6 @@ class _RestaurantHomeState extends State<RestaurantHome> {
         Container(
           child: ListTile(
             onTap: () {
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => Pickup()));
             },
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Container(
@@ -202,10 +214,11 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                   Icons.notifications,
                 )),
             title: Container(
-                margin: EdgeInsets.only(left: 50), child: Text("Next Donation")),
+                margin: EdgeInsets.only(left: 0), child: Text("Next Donation")),
             subtitle: Container(
-                margin: EdgeInsets.only(left: 50),
-                child: Text(selectedDate + selectedTime)),
+                margin: EdgeInsets.only(left: 0),
+                child: fetch("No Scheduled Donations"),
+            ),
             //trailing:
           ),
         ),
@@ -214,7 +227,42 @@ class _RestaurantHomeState extends State<RestaurantHome> {
   }
 }
 
-class ShelterHome extends StatelessWidget {
+Widget fetch(message){
+  return StreamBuilder(
+    stream: Firestore.instance
+        .collection("donations")
+        .snapshots(),
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      if (snapshot.hasData)
+      {
+        if(snapshot.data.documents.length <= 0){
+          return Text(message);
+        }
+        else {
+          var data = snapshot.data.documents.first['date'];
+          if (data == null) {
+            data = message;
+            return Text(data.toString());
+          }
+          else {
+            return Text(data.toString());
+          }
+        }
+      }
+      else {
+        return Center(child: new Text('Checkimg...'));
+      }
+    },
+  );
+}
+
+class ShelterHome extends StatefulWidget {
+  @override
+  _ShelterHomeState createState() => _ShelterHomeState();
+}
+
+class _ShelterHomeState extends State<ShelterHome> {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -266,10 +314,11 @@ class ShelterHome extends StatelessWidget {
         ),
         Container(
           child: ListTile(
-            onTap: (){},
+            //onTap: (){},
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Icon(Icons.calendar_today),
-            title: Text("Drop off Time"),
+            leading: Container(height: 50, child: Icon(Icons.calendar_today)),
+            title: Text("Next Donation"),
+            subtitle: fetch("No Available Donations"),
           ),
         ),
       ],

@@ -11,7 +11,6 @@ class Pickup extends StatefulWidget {
 }
 
 class _PickupState extends State<Pickup> {
-  int id = 0;
   String userId = "";
   String mainCollection = "";
   String subCollection = "";
@@ -60,16 +59,18 @@ class _PickupState extends State<Pickup> {
       print("loaded" + userId);
       return new StreamBuilder(
         stream: Firestore.instance
-            .collection("donations")
+            .collection("donations").orderBy('id')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Center(child: new Text('Loading...'));
+          if (snapshot.data.documents.length <= 0) {
+            return Center(child: Text("No Available Donations"));
+          }
+          else {
           return new ListView(
             children: snapshot.data.documents.map((document) {
-              id = snapshot.data.documents.length +1; //set new ID
-              return new ListTile(
-                onTap: (){
-                  print(id);
+              return ListTile(
+                onTap: () {
                   // dont use for delete
                 },
                 leading: Container(
@@ -77,9 +78,11 @@ class _PickupState extends State<Pickup> {
                   child: Icon(Icons.calendar_today),
                 ),
                 title: Text('Next Donation'),
-                subtitle: Text(document['date']),
+                subtitle: Text(
+                    document['date'] + " id: " + document['id'].toString()),
                 trailing: Container(
-                  decoration: BoxDecoration(shape: BoxShape.circle,color: mainColor),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: mainColor),
                   height: 50,
                   child: IconButton(
                     onPressed: () {
@@ -88,20 +91,27 @@ class _PickupState extends State<Pickup> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             shape: RoundedRectangleBorder(
-                                borderRadius:  BorderRadius.circular(2)),
+                                borderRadius: BorderRadius.circular(2)),
                             backgroundColor: Colors.white,
-                            title:  Text("Delete Confirmation"),
-                            content:  Text(
+                            title: Text("Delete Confirmation"),
+                            content: Text(
                                 "Are you sure you want to delete"),
                             actions: <Widget>[
                               FlatButton(
-                                child:  Text("Yes"),
+                                child: Text("Yes"),
                                 onPressed: () {
+                                  print(document.documentID);
+                                  Firestore.instance.collection("donations")
+                                      .document(document.documentID)
+                                      .delete()
+                                      .then((oValue) {
+                                    SnackBar(content: Text('Deleted'));
+                                  });
                                   Navigator.of(context).pop();
                                 },
                               ),
                               FlatButton(
-                                child:  Text("No"),
+                                child: Text("No"),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
@@ -111,12 +121,13 @@ class _PickupState extends State<Pickup> {
                         },
                       );
                     },
-                    icon: Icon(Icons.delete,color: Colors.white,),
+                    icon: Icon(Icons.delete, color: Colors.white,),
                   ),
                 ),
               );
             }).toList(),
           );
+        }
         },
       );
     }

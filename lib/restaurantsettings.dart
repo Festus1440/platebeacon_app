@@ -176,7 +176,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
             ),),
           ),
         ],
-      )
+      ),
     );
   }
 }
