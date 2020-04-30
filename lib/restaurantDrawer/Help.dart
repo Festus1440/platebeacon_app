@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:share/share.dart';
 
@@ -11,12 +12,23 @@ class Help extends StatefulWidget{
 
 }
 class HelpState extends State<Help> {
-
+Color mainColor;
   @override
   void initState() {
+    // this function is called when the page starts
     super.initState();
-    Timer.run(() => _showDialog());
+    FirebaseAuth.instance.currentUser().then((user) {
+      setState(() {
+        if (user.displayName == "Shelter") {
+          mainColor = Colors.blue;
+        } else {
+          mainColor = Colors.green;
+        }
+
+      });
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

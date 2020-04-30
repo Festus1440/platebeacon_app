@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/restaurantBottomBar/pickup.dart';
+import 'package:flutterapp/restaurantDrawer/Help.dart';
 //import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'restaurantsettings.dart';
@@ -237,27 +238,10 @@ class _MaterialHomeState extends State<Home> {
                   ),
                   ListTile(
                     onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          // return object of type Dialog
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
-                            backgroundColor: Colors.white,
-                            title: new Text("Help coming soon!"),
-                            content: new Text("Yes, you might have questions and we'll have a help section shortly."
-                                " For now directly ask the team!"),
-                            actions: <Widget>[
-                              new FlatButton(
-                                child: new Text("Sounds good!"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );},
+                      Navigator.of(context).pop();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Help(), fullscreenDialog: true));
+                      },
                     leading: Icon(Icons.help),
                     title: Text("Help"),
                   ),
