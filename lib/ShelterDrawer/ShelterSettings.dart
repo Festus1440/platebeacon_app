@@ -98,6 +98,38 @@ class _ShelterSettingsState extends State<ShelterSettings> {
                       builder: (context) => Notifications()));
             },
           ),
+          ListTile(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                    backgroundColor: Colors.white,
+                    title: new Text("About coming soon!"),
+                    content: new Text("Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("Sounds good!"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );},
+
+            title: Text(
+              "About",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text("Find out what's new about us here."),
+
+          ),
         ],
       ),
     );
