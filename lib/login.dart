@@ -82,51 +82,79 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  ListTile(
-                    leading: Icon(
-                      Icons.email,
-                      color: Colors.green,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                      ),
-                      onChanged: (value) {
-                        this.setState(() {
-                          _email = value;
-                          if (_email == "") {
-                            showError("Email can't be empty", true);
-                          } else {
-                            showError("", false);
-                          }
-                        });
-                      },
-                    ),
+                  SizedBox(
+                    height: 10,
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.lock,
-                      color: Colors.green,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Password",
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.email,
+                        color: Colors.green,
                       ),
-                      obscureText: true,
-                      onChanged: (value) {
-                        this.setState(() {
-                          _password = value;
-                          if (_password == "") {
-                            showError("Password can't be empty", true);
-                          } else {
-                            showError("", false);
-                          }
-                        });
-                      },
-                    ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: "Email",
+                          ),
+                          onChanged: (value) {
+                            this.setState(() {
+                              _email = value;
+                              if (_email == "") {
+                                showError("Email can't be empty", true);
+                              } else {
+                                showError("", false);
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.lock,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                          ),
+                          obscureText: true,
+                          onChanged: (value) {
+                            this.setState(() {
+                              _password = value;
+                              if (_password == "") {
+                                showError("Password can't be empty", true);
+                              } else {
+                                showError("", false);
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 5.0),
+                  Visibility(
+                    visible: errorVisible,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      alignment: Alignment(-1.0, 0.0),
+                      child: Text(loginError),
+                    ),
+                  ),
+                  //SizedBox(height: 5.0),
                   Container(
                     alignment: Alignment(1.0, 0.0),
                     padding: EdgeInsets.only(top: 15.0),
@@ -194,14 +222,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: errorVisible,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 10.0),
-                      alignment: Alignment(-1.0, 0.0),
-                      child: Text(loginError),
                     ),
                   ),
                   //SizedBox(height: 30.0),

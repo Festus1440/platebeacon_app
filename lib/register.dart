@@ -88,7 +88,7 @@ class RegisterPageState extends State<RegisterPage> {
                           backgroundColor: Colors.black12,
                           selectedColor: Colors.green,
                           labelStyle: TextStyle(color: Colors.black),
-                          padding: EdgeInsets.all(6.0),
+                          padding: EdgeInsets.all(8.0),
                           label: Row(
                             children: <Widget>[
                               Icon(Icons.restaurant),
@@ -120,7 +120,7 @@ class RegisterPageState extends State<RegisterPage> {
                           backgroundColor: Colors.black12,
                           selectedColor: Colors.blue,
                           labelStyle: TextStyle(color: Colors.black),
-                          padding: EdgeInsets.all(6.0),
+                          padding: EdgeInsets.all(8.0),
                           label: Row(
                             children: <Widget>[
                               Icon(Icons.home),
@@ -147,79 +147,109 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.account_box,
-                      color: mainColor,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: checkBoxLabelText,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor),
+                  Container(
+                    //margin: EdgeInsets.all(10),
+                    //color: Colors.lightBlue,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.account_box,
+                              color: mainColor,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: checkBoxLabelText,
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: mainColor),
+                                  ),
+                                  //labelText: checkBoxLabelText,
+                                  labelStyle: TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                onChanged: (value) {
+                                  this.setState(() {
+                                    _name = value;
+                                    if (_name == "") {
+                                      showError("Name can't be empty", true);
+                                      loading = false;
+                                    } else {
+                                      showError("", false);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                        //labelText: checkBoxLabelText,
-                        labelStyle: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                        SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.email,
+                              color: mainColor,
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: "Email",
+                                ),
+                                onChanged: (value) {
+                                  this.setState(() {
+                                    _email = value;
+                                    if (_email == "") {
+                                      showError("Email can't be empty", true);
+                                      loading = false;
+                                    } else {
+                                      showError("", false);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      onChanged: (value) {
-                        this.setState(() {
-                          _name = value;
-                          if (_name == "") {
-                            showError("Name can't be empty", true);
-                            loading = false;
-                          } else {
-                            showError("", false);
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.email,
-                      color: mainColor,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                      ),
-                      onChanged: (value) {
-                        this.setState(() {
-                          _email = value;
-                          if (_email == "") {
-                            showError("Email can't be empty", true);
-                            loading = false;
-                          } else {
-                            showError("", false);
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.lock,
-                      color: mainColor,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                      ),
-                      onChanged: (value) {
-                        this.setState(() {
-                          _password = value;
-                          if (_password == "") {
-                            showError("Password can't be empty", true);
-                            loading = false;
-                          } else {
-                            showError("", false);
-                          }
-                        });
-                      },
+                        SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.lock,
+                              color: mainColor,
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  hintText: "Password",
+                                ),
+                                onChanged: (value) {
+                                  this.setState(() {
+                                    _password = value;
+                                    if (_password == "") {
+                                      showError("Password can't be empty", true);
+                                      loading = false;
+                                    } else {
+                                      showError("", false);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                      ],
                     ),
                   ),
                   Visibility(
