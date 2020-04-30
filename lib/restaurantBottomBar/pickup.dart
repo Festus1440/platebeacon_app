@@ -34,41 +34,64 @@ class _PickupState extends State<Pickup> {
           subCollection = "deliveries";
           mainColor = Colors.green;
         }
-        loading = false;
+        loading = true;
       });
+      loading = false;
       //sleep(const Duration(seconds: 2));
     });
   }
 
   Future getLists() async {
     var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore.collection(mainCollection).document(userId).collection("deliveries").getDocuments();
+    QuerySnapshot qn = await firestore
+        .collection(mainCollection)
+        .document(userId)
+        .collection("deliveries")
+        .getDocuments();
     return qn.documents;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: FutureBuilder(
-          future: getLists(),
-          builder: (_, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (_, index) {
-                    return ListTile(
-                      leading: Container(
-                        height: 50,
-                        child: Icon(Icons.calendar_today),
-                      ),
-                      title: Text("Next Pickup"),
-                      subtitle: Text(snapshot.data[index].data["date"]),
-                    );
-                  });
-            }
-          }),
-    );
+    if(loading == true){
+      print(userId);
+    }else{
+      print("loaded" + userId);
+      return new StreamBuilder(
+        stream: Firestore.instance
+            .collection("Restaurant")
+            .document(userId)
+            .collection("deliveries")
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) return Center(child: new Text('Loading...'));
+          return new ListView(
+            children: snapshot.data.documents.map((document) {
+              return new ListTile(
+                onTap: (){
+
+                },
+                leading: Container(
+                  height: 50,
+                  child: Icon(Icons.calendar_today),
+                ),
+                title: new Text('Next Donation'),
+                subtitle: new Text(document['date']),
+                trailing: Container(
+                  height: 50,
+                  child: IconButton(
+                    onPressed: () {
+
+                    },
+                    icon: Icon(Icons.delete),
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        },
+      );
+    }
+    return Center(child: Text("Loading..."));
   }
 }
