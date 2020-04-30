@@ -147,35 +147,39 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.account_box,
-                      color: mainColor,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: checkBoxLabelText,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor),
-                        ),
-                        //labelText: checkBoxLabelText,
-                        labelStyle: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                  Container(
+                    margin: EdgeInsets.all(0),
+                    //color: Colors.lightBlue,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.account_box,
+                        color: mainColor,
                       ),
-                      onChanged: (value) {
-                        this.setState(() {
-                          _name = value;
-                          if (_name == "") {
-                            showError("Name can't be empty", true);
-                            loading = false;
-                          } else {
-                            showError("", false);
-                          }
-                        });
-                      },
+                      title: TextField(
+                        decoration: InputDecoration(
+                          hintText: checkBoxLabelText,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: mainColor),
+                          ),
+                          //labelText: checkBoxLabelText,
+                          labelStyle: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        onChanged: (value) {
+                          this.setState(() {
+                            _name = value;
+                            if (_name == "") {
+                              showError("Name can't be empty", true);
+                              loading = false;
+                            } else {
+                              showError("", false);
+                            }
+                          });
+                        },
+                      ),
                     ),
                   ),
                   ListTile(
@@ -206,6 +210,7 @@ class RegisterPageState extends State<RegisterPage> {
                       color: mainColor,
                     ),
                     title: TextField(
+                      obscureText: true,
                       decoration: InputDecoration(
                         hintText: "Password",
                       ),
