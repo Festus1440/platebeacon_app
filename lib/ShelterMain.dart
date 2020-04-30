@@ -127,10 +127,10 @@ class _MaterialHomeState extends State<Home> {
             icon: Icon(Icons.shopping_basket),
             title: Text("Pickups"),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Profile"),
-          ),
+          //BottomNavigationBarItem(
+            //icon: Icon(Icons.person),
+            //title: Text("Profile"),
+          //),
         ],
         currentIndex: _bottomBarIndex,
         selectedItemColor: Colors.white,

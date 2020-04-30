@@ -25,7 +25,7 @@ class SheltertAnalytics extends State<ShelterAnalyticsHome>{
   final _pageOptions = [
     FoodDonationsAnalytics(),
     TopContributors(),
-    FoodDonationsAnalytics(),
+    FoodRequestAnalytics(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class SheltertAnalytics extends State<ShelterAnalyticsHome>{
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.monetization_on),
+                icon: Icon(Icons.fastfood),
                 title: Text('Donations')
             ),
             BottomNavigationBarItem(
@@ -58,7 +58,7 @@ class SheltertAnalytics extends State<ShelterAnalyticsHome>{
                 title: Text('Top Contributors')
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money),
+                icon: Icon(Icons.add_circle_outline),
                 title: Text('Food Request')
             )
           ],
