@@ -24,6 +24,8 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
 
   Color mainColor;
 
+
+
   @override
   void initState() {
     // this function is called when the page starts
@@ -108,7 +110,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: Text("Manage your Subscriptions"),
+            subtitle: Text("Manage your Subscriptions."),
             onTap: () {
               Navigator.push(
                   context,
@@ -124,13 +126,49 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: Text("Define what alerts and notifications you want to see"),
+            subtitle: Text("Define what alerts and notifications you want to see."),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => RestaurantNotifications()));
             },
+          ),
+
+
+          ListTile(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(15)),
+                    backgroundColor: Colors.white,
+                    title: new Text("About coming soon!"),
+                    content: new Text("Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("Sounds good!"),
+                        textColor: Colors.green,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            title: Text(
+              "About",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text("Find out what's new about us here."),
+
           ),
           Container(
               alignment: Alignment.topLeft,
@@ -162,21 +200,20 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                   },
                 );
 
+
                 },
+
+
 
 
 
               )
           ),
-          Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(top: 5.0, left: 15.0),
-            child: Text("Select different payment options.",style: TextStyle(
-              fontSize: 15.0,
-            ),),
-          ),
+
+
         ],
       ),
+
     );
   }
 }

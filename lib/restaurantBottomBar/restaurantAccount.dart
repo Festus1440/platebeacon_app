@@ -50,35 +50,7 @@ class RestaurantAccount extends StatelessWidget {
 
 
 
-          ListTile(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  // return object of type Dialog
-                  return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(15)),
-                    backgroundColor: Colors.white,
-                    title: new Text("About coming soon!"),
-                    content: new Text("Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
-                    actions: <Widget>[
-                      new FlatButton(
-                        child: new Text("Sounds good!"),
-                        textColor: Colors.green,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            leading: Container(
-                margin: EdgeInsets.only(left: 10.0), child: Icon(Icons.info)),
-            title: Text("About"),
-          ),
+
         ],
       ),
     );
