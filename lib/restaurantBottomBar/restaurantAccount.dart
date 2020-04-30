@@ -104,7 +104,6 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
         email.text = data["email"] ?? "null";
         role.text = data["role"] ?? "null";
       });
-      print(email);
     });
   }
 
@@ -121,6 +120,14 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
         centerTitle: false,
         elevation: 10.0,
         title: Text("Account"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Done"),
+            onPressed: () {
+
+            },
+          ),
+        ],
         backgroundColor:mainColor,
       ),
       body: Stack(

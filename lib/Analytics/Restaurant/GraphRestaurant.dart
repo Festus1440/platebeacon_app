@@ -121,11 +121,7 @@ class _HomePageAnalytics extends State<AnalyticsHomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DefaultTabController(
+    return DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
@@ -300,7 +296,6 @@ class _HomePageAnalytics extends State<AnalyticsHomePage> {
             ],
           ),
         ),
-      ),
     );
   }
 

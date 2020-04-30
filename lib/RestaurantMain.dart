@@ -25,8 +25,8 @@ class RestaurantMain extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
-        '/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
-//      '/analytics' : (BuildContext context) => AnalyticsHomePage(),
+        //'/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
+        //'/analytics' : (BuildContext context) => AnalyticsHomePage(),
       },
     );
   }
@@ -299,7 +299,10 @@ class RestaurantState extends State<Home> {
                     //Creates the Analytics section.
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/analytics'); //Analytics
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RestaurantAnalyticsHome()));
                     },
                     leading: Icon(Icons.insert_chart),
                     title: Text("Analytics"),
@@ -322,6 +325,7 @@ class RestaurantState extends State<Home> {
                     leading: Container(child: Icon(Icons.help)),
                     title: Text("Help"),
                   ),
+
                   //ListTile(
                   //onTap: () {
                   //  Navigator.of(context).pop();

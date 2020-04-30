@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,7 +77,7 @@ class _PickupState extends State<Pickup> {
                 ),
                 title: Text('Next Donation'),
                 subtitle: Text(
-                    document['date'] + " id: " + document['id'].toString()),
+                    document['date'].toString()),
                 trailing: Container(
                   decoration: BoxDecoration(
                       shape: BoxShape.circle, color: mainColor),

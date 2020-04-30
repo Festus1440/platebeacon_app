@@ -13,15 +13,12 @@ class ShelterAnalyticsHome extends StatefulWidget{
 }
 
 class SheltertAnalytics extends State<ShelterAnalyticsHome>{
-
   @override
   void initState() {
     super.initState();
     Timer.run(() => _showDialog());
   }
-
   int _currentIndex = 0;
-
   final _pageOptions = [
     FoodDonationsAnalytics(),
     TopContributors(),
@@ -29,18 +26,15 @@ class SheltertAnalytics extends State<ShelterAnalyticsHome>{
   ];
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-      title: 'Analytics',
-      theme: ThemeData(
-          primarySwatch: Colors.blue
-      ),
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text('Analytics'),
+          backgroundColor: Colors.blue,
         ),
         body: _pageOptions[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.blue,
+          selectedItemColor: Colors.white,
           currentIndex: _currentIndex,
           onTap: (int index) {
             setState(() {
@@ -63,7 +57,6 @@ class SheltertAnalytics extends State<ShelterAnalyticsHome>{
             )
           ],
         ),
-      ),
 
     );
   }
