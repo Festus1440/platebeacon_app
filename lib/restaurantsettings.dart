@@ -69,45 +69,47 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
       body: Container(
         child: Column(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      child: Text(
-                        "Edit profile",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    RestaurantAccountDetails()));
-                      },
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(top: 5.0),
-                    child: Text(
-                      "Change your name,description and profile photo.",
-                      style: TextStyle(
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                ],
+            ListTile(
+              contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
+              title: Text(
+                "Edit Profile",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+              subtitle: Text("Change your name,description and profile photo."),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RestaurantAccountDetails()));
+              },
             ),
             Divider(
-              height: 20.0,
+              height: 0.0,
+              thickness: 0.5,
+              color: mainColor,
+              indent: 0.0,
+              endIndent: 0.0,
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
+              title: Text(
+                "Account Settings",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text("Change your email or delete your account."),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AccountSettingsDetails()));
+              },
+            ),
+            Divider(
+              height: 0.0,
               thickness: 0.5,
               color: mainColor,
               indent: 0.0,
@@ -115,15 +117,15 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
             ),
             Column(
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
+                Column(
+                  children: <Widget>[
+                    Container(
                         alignment: Alignment.topLeft,
+                        margin:
+                            EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
                         child: GestureDetector(
                           child: Text(
-                            "Account Settings",
+                            "Notifications",
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
@@ -134,18 +136,16 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        AccountSettingsDetails()));
+                                        RestaurantNotifications()));
                           },
-                        ),
-                      )
-                    ],
-                  ),
+                        ))
+                  ],
                 ),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.only(top: 5.0, left: 15.0),
                   child: Text(
-                    "Change your email or delete your account.",
+                    "Define what alerts and notifications you want to see.",
                     style: TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.bold,
@@ -162,68 +162,36 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                 Column(
                   children: <Widget>[
                     Container(
-                      alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                        alignment: Alignment.topLeft,
+                        margin:
+                            EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
                         child: GestureDetector(
-                            child: Text(
-                              "Notifications",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          child: Text(
+                            "Subscriptions",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
                             ),
-                          onTap: (){
-                              Navigator.push(
+                          ),
+                          onTap: () {
+                            Navigator.push(
                                 context,
-                                MaterialPageRoute(builder:(context) => RestaurantNotifications()));
-
+                                MaterialPageRoute(
+                                    builder: (context) => Subscriptions()));
                           },
-
-                        )
-                    )
+                        )),
                   ],
                 ),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.only(top: 5.0, left: 15.0),
-                  child: Text("Define what alerts and notifications you want to see.",style: TextStyle(
-                    fontSize: 10.0,fontWeight:FontWeight.bold,
-                  ),),
-                ),
-                Divider(
-                  height: 20.0,
-                  thickness: 0.5,
-                  color: mainColor,
-                  indent: 0.0,
-                  endIndent: 0.0,
-                ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      alignment: Alignment.topLeft,
-                      margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                      child: GestureDetector(
-                        child: Text("Subscriptions",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,
-                        ),
-                        ),
-                        onTap: (){Navigator.push( context,
-                        MaterialPageRoute(builder:(context) => Subscriptions()));
-
-                        },
-
-
-
-    )
-    ),
-
-    ],
+                  child: Text(
+                    "Manage your subscriptions.",
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(top: 5.0, left: 15.0),
-                  child: Text("Manage your subscriptions.",style: TextStyle(
-                    fontSize: 10.0,fontWeight:FontWeight.bold,
-                  ),),
                 ),
                 Divider(
                   height: 20.0,
@@ -232,15 +200,11 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                   indent: 0.0,
                   endIndent: 0.0,
                 ),
-
-
-
               ],
             ),
           ],
         ),
       ),
-
     );
   }
 }
