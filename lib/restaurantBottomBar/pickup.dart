@@ -77,6 +77,15 @@ class _PickupState extends State<Pickup> {
                 ),
                 title: new Text('Next Donation'),
                 subtitle: new Text(document['date']),
+                trailing: Container(
+                  height: 50,
+                  child: IconButton(
+                    onPressed: () {
+
+                    },
+                    icon: Icon(Icons.delete),
+                  ),
+                ),
               );
             }).toList(),
           );

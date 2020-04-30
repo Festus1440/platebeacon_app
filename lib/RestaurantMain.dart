@@ -184,10 +184,10 @@ class RestaurantState extends State<Home> {
             ),
             title: Text("Deliveries"),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Profile"),
-          ),
+//          BottomNavigationBarItem(
+//            icon: Icon(Icons.person),
+//            title: Text("Profile"),
+//          ),
         ],
         currentIndex: _bottomBarIndex,
         selectedItemColor: Colors.white,
@@ -269,6 +269,36 @@ class RestaurantState extends State<Home> {
                     leading: Icon(Icons.library_books),
                     title: Text("Stories"),
                   ),
+                  ListTile(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(15)),
+                            backgroundColor: Colors.white,
+                            title: new Text("Help coming soon!"),
+                            content: new Text("Yes, you might have questions and we'll have a help section shortly."
+                                " For now directly ask the team!"),
+                            actions: <Widget>[
+                              new FlatButton(
+                                child: new Text("Sounds good!"),
+                                textColor: Colors.green,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    leading: Container(
+                        child: Icon(Icons.help)),
+                    title: Text("Help"),
+                  ),
                   //ListTile(
                     //onTap: () {
                     //  Navigator.of(context).pop();
@@ -310,36 +340,6 @@ class RestaurantState extends State<Home> {
                     },
                     leading: Icon(Icons.settings),
                     title: Text("Settings"),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          // return object of type Dialog
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(15)),
-                            backgroundColor: Colors.white,
-                            title: new Text("Help coming soon!"),
-                            content: new Text("Yes, you might have questions and we'll have a help section shortly."
-                                " For now directly ask the team!"),
-                            actions: <Widget>[
-                              new FlatButton(
-                                child: new Text("Sounds good!"),
-                                textColor: Colors.green,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    leading: Container(
-                        margin: EdgeInsets.only(left: 10.0), child: Icon(Icons.help)),
-                    title: Text("Help"),
                   ),
                   ListTile(
                     onTap: () {
