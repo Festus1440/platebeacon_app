@@ -136,7 +136,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
               child: GestureDetector(
-                child: Text("Payment Options",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,
+                child: Text("Payment Options",style: TextStyle(fontSize: 17.0,fontWeight: FontWeight.bold,
                 ),
                 ),
                 onTap: (){     showDialog(
@@ -172,7 +172,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
             alignment: Alignment.topLeft,
             padding: EdgeInsets.only(top: 5.0, left: 15.0),
             child: Text("Select different payment options.",style: TextStyle(
-              fontSize: 10.0,fontWeight:FontWeight.bold,
+              fontSize: 15.0,
             ),),
           ),
         ],
