@@ -16,6 +16,14 @@ class _FoodDonations extends State<FoodDonationsAnalytics>{
         child: Container(
           child: Column(
             children: <Widget>[
+              Container(
+                child: Text('Food Request',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30,
+                ),),
+                height: 40,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -32,6 +40,9 @@ class _FoodDonations extends State<FoodDonationsAnalytics>{
                     onPressed: null,
                   )
                 ],
+              ),
+              Container(
+                height: 40,
               ),
               Image(
                 image: AssetImage('assets/barChart3.png'),

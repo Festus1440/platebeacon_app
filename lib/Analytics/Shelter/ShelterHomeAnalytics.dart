@@ -25,7 +25,7 @@ class SheltertAnalytics extends State<ShelterAnalyticsHome>{
   final _pageOptions = [
     FoodDonationsAnalytics(),
     TopContributors(),
-    FoodDonationsAnalytics(),
+    FoodRequestAnalytics(),
   ];
   @override
   Widget build(BuildContext context) {
