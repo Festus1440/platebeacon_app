@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
+import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 //import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'restaurantsettings.dart';
@@ -76,9 +77,7 @@ class _MaterialHomeState extends State<Home> {
   final bottomBarItems = [
     HomeScreen(),
     MapSample(),
-    Container(
-      child: Center(child: Text("")),
-    ),
+    Pickup(),
     ShelterAccount(),
   ];
   Color mainColor = Colors.blue;
@@ -95,7 +94,7 @@ class _MaterialHomeState extends State<Home> {
           appBarTitle = "Map";
           break;
         case 2:
-          appBarTitle = "Pickups";
+          appBarTitle = "Donations";
           break;
         case 3:
           appBarTitle = "Account";
