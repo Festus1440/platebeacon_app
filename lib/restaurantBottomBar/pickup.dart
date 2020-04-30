@@ -59,9 +59,9 @@ class _PickupState extends State<Pickup> {
       print("loaded" + userId);
       return new StreamBuilder(
         stream: Firestore.instance
-            .collection("Restaurant")
+            .collection(mainCollection)
             .document(userId)
-            .collection("deliveries")
+            .collection(subCollection)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Center(child: new Text('Loading...'));
@@ -78,12 +78,14 @@ class _PickupState extends State<Pickup> {
                 title: new Text('Next Donation'),
                 subtitle: new Text(document['date']),
                 trailing: Container(
+                  decoration: BoxDecoration(shape: BoxShape.circle,color: mainColor),
+                  //color: Colors.grey,
                   height: 50,
                   child: IconButton(
                     onPressed: () {
 
                     },
-                    icon: Icon(Icons.delete),
+                    icon: Icon(Icons.delete,color: Colors.white,),
                   ),
                 ),
               );

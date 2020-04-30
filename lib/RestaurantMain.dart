@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -121,7 +122,7 @@ class RestaurantState extends State<Home> {
           appBarTitle = "Map";
           break;
         case 2:
-          appBarTitle = "Pickups";
+          appBarTitle = "Donations";
           break;
         case 3:
           appBarTitle = "Account";
@@ -157,7 +158,7 @@ class RestaurantState extends State<Home> {
           BottomNavigationBarItem(
             icon: Stack(
               children: <Widget>[
-                Icon(Icons.directions_car),
+                Icon(CupertinoIcons.heart),
                 Positioned(
                   right: 0,
                   child: Container(
@@ -182,7 +183,7 @@ class RestaurantState extends State<Home> {
                 )
               ],
             ),
-            title: Text("Deliveries"),
+            title: Text("Donations"),
           ),
 //          BottomNavigationBarItem(
 //            icon: Icon(Icons.person),
