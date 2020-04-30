@@ -263,6 +263,7 @@ class _MaterialHomeState extends State<Home> {
                   ),
                   ListTile(
                     onTap: () {
+                      // flutter defined function
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -270,8 +271,9 @@ class _MaterialHomeState extends State<Home> {
                           return AlertDialog(
                             shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                             backgroundColor: Colors.white,
-                            title: new Text("About coming soon!"),
-                            content: new Text("Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
+                            title: new Text("Favorites coming soon!"),
+                            content: new Text("Soon you will be able to favorite Shelters you work with"
+                                " closely and view them all in one place!"),
                             actions: <Widget>[
                               new FlatButton(
                                 child: new Text("Sounds good!"),
@@ -282,10 +284,15 @@ class _MaterialHomeState extends State<Home> {
                             ],
                           );
                         },
-                      );},
-                    leading: Icon(Icons.info),
-                    title: Text("About"),
+                      );
+                    },
+                    leading: Container(
+                        //margin: EdgeInsets.only(left: 10.0),
+                        child: Icon(Icons.favorite)),
+                    title: Text("Favorites"),
+
                   ),
+
                   Divider(
                     height: 15.0,
                     thickness: 0.5,

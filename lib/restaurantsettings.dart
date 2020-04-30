@@ -132,6 +132,49 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                       builder: (context) => RestaurantNotifications()));
             },
           ),
+          Container(
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+              child: GestureDetector(
+                child: Text("Payment Options",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,
+                ),
+                ),
+                onTap: (){     showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    // return object of type Dialog
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15)),
+                      backgroundColor: Colors.white,
+                      title: new Text("Payment Options coming soon!"),
+                      content: new Text("Feel FREE to use this app as part of our research, no need to pay right now! "),
+                      actions: <Widget>[
+                        new FlatButton(
+                          child: new Text("Sounds good!"),
+                          textColor: Colors.green,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+                },
+
+
+
+              )
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(top: 5.0, left: 15.0),
+            child: Text("Select different payment options.",style: TextStyle(
+              fontSize: 10.0,fontWeight:FontWeight.bold,
+            ),),
+          ),
         ],
       ),
     );
