@@ -12,11 +12,11 @@ class _SavingTotalPage extends State<SavingTotal>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Center(
+      heightFactor: 445,
       child: Container(
         child: Column(
           children: <Widget>[
             Row(
-
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 RaisedButton(

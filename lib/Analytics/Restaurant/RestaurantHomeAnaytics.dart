@@ -1,16 +1,18 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutterapp/restaurantScreens/AnalyticsPage.dart';
-import 'package:flutterapp/restaurantScreens/RestaurantRating.dart';
-import 'package:flutterapp/restaurantScreens/Earning.dart';
+import 'package:flutterapp/Analytics/Restaurant/RestaurantRating.dart';
+import 'package:flutterapp/Analytics/Restaurant/SavigTotal.dart';
+import 'package:flutterapp/Analytics/Restaurant/Earning.dart';
 import 'dart:async';
 
-class AnalyticsHomePage extends StatefulWidget{
+class RestaurantAnalyticsHome extends StatefulWidget{
   @override
-  _HomePageAnalytics createState() => _HomePageAnalytics();
- }
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return RestaurantAnalytics();
+  }
+}
 
-class _HomePageAnalytics extends State<AnalyticsHomePage>{
+class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
 
   @override
   void initState() {
@@ -18,6 +20,56 @@ class _HomePageAnalytics extends State<AnalyticsHomePage>{
     Timer.run(() => _showDialog());
   }
 
+  int _currentIndex = 0;
+
+  final _pageOptions = [
+    EarningsTotal(),
+    RatingPage(),
+    SavingTotal()
+  ];
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      title: 'Analytics',
+      theme: ThemeData(
+        primarySwatch: Colors.green
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Analytics'),
+        ),
+        body: _pageOptions[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+              _onItemTapped(index);
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.monetization_on),
+              title: Text('Savings')
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.star),
+                title: Text('Ranking')
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.attach_money),
+                title: Text('Earnings')
+            )
+          ],
+        ),
+      ),
+
+    );
+  }
+
+
+  //Function: Takes on parameter an sets the index of the currently selected widget
   void _onItemTapped(int index) {
     switch (index) {
       case 0:
@@ -29,65 +81,10 @@ class _HomePageAnalytics extends State<AnalyticsHomePage>{
       case 2:
         _showDialogEarnings();
         break;
-      default:
-        _showDialog();
+      default:_showDialog();
     }
   }
 
-
-  int _currentIndex = 0;
-
-  final _page = [
-    SavingTotal(),
-    RatingPage(),
-    EarningsTotal(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-      title: 'Analytics',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Analytics'),
-        ),
-        body: _page[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.grey,
-          selectedItemColor: Colors.black,
-          currentIndex: _currentIndex,
-          onTap: (int index){
-            setState(() {
-              _currentIndex = index;
-              _onItemTapped(index);   //Set the pop up message
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.monetization_on),
-                title: Text('Saving')
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              title: Text('Ranking'),
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money),
-                title: Text('Earnings')
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-
-
-//  Creating the section for the pop up
   void _showDialog() {
 // flutter defined function
     showDialog(

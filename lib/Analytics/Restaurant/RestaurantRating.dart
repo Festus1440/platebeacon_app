@@ -10,8 +10,8 @@ class RatingPage extends StatefulWidget{
 class _RatingPageLayout extends State<RatingPage>{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return  ListView(
+        scrollDirection: Axis.vertical,
         children: <Widget>[
           ListTile(
             title: Text('Ranking 1'),
@@ -24,7 +24,7 @@ class _RatingPageLayout extends State<RatingPage>{
           ),
           ListTile(
             title: Text('Ranking 4'),
-          )
+          ),
         ],
       );
   }

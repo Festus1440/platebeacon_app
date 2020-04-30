@@ -8,10 +8,9 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
-import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
+import 'package:flutterapp/Analytics/Restaurant/RestaurantHomeAnaytics.dart';
 import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
-import 'package:flutterapp/restaurantScreens/shelterAnalytics.dart';
 import 'Home.dart';
 import 'main.dart';
 
@@ -24,9 +23,7 @@ class RestaurantMain extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
-        '/analytics': (BuildContext context) => AnalyticsHomePage(),
-//        '/restaurantAnalytics': (BuildContext context) => AnalyticsBody(),
-
+        '/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
       },
     );
   }
