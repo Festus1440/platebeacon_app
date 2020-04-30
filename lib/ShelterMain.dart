@@ -4,7 +4,6 @@ import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 //import 'package:flutterapp/Settings.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
-import 'ShelterDrawer/ShelterSettings.dart';
 import 'restaurantsettings.dart';
 import 'ShelterDrawer/ShelterStories.dart';
 import 'map.dart';
@@ -15,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/ShelterDrawer/Notifications.dart';
 import 'package:flutterapp/ShelterDrawer/Events.dart';
+import 'package:flutterapp/ShelterDrawer/ShelterSettings.dart';
 
 class ShelterMain extends StatelessWidget {
   //const ShelterMain({Key key, this.user}) : super(key: key);
@@ -208,6 +208,9 @@ class _MaterialHomeState extends State<Home> {
               leading: Icon(Icons.insert_chart),
               title: Text("My Analytics"),
             ),
+
+
+
             ListTile(
               onTap: () {
                 Navigator.of(context).pop();

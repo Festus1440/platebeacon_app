@@ -1,29 +1,16 @@
-//Implementation by Jose Heras on 04/27/2020
-
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/material.dart';
+import 'package:flutterapp/restaurantScreens/AnalyticsPage.dart';
+import 'package:flutterapp/restaurantScreens/RestaurantRating.dart';
+import 'package:flutterapp/restaurantScreens/Earning.dart';
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
-class RestaurantAnalytics extends StatelessWidget {
+class AnalyticsHomePage extends StatefulWidget{
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AnalyticsBody(),
-    );
-  }
-}
+  _HomePageAnalytics createState() => _HomePageAnalytics();
+ }
 
-class AnalyticsBody extends StatefulWidget {
-  AnalyticsBody({Key key}) : super (key: key);
-
-  @override
-  _AnalyticsBodyState createState() => _AnalyticsBodyState();
-}
-
-
-class _AnalyticsBodyState extends State<AnalyticsBody> {
+class _HomePageAnalytics extends State<AnalyticsHomePage>{
 
   @override
   void initState() {
@@ -31,63 +18,6 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
     Timer.run(() => _showDialog());
   }
 
-  int _selectedIndex = 0;
-
-  //Defines a constant style for body widgets
-  static const TextStyle optionStyle =
-  TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold
-  );
-
-  Widget selectButton(BuildContext context){
-    return Center(
-      child: Column(
-         children: <Widget>[
-           _createToolBar(),
-           Image(
-             image: AssetImage('assets/barChart3.png'),
-           )
-         ],
-      ),
-    );
-  }
-
-  static List<Widget> _widgetOptions = <Widget>[
-    Center(
-      child: Column(
-        children: <Widget>[
-          Image(
-            image: AssetImage('assets/barChart3.png'),
-          ),
-        ],
-      ),
-    ),
-    Center(
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              'Position 1'
-            ),
-            Text(
-              'Position 2'
-            ),
-            Text(
-              'Position 4'
-            ),
-          ],
-        ),
-      ),
-    ),
-    Text(
-      'Coming Soon',
-      style: optionStyle,
-    )
-  ];
-
-  //Function: Takes on parameter an sets the index of the currently selected widget
   void _onItemTapped(int index) {
     switch (index) {
       case 0:
@@ -99,90 +29,65 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
       case 2:
         _showDialogEarnings();
         break;
-      default:_showDialog();
+      default:
+        _showDialog();
     }
-
-    setState(() {
-      _selectedIndex = index;
-    });
   }
-  final graphButtonStyle = TextStyle(color: Colors.black, fontStyle: FontStyle.italic, fontSize: 30,);
 
-  //Defines and creates the top bar on the chart.
-  Row _createToolBar(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        new ButtonBar(children: <Widget>[
-          RaisedButton(
-            child: Text('Week',
-              style: graphButtonStyle,
-            ),
-            onPressed: null,
-          ),
-          RaisedButton(
-            child: Text('Month',
-              style: graphButtonStyle,
-            ),
-            onPressed: null,
-          ),
-          RaisedButton(
-            child: Text('Year',
-              style: graphButtonStyle,
-            ),
-            onPressed: null,
-          )
-        ],
+
+  int _currentIndex = 0;
+
+  final _page = [
+    SavingTotal(),
+    RatingPage(),
+    EarningsTotal(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      title: 'Analytics',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Analytics'),
         ),
-      ],
+        body: _page[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.grey,
+          selectedItemColor: Colors.black,
+          currentIndex: _currentIndex,
+          onTap: (int index){
+            setState(() {
+              _currentIndex = index;
+              _onItemTapped(index);   //Set the pop up message
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.monetization_on),
+                title: Text('Saving')
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              title: Text('Ranking'),
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.attach_money),
+                title: Text('Earnings')
+            )
+          ],
+        ),
+      ),
     );
   }
 
 
-  //Builds the overall view of the Analytics page
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar( //Top Bar.
-          backgroundColor: Colors.green,
-          title: Text("My Analytics"),
-        ),
-        body: Center( //Body of the screen
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _createToolBar(),
-              _widgetOptions.elementAt(_selectedIndex),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar( //Lower navigation.
-          backgroundColor: Colors.grey,
-          items: const <BottomNavigationBarItem>[
-            //Contains the lower icons on the screen
-            BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money),
-                title: Text('Savings')
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                title: Text('Ranking')
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.monetization_on),
-                title: Text('Earnings')
-            )
-          ],
 
-          currentIndex: _selectedIndex,
-          //Currently selected index
-          selectedItemColor: Colors.black,
-          //Color which indicates selected icon
-          onTap: _onItemTapped, //Action
-        ),
-      );
-  }
-
+//  Creating the section for the pop up
   void _showDialog() {
 // flutter defined function
     showDialog(

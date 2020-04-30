@@ -11,6 +11,7 @@ import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
 import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
 import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
+import 'package:flutterapp/restaurantScreens/shelterAnalytics.dart';
 import 'Home.dart';
 import 'main.dart';
 
@@ -23,7 +24,9 @@ class RestaurantMain extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
-        '/restaurantAnalytics': (BuildContext context) => AnalyticsBody(),
+        '/analytics': (BuildContext context) => AnalyticsHomePage(),
+//        '/restaurantAnalytics': (BuildContext context) => AnalyticsBody(),
+
       },
     );
   }
@@ -256,7 +259,7 @@ class RestaurantState extends State<Home> {
                     //Creates the Analytics section.
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/restaurantAnalytics');
+                      Navigator.of(context).pushNamed('/analytics');  //Analytics
                     },
                     leading: Icon(Icons.insert_chart),
                     title: Text("Analytics"),
