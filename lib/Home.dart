@@ -231,49 +231,43 @@ class ShelterHome extends StatelessWidget {
         SizedBox(height: 10.0),
         Container(
           child: ListTile(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(15)),
+                    backgroundColor: Colors.white,
+                    title: new Text("Food request coming soon!"),
+                    content: new Text(
+                        "Getting too many potatoes? Let's go ahead and share that information so we "
+                            "can share the wealth elsewhere, and ensure you get the food you need! This will also "
+                            "provide much needed data to see what foods are scarce, compared to whats easily accessable. "),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("Sounds good!"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Icon(Icons.location_on),
+            leading: Icon(Icons.restaurant),
             title: Text("Request Food"),
-            trailing: IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    // return object of type Dialog
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(15)),
-                      backgroundColor: Colors.white,
-                      title: new Text("Food request coming soon!"),
-                      content: new Text(
-                          "Getting too many potatoes? Let's go ahead and share that information so we "
-                          "can share the wealth elsewhere, and ensure you get the food you need! This will also "
-                          "provide much needed data to see what foods are scarce, compared to whats easily accessable. "),
-                      actions: <Widget>[
-                        new FlatButton(
-                          child: new Text("Sounds good!"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              icon: Icon(Icons.restaurant),
-            ),
           ),
         ),
         Container(
           child: ListTile(
+            onTap: (){},
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Icon(Icons.access_time),
+            leading: Icon(Icons.calendar_today),
             title: Text("Drop off Time"),
-            trailing: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.calendar_today),
-            ),
           ),
         ),
       ],
