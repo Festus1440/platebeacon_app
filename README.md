@@ -12,7 +12,7 @@ Please make detail messages when updating the project
 
  restuarantAccount.dart
 
-     
+
   # Notifications.dart
     You will be able to choose the notification method like email , message and calls to receive notifications in your order from plate beacon.
     And also you can select all methods for receiving notifications.
