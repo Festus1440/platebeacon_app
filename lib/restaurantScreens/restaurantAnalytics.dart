@@ -22,6 +22,7 @@ class AnalyticsBody extends StatefulWidget {
   _AnalyticsBodyState createState() => _AnalyticsBodyState();
 }
 
+
 class _AnalyticsBodyState extends State<AnalyticsBody> {
 
   @override
@@ -39,14 +40,46 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
       fontWeight: FontWeight.bold
   );
 
+  Widget selectButton(BuildContext context){
+    return Center(
+      child: Column(
+         children: <Widget>[
+           _createToolBar(),
+           Image(
+             image: AssetImage('assets/barChart3.png'),
+           )
+         ],
+      ),
+    );
+  }
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Image(
-      image: AssetImage('assets/barChart3.png'),
+  static List<Widget> _widgetOptions = <Widget>[
+    Center(
+      child: Column(
+        children: <Widget>[
+          Image(
+            image: AssetImage('assets/barChart3.png'),
+          ),
+        ],
+      ),
     ),
-    Text(
-      'Coming Soon',
-      style: optionStyle,
+    Center(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              'Position 1'
+            ),
+            Text(
+              'Position 2'
+            ),
+            Text(
+              'Position 4'
+            ),
+          ],
+        ),
+      ),
     ),
     Text(
       'Coming Soon',
@@ -105,11 +138,11 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
     );
   }
 
+
   //Builds the overall view of the Analytics page
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar( //Top Bar.
           backgroundColor: Colors.green,
           title: Text("My Analytics"),
@@ -147,8 +180,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
           //Color which indicates selected icon
           onTap: _onItemTapped, //Action
         ),
-      ),
-    );
+      );
   }
 
   void _showDialog() {
