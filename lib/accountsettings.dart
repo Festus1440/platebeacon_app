@@ -86,65 +86,61 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 15.0, left: 30.0, right: 15.0),
+              //margin: EdgeInsets.only(top: 15.0, left: 30.0, right: 15.0),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      child: Text(
-                        "Change Email",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  ListTile(
+                    //contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
+                    title: Text(
+                      "Change Email",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                    onTap: () {
+                    },
                   ),
                   Divider(
-                    height: 20.0,
+                    height: 0.0,
                     thickness: 0.5,
                     color: Colors.black,
                     indent: 0.0,
                     endIndent: 0.0,
                   ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(top: 3.0, left: 0.0, right: 15.0),
-                    child: GestureDetector(
-                      child: Text(
-                        "Delete Account",
-                        //semanticsLabel: tappedYes.toString(),
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  ListTile(
+                    //contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
+                    title: Text(
+                      "Delete Account",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                      onTap: () async {
-                        FirebaseUser user;
-                        switch (role) {
-                          case 'Shelter':
-                            Firestore.instance
-                                .collection(role)
-                                .document(user.uid)
-                                .delete();
-                            print("Deleted Successfully ");
-                            break;
-                          case 'Restaurant':
-                            Firestore.instance
-                                .collection(role)
-                                .document(user.uid)
-                                .delete();
-                            break;
-                            print("Deleted Successfully ");
-                        }
-                        Navigator.pop(context);
-                        FirebaseAuth.instance.signOut().then((value) {
-                          Navigator.of(context).pushReplacementNamed('/main');
-                        });
+                    ),
+                    //subtitle: Text("Change your name,description and profile photo."),
+                    onTap: () async {
+                      FirebaseUser user;
+                      switch (role) {
+                        case 'Shelter':
+                          Firestore.instance
+                              .collection(role)
+                              .document(user.uid)
+                              .delete();
+                          print("Deleted Successfully ");
+                          break;
+                        case 'Restaurant':
+                          Firestore.instance
+                              .collection(role)
+                              .document(user.uid)
+                              .delete();
+                          break;
+                          print("Deleted Successfully ");
+                      }
+                      Navigator.pop(context);
+                      FirebaseAuth.instance.signOut().then((value) {
+                        Navigator.of(context).pushReplacementNamed('/main');
+                      });
 
 
-                        /*
+                      /*
                         final action = await Dialogs.yesAbortDialog(
                             context,
                             'Do you want to Delete Your Account?',
@@ -177,11 +173,10 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                           setState(() => tappedYes = true);
                         }
                          */
-                      },
-                    ),
+                    },
                   ),
                   Divider(
-                    height: 20.0,
+                    height: 0.0,
                     thickness: 0.5,
                     color: Colors.black,
                     indent: 0.0,
