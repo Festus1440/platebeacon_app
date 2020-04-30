@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Analytics/Restaurant/RestaurantRating.dart';
-import 'package:flutterapp/Analytics/Restaurant/SavigTotal.dart';
-import 'package:flutterapp/Analytics/Restaurant/Earning.dart';
+import 'package:flutterapp/Analytics/Restaurant/SavingRestaurant.dart';
+import 'package:flutterapp/Analytics/Restaurant/EarningsRestaurant.dart';
 import 'dart:async';
 
 class RestaurantAnalyticsHome extends StatefulWidget{

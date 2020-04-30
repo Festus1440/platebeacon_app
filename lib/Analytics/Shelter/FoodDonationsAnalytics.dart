@@ -10,14 +10,14 @@ class FoodDonationsAnalytics extends StatefulWidget{
 class _FoodDonations extends State<FoodDonationsAnalytics>{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Center(
         heightFactor: 445,
         child: Container(
           child: Column(
             children: <Widget>[
               Container(
-                child: Text('Food Request',
+                alignment: Alignment.centerLeft,
+                child: Text('Food Donations',
                 style: TextStyle(
                   color: Colors.blue,
                   fontSize: 30,

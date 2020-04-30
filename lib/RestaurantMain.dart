@@ -13,6 +13,7 @@ import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'Home.dart';
 import 'main.dart';
+import 'package:flutterapp/Analytics/Restaurant/GraphRestaurant.dart';
 
 class RestaurantMain extends StatelessWidget {
   @override
@@ -24,6 +25,7 @@ class RestaurantMain extends StatelessWidget {
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
+//      '/analytics' : (BuildContext context) => AnalyticsHomePage(),
       },
     );
   }
