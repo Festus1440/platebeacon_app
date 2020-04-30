@@ -100,7 +100,7 @@ class HelpState extends State<Help> {
               decoration: BoxDecoration (
                 image: DecorationImage (
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/phone.png'),
+                  image: AssetImage('assets/phone1.png'),
                 ),
               ),
             ),
