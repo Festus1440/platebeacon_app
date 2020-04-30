@@ -1,29 +1,18 @@
-//Implementation by Jose Heras on 04/27/2020
-
+import 'package:flutter/material.dart';
+import 'package:flutterapp/Analytics/Shelter/FoodDonationsAnalytics.dart';
+import 'package:flutterapp/Analytics/Shelter/FoodRequesAnalytics.dart';
+import 'package:flutterapp/Analytics/Shelter/TopContributors.dart';
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
-class RestaurantAnalytics extends StatelessWidget {
+class ShelterAnalyticsHome extends StatefulWidget{
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AnalyticsBody(),
-    );
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return SheltertAnalytics();
   }
 }
 
-class AnalyticsBody extends StatefulWidget {
-  AnalyticsBody({Key key}) : super (key: key);
-
-  @override
-  _AnalyticsBodyState createState() => _AnalyticsBodyState();
-}
-
-
-class _AnalyticsBodyState extends State<AnalyticsBody> {
+class SheltertAnalytics extends State<ShelterAnalyticsHome>{
 
   @override
   void initState() {
@@ -31,61 +20,54 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
     Timer.run(() => _showDialog());
   }
 
-  int _selectedIndex = 0;
+  int _currentIndex = 0;
 
-  //Defines a constant style for body widgets
-  static const TextStyle optionStyle =
-  TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold
-  );
-
-  Widget selectButton(BuildContext context){
-    return Center(
-      child: Column(
-         children: <Widget>[
-           _createToolBar(),
-           Image(
-             image: AssetImage('assets/barChart3.png'),
-           )
-         ],
+  final _pageOptions = [
+    FoodDonationsAnalytics(),
+    TopContributors(),
+    FoodDonationsAnalytics(),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      title: 'Analytics',
+      theme: ThemeData(
+          primarySwatch: Colors.blue
       ),
-    );
-  }
-
-  static List<Widget> _widgetOptions = <Widget>[
-    Center(
-      child: Column(
-        children: <Widget>[
-          Image(
-            image: AssetImage('assets/barChart3.png'),
-          ),
-        ],
-      ),
-    ),
-    Center(
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              'Position 1'
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Analytics'),
+        ),
+        body: _pageOptions[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+              _onItemTapped(index);
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.monetization_on),
+                title: Text('Donations')
             ),
-            Text(
-              'Position 2'
+            BottomNavigationBarItem(
+                icon: Icon(Icons.star),
+                title: Text('Top Contributors')
             ),
-            Text(
-              'Position 4'
-            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.attach_money),
+                title: Text('Food Request')
+            )
           ],
         ),
       ),
-    ),
-    Text(
-      'Coming Soon',
-      style: optionStyle,
-    )
-  ];
+
+    );
+  }
+
 
   //Function: Takes on parameter an sets the index of the currently selected widget
   void _onItemTapped(int index) {
@@ -101,86 +83,6 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
         break;
       default:_showDialog();
     }
-
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-  final graphButtonStyle = TextStyle(color: Colors.black, fontStyle: FontStyle.italic, fontSize: 30,);
-
-  //Defines and creates the top bar on the chart.
-  Row _createToolBar(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        new ButtonBar(children: <Widget>[
-          RaisedButton(
-            child: Text('Week',
-              style: graphButtonStyle,
-            ),
-            onPressed: null,
-          ),
-          RaisedButton(
-            child: Text('Month',
-              style: graphButtonStyle,
-            ),
-            onPressed: null,
-          ),
-          RaisedButton(
-            child: Text('Year',
-              style: graphButtonStyle,
-            ),
-            onPressed: null,
-          )
-        ],
-        ),
-      ],
-    );
-  }
-
-
-  //Builds the overall view of the Analytics page
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar( //Top Bar.
-          backgroundColor: Colors.green,
-          title: Text("My Analytics"),
-        ),
-        body: Center( //Body of the screen
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _createToolBar(),
-              _widgetOptions.elementAt(_selectedIndex),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar( //Lower navigation.
-          backgroundColor: Colors.grey,
-          items: const <BottomNavigationBarItem>[
-            //Contains the lower icons on the screen
-            BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money),
-                title: Text('Savings')
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                title: Text('Ranking')
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.monetization_on),
-                title: Text('Earnings')
-            )
-          ],
-
-          currentIndex: _selectedIndex,
-          //Currently selected index
-          selectedItemColor: Colors.black,
-          //Color which indicates selected icon
-          onTap: _onItemTapped, //Action
-        ),
-      );
   }
 
   void _showDialog() {

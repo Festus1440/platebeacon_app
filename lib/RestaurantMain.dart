@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +8,7 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
-import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
+import 'package:flutterapp/Analytics/Restaurant/RestaurantHomeAnaytics.dart';
 import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'Home.dart';
@@ -22,7 +23,7 @@ class RestaurantMain extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
-        '/restaurantAnalytics': (BuildContext context) => AnalyticsBody(),
+        '/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
       },
     );
   }
@@ -91,7 +92,7 @@ class RestaurantState extends State<Home> {
   void countDocuments() async {
     QuerySnapshot _myDoc = await Firestore.instance.collection("Restaurant").document(userId).collection("deliveries").getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    print(_myDocCount.length);  // Count of Documents in Collection
+    //print(_myDocCount.length);  // Count of Documents in Collection
     setState(() {
       size = _myDocCount.length;
     });
@@ -121,7 +122,7 @@ class RestaurantState extends State<Home> {
           appBarTitle = "Map";
           break;
         case 2:
-          appBarTitle = "Pickups";
+          appBarTitle = "Donations";
           break;
         case 3:
           appBarTitle = "Account";
@@ -157,7 +158,7 @@ class RestaurantState extends State<Home> {
           BottomNavigationBarItem(
             icon: Stack(
               children: <Widget>[
-                Icon(Icons.directions_car),
+                Icon(CupertinoIcons.heart),
                 Positioned(
                   right: 0,
                   child: Container(
@@ -182,7 +183,7 @@ class RestaurantState extends State<Home> {
                 )
               ],
             ),
-            title: Text("Deliveries"),
+            title: Text("Donations"),
           ),
 //          BottomNavigationBarItem(
 //            icon: Icon(Icons.person),
@@ -255,7 +256,7 @@ class RestaurantState extends State<Home> {
                     //Creates the Analytics section.
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/restaurantAnalytics');
+                      Navigator.of(context).pushNamed('/analytics');  //Analytics
                     },
                     leading: Icon(Icons.insert_chart),
                     title: Text("Analytics"),

@@ -11,6 +11,7 @@ class Pickup extends StatefulWidget {
 }
 
 class _PickupState extends State<Pickup> {
+  int id = 0;
   String userId = "";
   String mainCollection = "";
   String subCollection = "";
@@ -59,31 +60,58 @@ class _PickupState extends State<Pickup> {
       print("loaded" + userId);
       return new StreamBuilder(
         stream: Firestore.instance
-            .collection("Restaurant")
-            .document(userId)
-            .collection("deliveries")
+            .collection("donations")
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Center(child: new Text('Loading...'));
           return new ListView(
             children: snapshot.data.documents.map((document) {
+              id = snapshot.data.documents.length +1; //set new ID
               return new ListTile(
                 onTap: (){
-
+                  print(id);
+                  // dont use for delete
                 },
                 leading: Container(
                   height: 50,
                   child: Icon(Icons.calendar_today),
                 ),
-                title: new Text('Next Donation'),
-                subtitle: new Text(document['date']),
+                title: Text('Next Donation'),
+                subtitle: Text(document['date']),
                 trailing: Container(
+                  decoration: BoxDecoration(shape: BoxShape.circle,color: mainColor),
                   height: 50,
                   child: IconButton(
                     onPressed: () {
-
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:  BorderRadius.circular(2)),
+                            backgroundColor: Colors.white,
+                            title:  Text("Delete Confirmation"),
+                            content:  Text(
+                                "Are you sure you want to delete"),
+                            actions: <Widget>[
+                              FlatButton(
+                                child:  Text("Yes"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              FlatButton(
+                                child:  Text("No"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
-                    icon: Icon(Icons.delete),
+                    icon: Icon(Icons.delete,color: Colors.white,),
                   ),
                 ),
               );

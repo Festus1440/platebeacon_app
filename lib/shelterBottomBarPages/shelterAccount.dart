@@ -77,7 +77,6 @@ class ShelterAccount extends StatelessWidget {
             title: Text("Favorites"),
 
           ),
-
           //ListTile(
             //onTap: () {    showDialog(
              // context: context,
