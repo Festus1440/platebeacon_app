@@ -66,7 +66,7 @@ Color mainColor;
                     margin: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                     alignment: Alignment.topCenter,
                     child: Text(
-                      "If you nedd any help please contact us: ",
+                      "If you need any help please contact us: ",
                       style: TextStyle(
                         fontSize: 20.0,
                         // fontWeight:FontWeight.bold,
