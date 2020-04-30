@@ -88,7 +88,7 @@ class RegisterPageState extends State<RegisterPage> {
                           backgroundColor: Colors.black12,
                           selectedColor: Colors.green,
                           labelStyle: TextStyle(color: Colors.black),
-                          padding: EdgeInsets.all(6.0),
+                          padding: EdgeInsets.all(8.0),
                           label: Row(
                             children: <Widget>[
                               Icon(Icons.restaurant),
@@ -120,7 +120,7 @@ class RegisterPageState extends State<RegisterPage> {
                           backgroundColor: Colors.black12,
                           selectedColor: Colors.blue,
                           labelStyle: TextStyle(color: Colors.black),
-                          padding: EdgeInsets.all(6.0),
+                          padding: EdgeInsets.all(8.0),
                           label: Row(
                             children: <Widget>[
                               Icon(Icons.home),
