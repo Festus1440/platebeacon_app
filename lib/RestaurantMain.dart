@@ -95,7 +95,7 @@ class RestaurantState extends State<Home> {
   void countDocuments() async {
     QuerySnapshot _myDoc = await Firestore.instance.collection("Restaurant").document(userId).collection("deliveries").getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    print(_myDocCount.length);  // Count of Documents in Collection
+    //print(_myDocCount.length);  // Count of Documents in Collection
     setState(() {
       size = _myDocCount.length;
     });

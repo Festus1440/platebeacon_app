@@ -28,7 +28,7 @@ Widget whatUser() {
         }
       });
 }
-
+String selectedTime = "";
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -72,8 +72,8 @@ class _RestaurantHomeState extends State<RestaurantHome> {
   String subCollection = "";
   DateTime _dateTime;
   TimeOfDay _timeOfDay = TimeOfDay.now();
-  String selectedDate = "No Scheduled Pickups";
-  String selectedTime = "";
+  String selectedDate = "No Scheduled Donations";
+
   String formattedTimeOfDay;
   // TimeOfDay res = TimeOfDay.fromDateTime(DateTime.now());
   @override
@@ -101,9 +101,11 @@ class _RestaurantHomeState extends State<RestaurantHome> {
 
   update() {
     Firestore.instance
-        .collection(mainCollection)
-        .document(userId).collection(subCollection).document()
-        .setData({'date': selectedDate + selectedTime}).then((onValue) {});
+        .collection("donations").document().setData({
+      'date': selectedDate + selectedTime,
+        }).then((onValue) {
+
+    });
   }
 
   Future<Null> selectTime(BuildContext context) async {
@@ -200,7 +202,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                   Icons.notifications,
                 )),
             title: Container(
-                margin: EdgeInsets.only(left: 50), child: Text("Next Pickup")),
+                margin: EdgeInsets.only(left: 50), child: Text("Next Donation")),
             subtitle: Container(
                 margin: EdgeInsets.only(left: 50),
                 child: Text(selectedDate + selectedTime)),

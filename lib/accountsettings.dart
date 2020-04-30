@@ -3,48 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Home.dart';
 
-//import 'Home.dart';
+import 'main.dart';
 //import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
-/*
-enum DialogAction { Yes, abort }
 
-class Dialogs {
-  static Future<DialogAction> yesAbortDialog(
-    BuildContext context,
-    String title,
-    String body,
-  ) async {
-    final action = await showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          title: Text('Deleting account'),
-          content: Text('Are you sure you want to delete account?'),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () => Navigator.of(context).pop(DialogAction.abort),
-              child: const Text('No', style: TextStyle(color: Colors.black)),
-            ),
-            RaisedButton(
-              onPressed: () => Navigator.of(context).pop(DialogAction.Yes),
-              child: const Text('Yes', style: TextStyle(color: Colors.black)),
-            ),
-          ],
-        );
-      },
-    );
-    return (action != null) ? action : DialogAction.abort;
-  }
-}
-*/
-/*
-bool _isRestaurant = true;
-bool _isShelter = false;
-*/
 
 class AccountSettingsDetails extends StatefulWidget {
   @override
@@ -54,13 +15,14 @@ class AccountSettingsDetails extends StatefulWidget {
 class _AccountDetailsState extends State<AccountSettingsDetails> {
   //bool tappedYes = false;
   String role;
-
+  FirebaseUser userObject;
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
       setState(() {
+        userObject = user;
         if (user.displayName == "Shelter") {
           role = "Shelter";
           mainColor = Colors.blue;
@@ -76,7 +38,6 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("Account Settings"),
@@ -116,63 +77,43 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                       ),
                     ),
                     //subtitle: Text("Change your name,description and profile photo."),
-                    onTap: () async {
-                      FirebaseUser user;
-                      switch (role) {
-                        case 'Shelter':
-                          Firestore.instance
-                              .collection(role)
-                              .document(user.uid)
-                              .delete();
-                          print("Deleted Successfully ");
-                          break;
-                        case 'Restaurant':
-                          Firestore.instance
-                              .collection(role)
-                              .document(user.uid)
-                              .delete();
-                          break;
-                          print("Deleted Successfully ");
-                      }
-                      Navigator.pop(context);
-                      FirebaseAuth.instance.signOut().then((value) {
-                        Navigator.of(context).pushReplacementNamed('/main');
-                      });
+                    onTap: () {
+                      //print(userObject.toString());
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:  BorderRadius.circular(2)),
+                            backgroundColor: Colors.white,
+                            title:  Text("Delete Confirmation"),
+                            content:  Text(
+                                "Are you sure you want to delete"),
+                            actions: <Widget>[
+                              FlatButton(
+                                child:  Text("Yes"),
+                                onPressed: () {
+                                  Firestore.instance.collection(role).document(userObject.uid).delete().then((value) {
+                                    print("value");
+                                    Navigator.of(context).pop();
+                                    //userObject.delete()
+                                    //userObject.delete().then((value) {
 
-
-                      /*
-                        final action = await Dialogs.yesAbortDialog(
-                            context,
-                            'Do you want to Delete Your Account?',
-                            'Your data will be deleted and can\'t be retrieve after 30 days');
-                        FirebaseUser user;
-
-                        var DialogAction;
-                        if (action == DialogAction.yes) {
-                          setState(() =>  {
-                            switch (role){
-                        case 'Shelter':
-                        Firestore.instance
-                            .collection(role)
-                            .document(user.uid)
-                            .delete();
-                        break;
-                        case 'Restaurant':
-                        Firestore.instance
-                            .collection(role)
-                            .document(user.uid)
-                            .delete();
-                        break;
-                        }
-                          });
-
-
-
-
-                         else {
-                          setState(() => tappedYes = true);
-                        }
-                         */
+                                    //});
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MaterialDesign()));
+                                  });
+                                },
+                              ),
+                              FlatButton(
+                                child:  Text("No"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                   ),
                   Divider(

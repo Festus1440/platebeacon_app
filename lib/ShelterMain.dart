@@ -94,7 +94,7 @@ class _MaterialHomeState extends State<Home> {
           appBarTitle = "Map";
           break;
         case 2:
-          appBarTitle = "Donations";
+          appBarTitle = "Pickups";
           break;
         case 3:
           appBarTitle = "Account";
