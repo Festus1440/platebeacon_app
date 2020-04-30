@@ -16,6 +16,15 @@ class _SavingTotalPage extends State<SavingTotal>{
       child: Container(
         child: Column(
           children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Earnings',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 30,
+                ),),
+              height: 40,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[

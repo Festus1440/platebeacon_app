@@ -11,7 +11,7 @@ class _Top extends State<TopContributors>{
 
   //Creates the elements
   List<String> getListElements() {
-    var items = List<String>.generate(40, (counter) => "Item $counter");
+    var items = List<String>.generate(15, (counter) => "Item $counter");
     return items;
   }
 
@@ -25,7 +25,7 @@ class _Top extends State<TopContributors>{
 
           return ListTile(
             leading: Icon(Icons.flag),
-            title: Text("Restaurant" ,    //Default for demostration
+            title: Text("#$index Restaurant" ,    //Default for demostration
             style: TextStyle(             //Will display data from firebase
               fontSize: 30,
               fontStyle: FontStyle.italic,
@@ -41,24 +41,19 @@ class _Top extends State<TopContributors>{
 
   @override
   Widget build(BuildContext context) {
-//    return  ListView(
-////      padding: ,
-//      scrollDirection: Axis.vertical,
-//      children: <Widget>[
-//        ListTile(
-//          title: Text('Ranking 1'),
-//        ),
-//        ListTile(
-//          title: Text('Ranking 2'),
-//        ),
-//        ListTile(
-//          title: Text('Ranking 3'),
-//        ),
-//        ListTile(
-//          title: Text('Ranking 4'),
-//        ),
-//      ],
-//    );
-    return getListView();
+    return Column(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.bottomLeft,
+          child: Text('Top Contributors',
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 30,
+            ),),
+        ),
+        Expanded(
+            child: getListView()),
+      ],
+    );
   }
 }

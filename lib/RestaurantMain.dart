@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
-import 'package:flutterapp/restaurantDrawer/Help.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
@@ -14,6 +13,7 @@ import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
 import 'Home.dart';
 import 'main.dart';
+import 'package:flutterapp/Analytics/Restaurant/GraphRestaurant.dart';
 
 class RestaurantMain extends StatelessWidget {
   @override
@@ -25,7 +25,7 @@ class RestaurantMain extends StatelessWidget {
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
-        '/help': (BuildContext context) => Help(),
+//      '/analytics' : (BuildContext context) => AnalyticsHomePage(),
       },
     );
   }
@@ -314,32 +314,30 @@ class RestaurantState extends State<Home> {
                   ),
                   ListTile(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Help()));
-//                      showDialog(
-//                        context: context,
-//                        builder: (BuildContext context) {
-//                          // return object of type Dialog
-//                          return AlertDialog(
-//                            shape: RoundedRectangleBorder(
-//                                borderRadius: new BorderRadius.circular(15)),
-//                            backgroundColor: Colors.white,
-//                            title: new Text("Help coming soon!"),
-//                            content: new Text(
-//                                "Yes, you might have questions and we'll have a help section shortly."
-//                                " For now directly ask the team!"),
-//                            actions: <Widget>[
-//                              new FlatButton(
-//                                child: new Text("Sounds good!"),
-//                                textColor: Colors.green,
-//                                onPressed: () {
-//                                  Navigator.of(context).pop();
-//                                },
-//                              ),
-//                            ],
-//                          );
-//                        },
-//                      );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(15)),
+                            backgroundColor: Colors.white,
+                            title: new Text("Help coming soon!"),
+                            content: new Text(
+                                "Yes, you might have questions and we'll have a help section shortly."
+                                " For now directly ask the team!"),
+                            actions: <Widget>[
+                              new FlatButton(
+                                child: new Text("Sounds good!"),
+                                textColor: Colors.green,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     leading: Container(child: Icon(Icons.help)),
                     title: Text("Help"),
@@ -370,6 +368,37 @@ class RestaurantState extends State<Home> {
                   //leading: Icon(Icons.subscriptions),
                   // title: Text("Subscriptions"),
                   //),
+                  ListTile(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(15)),
+                            backgroundColor: Colors.white,
+                            title: new Text("Favorites coming soon!"),
+                            content: new Text("Soon you will be able to favorite Shelters you work with"
+                                " closely and view them all in one place!"),
+                            actions: <Widget>[
+                              new FlatButton(
+                                child: new Text("Sounds good!"),
+                                textColor: Colors.green,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    leading: Container(
+                        //margin: EdgeInsets.only(left: 10.0),
+                        child: Icon(Icons.favorite)),
+                    title: Text("Favorites"),
+                  ),
                   Divider(
                     height: 15.0,
                     thickness: 0.5,

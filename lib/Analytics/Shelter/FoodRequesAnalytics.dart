@@ -16,6 +16,15 @@ class _FoodRequest extends State<FoodRequestAnalytics>{
         child: Container(
           child: Column(
             children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text('Food Request',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 30,
+                  ),),
+                height: 40,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

@@ -8,24 +8,51 @@ class RatingPage extends StatefulWidget{
 
 
 class _RatingPageLayout extends State<RatingPage>{
+
+  //Creates the elements
+  List<String> getListElements() {
+    var items = List<String>.generate(15, (counter) => "Item $counter");
+    return items;
+  }
+
+  //Builds the list view
+  Widget getListView(){
+    var listItems = getListElements();
+
+    var listView = ListView.builder(
+        itemCount: listItems.length,
+        itemBuilder: (context, index){
+
+          return ListTile(
+            leading: Icon(Icons.flag),
+            title: Text("#$index Restaurant" ,    //Default for demostration
+              style: TextStyle(             //Will display data from firebase
+                  fontSize: 30,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.green
+              ),
+            ),
+          );
+        }
+    );
+    return listView;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  ListView(
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          ListTile(
-            title: Text('Ranking 1'),
-          ),
-          ListTile(
-            title: Text('Ranking 2'),
-          ),
-          ListTile(
-            title: Text('Ranking 3'),
-          ),
-          ListTile(
-            title: Text('Ranking 4'),
-          ),
-        ],
-      );
+    return  Column(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.bottomLeft,
+          child: Text('Your Ranking is:',
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 30,
+            ),),
+        ),
+        Expanded(
+            child: getListView()),
+      ],
+    );
   }
 }
