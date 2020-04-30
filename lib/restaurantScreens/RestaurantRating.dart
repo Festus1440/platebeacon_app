@@ -13,14 +13,18 @@ class _RatingPageLayout extends State<RatingPage>{
     // TODO: implement build
     return  ListView(
         children: <Widget>[
-          Container(
-            child: Text('Hello'),
-            width: 800,
-            color: Colors.blue,
+          ListTile(
+            title: Text('Ranking 1'),
           ),
-          Text('Rating 2'),
-          Text('Rating 3'),
-          Text('Rating 4'),
+          ListTile(
+            title: Text('Ranking 2'),
+          ),
+          ListTile(
+            title: Text('Ranking 3'),
+          ),
+          ListTile(
+            title: Text('Ranking 4'),
+          )
         ],
       );
   }
