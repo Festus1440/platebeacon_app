@@ -4,16 +4,21 @@ import 'package:flutterapp/Analytics/Restaurant/SavingRestaurant.dart';
 import 'package:flutterapp/Analytics/Restaurant/EarningsRestaurant.dart';
 import 'dart:async';
 
-class RestaurantAnalyticsHome extends StatefulWidget{
+
+class RestaurantAnalyticsHomes extends StatelessWidget{
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return RestaurantAnalytics();
+  Widget build(BuildContext context) {
+    return null;
   }
+
 }
 
-class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
+class RestaurantAnalyticsHome extends StatefulWidget {
+  @override
+  _RestaurantAnalyticsState createState() => _RestaurantAnalyticsState();
+}
 
+class _RestaurantAnalyticsState extends State<RestaurantAnalyticsHome> {
   @override
   void initState() {
     super.initState();
@@ -22,25 +27,19 @@ class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
 
   int _currentIndex = 0;
 
-  final _pageOptions = [
-    EarningsTotal(),
-    RatingPage(),
-    SavingTotal()
-  ];
+  final _pageOptions = [EarningsTotal(), RatingPage(), SavingTotal()];
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      title: 'Analytics',
-      theme: ThemeData(
-        primarySwatch: Colors.green
-      ),
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.green,
           title: Text('Analytics'),
         ),
         body: _pageOptions[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Colors.white,
+          backgroundColor: Colors.green,
           currentIndex: _currentIndex,
           onTap: (int index) {
             setState(() {
@@ -50,24 +49,15 @@ class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
           },
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.monetization_on),
-              title: Text('Savings')
-            ),
+                icon: Icon(Icons.monetization_on), title: Text('Savings')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                title: Text('Ranking')
-            ),
+                icon: Icon(Icons.star), title: Text('Ranking')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money),
-                title: Text('Earnings')
-            )
+                icon: Icon(Icons.attach_money), title: Text('Earnings'))
           ],
         ),
-      ),
-
     );
   }
-
 
   //Function: Takes on parameter an sets the index of the currently selected widget
   void _onItemTapped(int index) {
@@ -81,7 +71,8 @@ class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
       case 2:
         _showDialogEarnings();
         break;
-      default:_showDialog();
+      default:
+        _showDialog();
     }
   }
 
@@ -93,12 +84,12 @@ class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
 // return object of type Dialog
         return AlertDialog(
           elevation: 0.0,
-          shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
           title: new Text("My Analytics coming soon!"),
-
-          content: new Text("Here is where all analytics will be displayed, please click the bottom buttons for further details!"),
+          content: new Text(
+              "Here is where all analytics will be displayed, please click the bottom buttons for further details!"),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -122,12 +113,12 @@ class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
 // return object of type Dialog
         return AlertDialog(
           elevation: 0.0,
-          shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
           title: new Text("Savings coming soon!"),
-
-          content: new Text("Soon you will be able to see your weekly, monthly, and yearly savings as a result of "
+          content: new Text(
+              "Soon you will be able to see your weekly, monthly, and yearly savings as a result of "
               "donating rather than disposal! "),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
@@ -152,12 +143,12 @@ class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
 // return object of type Dialog
         return AlertDialog(
           elevation: 0.0,
-          shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
           title: new Text("Ranking coming soon"),
-
-          content: new Text("See where you stand out among other restaurant donators! Word is this will "
+          content: new Text(
+              "See where you stand out among other restaurant donators! Word is this will "
               "become a focal point of our rewards program!"),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
@@ -182,12 +173,12 @@ class RestaurantAnalytics extends State<RestaurantAnalyticsHome>{
 // return object of type Dialog
         return AlertDialog(
           elevation: 0.0,
-          shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(15)),
           backgroundColor: Colors.white,
           title: new Text("Earnings coming soon"),
-
-          content: new Text("Future versions of this app will allow meal purchases by your clients! This is where you will see"
+          content: new Text(
+              "Future versions of this app will allow meal purchases by your clients! This is where you will see"
               " any earnings gained by this feature! "),
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
