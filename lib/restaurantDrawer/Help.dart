@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //import 'package:share/share.dart';
 
 
-Color mainColor = Colors.blue;
+Color mainColor = Colors.green;
 class Help extends StatefulWidget{
   @override
   HelpState createState() => HelpState();
