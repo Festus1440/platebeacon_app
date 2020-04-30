@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/ShelterDrawer/Notifications.dart';
 import 'package:flutterapp/ShelterDrawer/Events.dart';
+import 'package:flutterapp/ShelterDrawer/ShelterSettings.dart';
 
 class ShelterMain extends StatelessWidget {
   //const ShelterMain({Key key, this.user}) : super(key: key);
@@ -229,38 +230,6 @@ class _MaterialHomeState extends State<Home> {
               leading: Icon(Icons.event),
               title: Text("Events"),
             ),
-            ListTile(
-              onTap: () {
-                // flutter defined function
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    // return object of type Dialog
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
-                      backgroundColor: Colors.white,
-                      title: new Text("Favorites coming soon!"),
-                      content: new Text("Soon you will be able to favorite Shelters you work with"
-                          " closely and view them all in one place!"),
-                      actions: <Widget>[
-                        new FlatButton(
-                          child: new Text("Sounds good!"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              leading: Container(
-                  margin: EdgeInsets.only(left: 10.0),
-                  child: Icon(Icons.favorite)),
-              title: Text("Favorites"),
-
-            ),
-
             Divider(
               height: 15.0,
               thickness: 0.5,
@@ -268,7 +237,15 @@ class _MaterialHomeState extends State<Home> {
               indent: 20.0,
               endIndent: 20.0,
             ),
-
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ShelterSettings()));
+              },
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+            ),
             ListTile(
               onTap: () {    showDialog(
                 context: context,

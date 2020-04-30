@@ -6,7 +6,7 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/shelterBottomBarPages/shelterAccount.dart';
 import '../accountsettings.dart';
-import '../ShelterDrawer/Notifications.dart';
+import 'Notifications.dart';
 
 Color mainColor;
 
