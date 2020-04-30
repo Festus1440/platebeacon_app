@@ -10,7 +10,7 @@ import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
 import 'package:flutterapp/restaurantScreens/restaurantAnalytics.dart';
 import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
-import 'package:flutterapp/restaurantScreens/HomeAnalytic.dart';
+import 'package:flutterapp/restaurantScreens/shelterAnalytics.dart';
 import 'Home.dart';
 import 'main.dart';
 
