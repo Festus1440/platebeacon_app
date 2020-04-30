@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
-import 'package:flutterapp/restaurantDrawer/Help.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
@@ -25,7 +24,6 @@ class RestaurantMain extends StatelessWidget {
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
-        '/help': (BuildContext context) => Help(),
       },
     );
   }
@@ -48,8 +46,7 @@ Widget fetch(data) {
                 //print(snapshot.data);
                 if (snapshot.hasData) {
                   return Text(snapshot.data[data]);
-                }
-                else {
+                } else {
                   return Text("");
                 }
               });
@@ -63,7 +60,8 @@ class Home extends StatefulWidget {
 }
 
 class RestaurantState extends State<Home> {
-  int size = 0;
+  bool visible = true;
+  String size = "";
   String userId = "";
   String mainCollection = "";
   String subCollection = "";
@@ -86,20 +84,57 @@ class RestaurantState extends State<Home> {
         }
         //loading = false;
       });
-      countDocuments();
+      //countDon();
       //sleep(const Duration(seconds: 2));
     });
-
+    countDocuments();
   }
+
   void countDocuments() async {
-    QuerySnapshot _myDoc = await Firestore.instance.collection("donations").getDocuments();
+    QuerySnapshot _myDoc =
+        await Firestore.instance.collection("donations").getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
     //print(_myDocCount.length);  // Count of Documents in Collection
     setState(() {
-      size = _myDocCount.length;
+      if(_myDocCount.length <= 0){
+        visible = false;
+      }
+      else {
+        visible = true;
+        size = _myDocCount.length.toString();
+      }
     });
-
   }
+
+  Widget countDon() {
+    return StreamBuilder(
+        stream: Firestore.instance
+            .collection("donations")
+            .snapshots(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text("");
+          }
+          else {
+            String num = snapshot.data.documents.length.toString();
+            if(num != null) {
+              return Text(
+                num,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 8,
+                ),
+                textAlign: TextAlign.center,
+              );
+            }
+            else {
+              return Text("");
+            }
+          }
+        });
+  }
+
   final bottomBarItems = [
     HomeScreen(), // bottom bar items (0,1,2,3)
     MapSample(),
@@ -161,28 +196,31 @@ class RestaurantState extends State<Home> {
             icon: Stack(
               children: <Widget>[
                 Icon(CupertinoIcons.heart),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: Text(
-                      size.toString(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
+                  Visibility(
+                    visible: visible,
+                    child: Positioned(
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 12,
+                          minHeight: 12,
+                        ),
+                        child: Text(
+                          size,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 8,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                )
               ],
             ),
             title: Text("Donations"),
@@ -258,7 +296,7 @@ class RestaurantState extends State<Home> {
                     //Creates the Analytics section.
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/analytics');  //Analytics
+                      Navigator.of(context).pushNamed('/analytics'); //Analytics
                     },
                     leading: Icon(Icons.insert_chart),
                     title: Text("Analytics"),
@@ -274,62 +312,59 @@ class RestaurantState extends State<Home> {
                   ),
                   ListTile(
                     onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Help()));
-//                      showDialog(
-//                        context: context,
-//                        builder: (BuildContext context) {
-//                          // return object of type Dialog
-//                          return AlertDialog(
-//                            shape: RoundedRectangleBorder(
-//                                borderRadius: new BorderRadius.circular(15)),
-//                            backgroundColor: Colors.white,
-//                            title: new Text("Help coming soon!"),
-//                            content: new Text("Yes, you might have questions and we'll have a help section shortly."
-//                                " For now directly ask the team!"),
-//                            actions: <Widget>[
-//                              new FlatButton(
-//                                child: new Text("Sounds good!"),
-//                                textColor: Colors.green,
-//                                onPressed: () {
-//                                  Navigator.of(context).pop();
-//                                },
-//                              ),
-//                            ],
-//                          );
-//                        },
-//                      );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(15)),
+                            backgroundColor: Colors.white,
+                            title: new Text("Help coming soon!"),
+                            content: new Text(
+                                "Yes, you might have questions and we'll have a help section shortly."
+                                " For now directly ask the team!"),
+                            actions: <Widget>[
+                              new FlatButton(
+                                child: new Text("Sounds good!"),
+                                textColor: Colors.green,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
-                    leading: Container(
-                        child: Icon(Icons.help)),
+                    leading: Container(child: Icon(Icons.help)),
                     title: Text("Help"),
                   ),
                   //ListTile(
-                    //onTap: () {
-                    //  Navigator.of(context).pop();
-                    //  Navigator.push(context, MaterialPageRoute(
-                      //    builder: (context) => Notifications()));
-                   // },
-                    //leading: Icon(Icons.notifications),
-                    //title: Text("Notifications"),
+                  //onTap: () {
+                  //  Navigator.of(context).pop();
+                  //  Navigator.push(context, MaterialPageRoute(
+                  //    builder: (context) => Notifications()));
+                  // },
+                  //leading: Icon(Icons.notifications),
+                  //title: Text("Notifications"),
 
                   //),
                   //ListTile(
-                   // onTap: () {
-                    //  Navigator.of(context).pop();
-                   // },
-                   // leading: Icon(Icons.event),
-                   // title: Text("Events"),
+                  // onTap: () {
+                  //  Navigator.of(context).pop();
+                  // },
+                  // leading: Icon(Icons.event),
+                  // title: Text("Events"),
                   //),
                   //ListTile(
-                    //onTap: () {
-                     // Navigator.of(context).pop();
-                      //Navigator.push(context, MaterialPageRoute(
-                       //   builder: (context) => Subscriptions()));
-                    //},
-                    //leading: Icon(Icons.subscriptions),
-                   // title: Text("Subscriptions"),
+                  //onTap: () {
+                  // Navigator.of(context).pop();
+                  //Navigator.push(context, MaterialPageRoute(
+                  //   builder: (context) => Subscriptions()));
+                  //},
+                  //leading: Icon(Icons.subscriptions),
+                  // title: Text("Subscriptions"),
                   //),
                   Divider(
                     height: 15.0,
@@ -341,8 +376,10 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => RestaurantSettings()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RestaurantSettings()));
                     },
                     leading: Icon(Icons.settings),
                     title: Text("Settings"),
@@ -365,5 +402,4 @@ class RestaurantState extends State<Home> {
       ),
     );
   }
-
 }

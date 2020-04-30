@@ -46,37 +46,7 @@ class ShelterAccount extends StatelessWidget {
               ),
             ],
           ),
-          ListTile(
-            onTap: () {
-              // flutter defined function
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  // return object of type Dialog
-                  return AlertDialog(
-                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
-                    backgroundColor: Colors.white,
-                    title: new Text("Favorites coming soon!"),
-                    content: new Text("Soon you will be able to favorite Shelters you work with"
-                        " closely and view them all in one place!"),
-                    actions: <Widget>[
-                      new FlatButton(
-                        child: new Text("Sounds good!"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            leading: Container(
-                margin: EdgeInsets.only(left: 10.0),
-                child: Icon(Icons.favorite)),
-            title: Text("Favorites"),
 
-          ),
           //ListTile(
             //onTap: () {    showDialog(
              // context: context,
