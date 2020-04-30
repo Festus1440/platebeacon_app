@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/map.dart';
 import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
+import 'package:flutterapp/restaurantDrawer/Help.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
@@ -24,6 +25,7 @@ class RestaurantMain extends StatelessWidget {
         '/shelter': (BuildContext context) => ShelterDetails(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/analytics': (BuildContext context) => RestaurantAnalyticsHome(),
+        '/help': (BuildContext context) => Help(),
       },
     );
   }
@@ -312,30 +314,32 @@ class RestaurantState extends State<Home> {
                   ),
                   ListTile(
                     onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          // return object of type Dialog
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(15)),
-                            backgroundColor: Colors.white,
-                            title: new Text("Help coming soon!"),
-                            content: new Text(
-                                "Yes, you might have questions and we'll have a help section shortly."
-                                " For now directly ask the team!"),
-                            actions: <Widget>[
-                              new FlatButton(
-                                child: new Text("Sounds good!"),
-                                textColor: Colors.green,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Help()));
+//                      showDialog(
+//                        context: context,
+//                        builder: (BuildContext context) {
+//                          // return object of type Dialog
+//                          return AlertDialog(
+//                            shape: RoundedRectangleBorder(
+//                                borderRadius: new BorderRadius.circular(15)),
+//                            backgroundColor: Colors.white,
+//                            title: new Text("Help coming soon!"),
+//                            content: new Text(
+//                                "Yes, you might have questions and we'll have a help section shortly."
+//                                " For now directly ask the team!"),
+//                            actions: <Widget>[
+//                              new FlatButton(
+//                                child: new Text("Sounds good!"),
+//                                textColor: Colors.green,
+//                                onPressed: () {
+//                                  Navigator.of(context).pop();
+//                                },
+//                              ),
+//                            ],
+//                          );
+//                        },
+//                      );
                     },
                     leading: Container(child: Icon(Icons.help)),
                     title: Text("Help"),

@@ -85,7 +85,7 @@ class HelpState extends State<Help> {
               ),
             ),
             title: Text("Email: platebeacon@gmail.com"),
-            //trailing: Icon(Icons.more_vert),
+
           ),
 
 
