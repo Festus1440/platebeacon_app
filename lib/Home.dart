@@ -153,6 +153,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
             title: Container(
               margin: EdgeInsets.only(left: 0),
               child: TextField(
+                enabled: false,
                 controller: _controller,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
@@ -201,7 +202,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                 margin: EdgeInsets.only(
                   left: 0,
                 ),
-                child: Text("Schedule Delivery")), //
+                child: Text("Schedule Donation")), //
           ),
         ),
         Container(
@@ -269,6 +270,7 @@ class _ShelterHomeState extends State<ShelterHome> {
       children: <Widget>[
         Container(
           child: ListTile(
+            enabled: false,
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Icon(Icons.menu),
             title: Text("Location"),
@@ -316,9 +318,9 @@ class _ShelterHomeState extends State<ShelterHome> {
           child: ListTile(
             //onTap: (){},
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
-            leading: Container(height: 50, child: Icon(Icons.calendar_today)),
-            title: Text("Next Donation"),
-            subtitle: fetch("No Available Donations"),
+            leading: Container(height: 50, child: Text("")),
+            title: Text("Next Pickup"),
+            subtitle: fetch("No Available Pickups"),
           ),
         ),
       ],
