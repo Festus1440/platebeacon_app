@@ -14,9 +14,6 @@ this file will be the next step in using the app because the user has to create 
 # login.dart
 this file will be the next step if the user already has an account because the user has to have an account to use the app
 
-# pickup.dart
-this file reads back a donation list from firestore 
-
 # RestaurantMain.dart
 The user shall be presented with this page if they are logged in as a restaurant. this file has a drawer with restaurant specific items in it
 
