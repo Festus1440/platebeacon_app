@@ -39,7 +39,8 @@ class MapSampleState extends State<MapSample> {
   Location location; //idk
   String userType;
   String mainCollection;
-
+  double newLat = 0;
+  double newLong = 0;
   @override
   void initState() {
     // this function is called when the page starts
@@ -176,7 +177,7 @@ class MapSampleState extends State<MapSample> {
               height: 150,
               child: StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance
-                    .collection(mainCollection ?? "Shelter")
+                    .collection("test")
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -189,8 +190,8 @@ class MapSampleState extends State<MapSample> {
                         padding: EdgeInsets.all(10.0),
                         child: _boxes(
                             "https://media.timeout.com/images/105239239/image.jpg",
-                            37.33233141,
-                            122.0312186,
+                            document['lat'].toDouble() ?? 0.0,
+                            document['long'].toDouble() ?? 0.0,
                             document['displayName'] ?? "Null",
                             document['role'] ?? "Null",
                             shelterIcon),
@@ -278,7 +279,7 @@ class MapSampleState extends State<MapSample> {
                   //color: Colors.green,
                   padding: EdgeInsets.only(top: 0.0, right: 20.0),
                   //color: Colors.blue,
-                  child: myDetailsContainer(restaurantName, role, lat, long),
+                  child: DetailsContainer(restaurantName, role, lat, long),
                 ),
               ],
             ),
@@ -288,7 +289,7 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Widget myDetailsContainer(
+  Widget DetailsContainer(
       String restaurantName, String role, double lat, double long) {
     return Column(
       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -318,7 +319,7 @@ class MapSampleState extends State<MapSample> {
           )),
         ),
         SizedBox(height: 10.0),
-        /*
+        /* //
         Padding(
           padding: EdgeInsets.only(left: 8.0),
           child: Container(
@@ -468,7 +469,7 @@ class MapSampleState extends State<MapSample> {
       _markers.add(Marker(
           markerId: MarkerId(type),
           position: LatLng(lat, long),
-          infoWindow: InfoWindow(title: name, snippet: type),
+          infoWindow: InfoWindow(title: name, snippet: lat.toString() + " in Chicago, IL"),
           icon: icon));
     });
   }
@@ -491,6 +492,7 @@ class MapSampleState extends State<MapSample> {
   }
 }
 
+//custom colors for map
 class Utils {
   static String mapStyles = '''[
   {

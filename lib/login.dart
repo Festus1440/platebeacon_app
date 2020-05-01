@@ -198,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                           showError("", false);
                           FirebaseAuth.instance
                               .signInWithEmailAndPassword(
-                                  email: _email, password: _password)
+                                  email: _email.trim(), password: _password.trim())
                               .then((value) {
                             Navigator.pop(context, value.user);
                             //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(), fullscreenDialog: true),);
