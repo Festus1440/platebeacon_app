@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:flutterapp/main.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -278,7 +277,7 @@ class MapSampleState extends State<MapSample> {
                   //color: Colors.green,
                   padding: EdgeInsets.only(top: 0.0, right: 20.0),
                   //color: Colors.blue,
-                  child: DetailsContainer(restaurantName, role, lat, long),
+                  child: detailsContainer(restaurantName, role, lat, long),
                 ),
               ],
             ),
@@ -288,7 +287,7 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Widget DetailsContainer(
+  Widget detailsContainer(
       String restaurantName, String role, double lat, double long) {
     return Column(
       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,

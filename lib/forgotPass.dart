@@ -135,129 +135,72 @@ class _PassRecoverPageState extends State<PassRecoverPage> {
                 ],
               ),
             ),
-            Visibility(
-              //visible: !viewVisible,
-              child: Container(
-                padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      onChanged: (value) {
-                        this.setState(() {
-                          _email = value;
-                          if (_email == "" || _email == null) {
-                            print("Empty");
-                            showError("Email can't be empty", true);
-                          } else {
-                            showError("", false);
-                          }
-                        });
-                      },
-                      decoration: InputDecoration(
-                          labelText: 'Enter email or Phone No',
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
+            Container(
+              padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    onChanged: (value) {
+                      this.setState(() {
+                        _email = value;
+                        if (_email == "" || _email == null) {
+                          print("Empty");
+                          showError("Email can't be empty", true);
+                        } else {
+                          showError("", false);
+                        }
+                      });
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Enter email or Phone No',
+                        labelStyle: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                  ),
+                  Visibility(
+                    visible: errorVisible,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      alignment: Alignment(-1.0, 0.0),
+                      child: Text(warning),
                     ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      child: FlatButton(
-                        color: Colors.black38,
-                        textColor: Colors.white,
-                        disabledColor: Colors.grey,
-                        disabledTextColor: Colors.black,
-                        //splashColor: Colors.blueAccent,
-                        onPressed: () {
-                          setState(() {});
-                            if (_email == "" || _email == null) {
-                              showError("Email cant be empty", true);
-                            }
-                            else{
-                              showError("", false);
-                              FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
-                              Navigator.of(context).pop();
-                            }
-                          //showWidget();
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 50.0,
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: errorVisible,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10.0),
-                        alignment: Alignment(-1.0, 0.0),
-                        child: Text(warning),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Visibility(
-              visible: viewVisible,
-              child: Container(
-                padding: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(
-                          labelText: 'Enter new password',
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                          labelText: 'Re-enter new password',
-                          labelStyle: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      child: FlatButton(
-                        color: Colors.black38,
-                        textColor: Colors.white,
-                        disabledColor: Colors.grey,
-                        disabledTextColor: Colors.black,
-                        //splashColor: Colors.blueAccent,
-                        onPressed: () {
+                  ),
+                  SizedBox(height: 20.0),
+                  Container(
+                    child: FlatButton(
+                      color: Colors.black38,
+                      textColor: Colors.white,
+                      disabledColor: Colors.grey,
+                      disabledTextColor: Colors.black,
+                      //splashColor: Colors.blueAccent,
+                      onPressed: () {
+                        setState(() {});
+                        if (_email == "" || _email == null) {
+                          showError("Email can't be empty", true);
+                        } else {
+                          showError("", false);
+                          FirebaseAuth.instance
+                              .sendPasswordResetEmail(email: _email);
                           Navigator.of(context).pop();
-                          //MaterialPageRoute(builder: (context) => MaterialDesign()),);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 50.0,
-                          child: Text(
-                            "Save",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        }
+                        //showWidget();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50.0,
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 30.0),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],

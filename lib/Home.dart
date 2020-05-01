@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutterapp/restaurantBottomBar/pickup.dart';
+//import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 
 var _controller = TextEditingController();
 Color mainColor = Colors.green;
