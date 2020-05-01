@@ -25,6 +25,9 @@ Please make detail messages when updating the project
   # Help.dart
 
    You can see contact details like email and phone number which will helps you to reach out plate beacon.
+   
+   #restaurant/shelter settings
+     Find all detailed settings here.You can edit your profile,payment options,subscriptions,notofications,about 
 
 
 
