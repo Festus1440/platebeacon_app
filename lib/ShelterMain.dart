@@ -16,7 +16,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/ShelterDrawer/Notifications.dart';
 import 'package:flutterapp/ShelterDrawer/Events.dart';
 import 'package:flutterapp/ShelterDrawer/ShelterSettings.dart';
-import 'package:flutterapp/Analytics/Shelter/ShelterHomeAnalytics.dart';
+import 'package:flutterapp/Analytics/Shelter/ShelterMainAnalytics.dart';
 
 
 class ShelterMain extends StatelessWidget {
@@ -36,7 +36,7 @@ class ShelterMain extends StatelessWidget {
         '/notifications': (BuildContext context) => Notifications(),
         '/main': (BuildContext context) => MaterialDesign(),
         '/events': (BuildContext context) => Events(),
-        '/shelterAnalytics': (BuildContext context) => ShelterAnalyticsHome(),
+        '/shelterAnalytics': (BuildContext context) => ShelterMainAnalytics(),
       },
     );
   }

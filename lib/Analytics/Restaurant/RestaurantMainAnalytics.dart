@@ -1,25 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Analytics/Restaurant/GraphRestaurant.dart';
-import 'package:flutterapp/Analytics/Shelter/FoodDonationsAnalytics.dart';
-import 'package:flutterapp/Analytics/Shelter/ShelterHomeAnalytics.dart';
-import 'package:flutterapp/Analytics/Shelter/TopContributors.dart';
+import 'package:flutterapp/Analytics/Restaurant/RestaurantSavingCharts.dart';
+import 'package:flutterapp/Analytics/Restaurant/EarningRestaurantChart.dart';
+import 'package:flutterapp/Analytics/Restaurant/RestaurantRating.dart';
 
-import 'EarningsRestaurant.dart';
-import 'RestaurantRating.dart';
-import 'SavingRestaurant.dart';
 
-class AnalyticsMain extends StatefulWidget{
+
+class RestaurantMainAnalytics extends StatefulWidget{
   @override
-  _AnalyticsMainState createState() => _AnalyticsMainState();
+  _RestaurantMainAnalyticsState createState() => _RestaurantMainAnalyticsState();
 }
 
-class _AnalyticsMainState extends State<AnalyticsMain> {
+class _RestaurantMainAnalyticsState extends State<RestaurantMainAnalytics> {
   int _currentIndex = 0;
+
   final bottomBarItems = [
-    AnalyticsHomePage(),
-    RatingPage(),
-    AnalyticsHomePage(),
+    RestaurantSavingCharts(),
+    RestaurantRating(),
+    EarningRestaurantChart(),
   ];
 
   void _onItemTapped(int index) {

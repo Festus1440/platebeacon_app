@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RatingPage extends StatefulWidget{
+class RestaurantRating extends StatefulWidget{
   @override
-  _RatingPageLayout createState() => _RatingPageLayout();
+  _Top createState() => _Top();
 }
 
 
-class _RatingPageLayout extends State<RatingPage>{
+class _Top extends State<RestaurantRating>{
 
   //Creates the elements
   List<String> getListElements() {
@@ -38,9 +38,10 @@ class _RatingPageLayout extends State<RatingPage>{
     return listView;
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: <Widget>[
         Container(
           alignment: Alignment.bottomLeft,

@@ -9,13 +9,12 @@ import 'package:flutterapp/restaurantDrawer/Help.dart';
 import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
-import 'package:flutterapp/Analytics/Restaurant/RestaurantHomeAnaytics.dart';
 import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
-import 'Analytics/Restaurant/analyticsMain.dart';
+import 'Analytics/Restaurant/RestaurantMainAnalytics.dart';
 import 'Home.dart';
 import 'main.dart';
-import 'package:flutterapp/Analytics/Restaurant/GraphRestaurant.dart';
+import 'package:flutterapp/Analytics/Restaurant/RestaurantSavingCharts.dart';
 
 class RestaurantMain extends StatelessWidget {
   @override
@@ -303,7 +302,7 @@ class RestaurantState extends State<Home> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AnalyticsMain()));
+                              builder: (context) => RestaurantMainAnalytics()));
                     },
                     leading: Icon(Icons.insert_chart),
                     title: Text("Analytics"),

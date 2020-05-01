@@ -2,12 +2,12 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class FoodDonationsAnalytics extends StatefulWidget{
+class EarningRestaurantChart extends StatefulWidget{
   @override
   _EarningCharts createState() => _EarningCharts();
 }
 
-class _EarningCharts extends State<FoodDonationsAnalytics> {
+class _EarningCharts extends State<EarningRestaurantChart> {
 
 
   List<charts.Series<BarChart, String>> _seriesBarChart;
@@ -390,19 +390,19 @@ class _EarningCharts extends State<FoodDonationsAnalytics> {
   }
 }
 
-class Task{
+  class Task{
 
   String task;
   double taskvalue;
   Color colorval;
 
   Task(this.task, this.taskvalue,this.colorval);
-}//Pie chart
+  }//Pie chart
 
-class BarChart{
+  class BarChart{
   String week;
   int left;
   int quantity;
   BarChart(this.week, this.left, this.quantity);
-} //Line chart
+  } //Line chart
 

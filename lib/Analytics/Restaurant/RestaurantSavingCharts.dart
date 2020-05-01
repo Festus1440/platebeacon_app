@@ -1,16 +1,15 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Analytics/Restaurant/EarningsRestaurant.dart';
-import 'package:flutterapp/Analytics/Restaurant/RestaurantRating.dart';
-import 'package:flutterapp/Analytics/Restaurant/SavingRestaurant.dart';
 import 'dart:async';
 
-class AnalyticsHomePage extends StatefulWidget{
+class RestaurantSavingCharts extends StatefulWidget{
   @override
   _HomePageAnalytics createState() => _HomePageAnalytics();
 }
 
-class _HomePageAnalytics extends State<AnalyticsHomePage> {
+class _HomePageAnalytics extends State<RestaurantSavingCharts> {
+
+
   List<charts.Series<BarChart,String>> _seriesBarChart;
   List<charts.Series<Task, String>> _seriesPieData;
   _generateData() {
@@ -99,7 +98,7 @@ class _HomePageAnalytics extends State<AnalyticsHomePage> {
         _showDialogSavings();
         break;
       case 1:
-        _showDialogRanking();
+        Text("Hello");
         break;
       case 2:
         _showDialogEarnings();
@@ -109,14 +108,6 @@ class _HomePageAnalytics extends State<AnalyticsHomePage> {
     }
   }
 
-
-  int _currentIndex = 0;
-
-  final _page = [
-    SavingTotal(),
-    RatingPage(),
-    EarningsTotal(),
-  ];
 
   @override
   Widget build(BuildContext context) {
