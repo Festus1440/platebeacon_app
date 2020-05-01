@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.green,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 20,
                       ),
                       Expanded(
                         child: TextField(
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.green,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 20,
                       ),
                       Expanded(
                         child: TextField(

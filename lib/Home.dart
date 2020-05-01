@@ -126,10 +126,11 @@ class _RestaurantHomeState extends State<RestaurantHome> {
       context: context,
       initialTime: _timeOfDay,
     );
-    if (picked != null && picked != _timeOfDay) {
-      if (!mounted)
-        return; // make sure not to run if its not mounted aka available saves memory
+    if (picked != null) {
+      print(_timeOfDay);
+      if (!mounted) return; // make sure not to run if its not mounted aka available saves memory
       setState(() {
+
         _timeOfDay = picked;
       });
       final MaterialLocalizations localizations =
@@ -205,14 +206,13 @@ class _RestaurantHomeState extends State<RestaurantHome> {
         ),
         Container(
           child: ListTile(
-            onTap: () {
-            },
             contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
             leading: Container(
                 height: 50,
-                child: Icon(
-                  Icons.notifications,
-                )),
+                child: Text(
+                  "",
+                ),
+            ),
             title: Container(
                 margin: EdgeInsets.only(left: 0), child: Text("Next Donation")),
             subtitle: Container(

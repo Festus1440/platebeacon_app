@@ -122,9 +122,9 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
         title: Text("Account"),
         actions: <Widget>[
           FlatButton(
-            child: Text("Done"),
+            child: Text("Save"),
             onPressed: () {
-
+              Navigator.of(context).pop();
             },
           ),
         ],

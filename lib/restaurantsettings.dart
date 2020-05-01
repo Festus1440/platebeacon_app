@@ -24,8 +24,6 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
 
   Color mainColor;
 
-
-
   @override
   void initState() {
     // this function is called when the page starts
@@ -112,10 +110,8 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
             ),
             subtitle: Text("Manage your Subscriptions."),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Subscriptions()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Subscriptions()));
             },
           ),
           ListTile(
@@ -126,7 +122,8 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: Text("Define what alerts and notifications you want to see."),
+            subtitle:
+                Text("Define what alerts and notifications you want to see."),
             onTap: () {
               Navigator.push(
                   context,
@@ -134,8 +131,6 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                       builder: (context) => RestaurantNotifications()));
             },
           ),
-
-
           ListTile(
             onTap: () {
               showDialog(
@@ -147,7 +142,8 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                         borderRadius: new BorderRadius.circular(15)),
                     backgroundColor: Colors.white,
                     title: new Text("About coming soon!"),
-                    content: new Text("Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
+                    content: new Text(
+                        "Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
                     actions: <Widget>[
                       new FlatButton(
                         child: new Text("Sounds good!"),
@@ -168,58 +164,41 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
               ),
             ),
             subtitle: Text("Find out what's new about us here."),
-
           ),
-          Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-              child: GestureDetector(
-                child: Text(
-                  "Payment Options",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-
-                  ),
-
-                ),
-
-                onTap: (){     showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    // return object of type Dialog
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(15)),
-                      backgroundColor: Colors.white,
-                      title: new Text("Payment Options coming soon!"),
-                      content: new Text("Feel FREE to use this app as part of our research, no need to pay right now! "),
-                      actions: <Widget>[
-                        new FlatButton(
-                          child: new Text("Sounds good!"),
-                          textColor: Colors.green,
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-
-
+          ListTile(
+            title: Text(
+                "Payment Options",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            )),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(15)),
+                    backgroundColor: Colors.white,
+                    title: new Text("Payment Options coming soon!"),
+                    content: new Text(
+                        "Feel FREE to use this app as part of our research, no need to pay right now! "),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("Sounds good!"),
+                        textColor: Colors.green,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
                 },
-
-
-
-
-
-              )
+              );
+            },
           ),
-
-
         ],
       ),
-
     );
   }
 }

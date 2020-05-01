@@ -39,8 +39,7 @@ class MapSampleState extends State<MapSample> {
   Location location; //idk
   String userType;
   String mainCollection;
-  double newLat = 0;
-  double newLong = 0;
+  bool loading = true;
   @override
   void initState() {
     // this function is called when the page starts
@@ -64,6 +63,7 @@ class MapSampleState extends State<MapSample> {
           //print(mainCollection);
         }
       });
+      loading = false;
     });
   }
 
@@ -177,11 +177,11 @@ class MapSampleState extends State<MapSample> {
               height: 150,
               child: StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance
-                    .collection("test")
+                    .collection(mainCollection ?? "Restaurant")
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) return Text('Loading...');
+                  if (!snapshot.hasData || loading == true) return Text('Loading...');
                   return ListView(
                     scrollDirection: Axis.horizontal,
                     children: snapshot.data.documents
@@ -190,8 +190,7 @@ class MapSampleState extends State<MapSample> {
                         padding: EdgeInsets.all(10.0),
                         child: _boxes(
                             "https://media.timeout.com/images/105239239/image.jpg",
-                            document['lat'].toDouble() ?? 0.0,
-                            document['long'].toDouble() ?? 0.0,
+                            41.987135, -87.731037,
                             document['displayName'] ?? "Null",
                             document['role'] ?? "Null",
                             shelterIcon),
@@ -469,7 +468,7 @@ class MapSampleState extends State<MapSample> {
       _markers.add(Marker(
           markerId: MarkerId(type),
           position: LatLng(lat, long),
-          infoWindow: InfoWindow(title: name, snippet: lat.toString() + " in Chicago, IL"),
+          infoWindow: InfoWindow(title: name, snippet: type + " in Chicago, IL"),
           icon: icon));
     });
   }
