@@ -27,10 +27,6 @@ class SheltertAnalytics extends State<ShelterAnalyticsHome>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Analytics'),
-          backgroundColor: Colors.blue,
-        ),
         body: _pageOptions[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.blue,

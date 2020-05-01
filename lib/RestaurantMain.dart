@@ -12,6 +12,7 @@ import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
 import 'package:flutterapp/Analytics/Restaurant/RestaurantHomeAnaytics.dart';
 import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
+import 'Analytics/Restaurant/analyticsMain.dart';
 import 'Home.dart';
 import 'main.dart';
 import 'package:flutterapp/Analytics/Restaurant/GraphRestaurant.dart';
@@ -302,7 +303,7 @@ class RestaurantState extends State<Home> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RestaurantAnalyticsHome()));
+                              builder: (context) => AnalyticsMain()));
                     },
                     leading: Icon(Icons.insert_chart),
                     title: Text("Analytics"),

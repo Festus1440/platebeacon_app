@@ -124,21 +124,18 @@ class _HomePageAnalytics extends State<AnalyticsHomePage> {
     return DefaultTabController(
         length: 3,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('   Analytics'),
-            bottom: TabBar(
-
-              indicatorColor: Color(0xffffffff),
-              tabs: [
-                Tab(
-                  icon: Icon(Icons.table_chart),
-                  //text:"Analytics",
-                ),
-                Tab(icon: Icon(Icons.pie_chart)),
-                Tab(icon: Icon(Icons.multiline_chart)),
-              ],
-            ),
-            //title: Text('Charts'),
+          appBar: TabBar(
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.green,
+            indicatorColor: Colors.orange,
+            tabs: [
+              Tab(
+                icon: Icon(Icons.table_chart),
+                //text:"Analytics",
+              ),
+              Tab(icon: Icon(Icons.pie_chart)),
+              Tab(icon: Icon(Icons.multiline_chart)),
+            ],
           ),
           body: Column(
             children: <Widget>[
@@ -268,31 +265,6 @@ class _HomePageAnalytics extends State<AnalyticsHomePage> {
                   ],
                 ),
               ),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Colors.grey,
-            selectedItemColor: Colors.black,
-            currentIndex: _currentIndex,
-            onTap: (int index) {
-              setState(() {
-                _currentIndex = index;
-                _onItemTapped(index); //Set the pop up message
-              });
-            },
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.monetization_on),
-                  title: Text('Saving')
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                title: Text('Ranking'),
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.attach_money),
-                  title: Text('Earnings')
-              )
             ],
           ),
         ),

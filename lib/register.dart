@@ -291,8 +291,8 @@ class RegisterPageState extends State<RegisterPage> {
                           FirebaseUser user;
                           try {
                             user = (await _auth.createUserWithEmailAndPassword(
-                              email: _email,
-                              password: _password,
+                              email: _email.trim(),
+                              password: _password.trim(),
                             ))
                                 .user;
                             //user.sendEmailVerification();
@@ -308,8 +308,10 @@ class RegisterPageState extends State<RegisterPage> {
                                       .document(user.uid)
                                       .setData({
                                     'displayName': _name,
-                                    'email': _email,
+                                    'email': _email.trim(),
                                     'role': role,
+                                    'lat': 0.0,
+                                    'long': 0.0,
                                   }).then((onValue) {});
                                   break;
                                 case 'Restaurant':
@@ -318,8 +320,10 @@ class RegisterPageState extends State<RegisterPage> {
                                       .document(user.uid)
                                       .setData({
                                     'displayName': _name,
-                                    'email': _email,
+                                    'email': _email.trim(),
                                     'role': role,
+                                    'lat': 0.0,
+                                    'long': 0.0,
                                   }).then((onValue) {});
                                   break;
                                 default:
@@ -328,8 +332,10 @@ class RegisterPageState extends State<RegisterPage> {
                                       .document(user.uid)
                                       .setData({
                                     'displayName': _name,
-                                    'email': _email,
+                                    'email': _email.trim(),
                                     'role': role,
+                                    'lat': 0.0,
+                                    'long': 0.0,
                                   }).then((onValue) {});
                               }
                               Navigator.pop(context, role);
