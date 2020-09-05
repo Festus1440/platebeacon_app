@@ -11,8 +11,10 @@ import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 //import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
 import 'package:flutterapp/restaurantsettings.dart';
 import 'package:flutterapp/restaurantDrawer/shelterDetails.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'Analytics/Restaurant/RestaurantMainAnalytics.dart';
 import 'Home.dart';
+import 'custom-widget.dart';
 import 'main.dart';
 //import 'package:flutterapp/Analytics/Restaurant/RestaurantSavingCharts.dart';
 
@@ -20,7 +22,9 @@ class RestaurantMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Material",
+      theme: ThemeData(fontFamily: 'Calibri'),
+      debugShowCheckedModeBanner: false,
+      title: "Plate Beacon",
       home: Home(),
       routes: <String, WidgetBuilder>{
         '/shelter': (BuildContext context) => ShelterDetails(),
@@ -32,31 +36,6 @@ class RestaurantMain extends StatelessWidget {
   }
 }
 
-Widget fetch(data) {
-  return FutureBuilder(
-      future: FirebaseAuth.instance.currentUser(),
-      builder: (BuildContext context, AsyncSnapshot user) {
-        if (user.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        } else {
-          return StreamBuilder<DocumentSnapshot>(
-              stream: Firestore.instance
-                  .collection("Restaurant")
-                  .document(user.data.uid)
-                  .snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                //print(snapshot.data);
-                if (snapshot.hasData) {
-                  return Text(snapshot.data[data]);
-                } else {
-                  return Text("");
-                }
-              });
-        }
-      });
-}
-
 class Home extends StatefulWidget {
   @override
   RestaurantState createState() => RestaurantState();
@@ -66,88 +45,119 @@ class RestaurantState extends State<Home> {
   bool visible = true;
   String size = "";
   String userId = "";
-  String mainCollection = "";
-  String subCollection = "";
+  String name = "Restaurant Name";
+  String city = "City";
+  String state = "State";
   //Color mainColor;
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
+    _controller = PersistentTabController(initialIndex: 0);
     FirebaseAuth.instance.currentUser().then((user) {
+      if (!mounted) return;
       setState(() {
         userId = user.uid;
-        if (user.displayName == "Shelter") {
-          mainCollection = "Shelter";
-          subCollection = "pickup";
-          mainColor = Colors.blue;
-        } else {
-          mainCollection = "Restaurant";
-          subCollection = "deliveries";
-          mainColor = Colors.green;
-        }
-        //loading = false;
       });
-      //countDon();
-      //sleep(const Duration(seconds: 2));
+      Firestore.instance
+          .collection('Restaurant')
+          .document(userId)
+          .get()
+          .then((document) {
+        if (!mounted) return;
+        setState(() {
+          name = document['displayName'] ?? "Restaurant Name";
+          city = document['city'] ?? "City";
+          state = document['state'] ?? "St";
+        });
+      });
     });
-    countDocuments();
+    //countDocuments();
   }
-
+  List<Widget> _buildScreens() {
+    return [
+      HomeScreen(),
+      MapSample(),
+      Pickup(),
+    ];
+  }
+  PersistentTabController _controller;
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.home),
+        title: ("Home"),
+        activeColor: Colors.white,
+        inactiveColor: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.map),
+        title: ("Map"),
+        activeColor: Colors.white,
+        inactiveColor: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Stack(
+          children: <Widget>[
+            Icon(CupertinoIcons.heart),
+          ],
+        ),
+        title: ("Donations"),
+        activeColor: Colors.white,
+        contentPadding: 1,
+        inactiveColor: Colors.black,
+      ),
+    ];
+  }
   void countDocuments() async {
     QuerySnapshot _myDoc =
         await Firestore.instance.collection("donations").getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
     //print(_myDocCount.length);  // Count of Documents in Collection
+    if (!mounted) return;
     setState(() {
-      if(_myDocCount.length <= 0){
+      if (_myDocCount.length <= 0) {
         visible = false;
-      }
-      else {
+      } else {
         visible = true;
         size = _myDocCount.length.toString();
       }
     });
   }
 
-  Widget countDon() {
-    return StreamBuilder(
-        stream: Firestore.instance
-            .collection("donations")
-            .snapshots(),
-        builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
+  Widget fetch() {
+    return FutureBuilder(
+        future: FirebaseAuth.instance.currentUser(),
+        builder: (BuildContext context, AsyncSnapshot user) {
+          if (user.connectionState == ConnectionState.waiting) {
             return Text("");
-          }
-          else {
-            String num = snapshot.data.documents.length.toString();
-            if(num != null) {
-              return Text(
-                num,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 8,
-                ),
-                textAlign: TextAlign.center,
-              );
-            }
-            else {
-              return Text("");
-            }
+          } else {
+            return StreamBuilder<QuerySnapshot>(
+                stream: Firestore.instance.collection("Restaurant")
+                    .document(userId)
+                    .collection("donations").snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  //print(snapshot.data);
+                  if (snapshot.hasData) {
+                    return Text(
+                      snapshot.data.documents.length.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 9,
+                      ),
+                      textAlign: TextAlign.center,
+                    );
+                  } else {
+                    return Text("");
+                  }
+                });
           }
         });
   }
 
-  final bottomBarItems = [
-    HomeScreen(), // bottom bar items (0,1,2,3)
-    MapSample(),
-    Pickup(),
-    RestaurantAccount(),
-  ];
-
   //String restaurantName = fetch("displayName");
   Color mainColor = Colors.green;
-  Widget roleTitle = fetch("displayName");
   String appBarTitle = "Home";
   int _bottomBarIndex = 0;
 
@@ -176,66 +186,36 @@ class RestaurantState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: bottomBarItems[_bottomBarIndex],
+      body: PersistentTabView(
+          controller: _controller,
+          screens: _buildScreens(),
+          items: _navBarsItems(), // Redundant here but defined to demonstrate for other than custom style
+          confineInSafeArea: false,
+          backgroundColor: Colors.green,
+          handleAndroidBackButtonPress: true,
+          onItemSelected: (int) {
+            if (!mounted) return;
+            setState(
+                    () {}); // This is required to update the nav bar if Android back button is pressed
+          },
+          customWidget: CustomNavBarWidget(
+            items: _navBarsItems(),
+            onItemSelected: (index) {
+              if (!mounted) return;
+              setState(() {
+                _controller.index = index; // THIS IS CRITICAL!! Don't miss it!
+              });
+            },
+            selectedIndex: _controller.index,
+          ),
+          itemCount: 3,
+          navBarStyle:
+          NavBarStyle.simple // Choose the nav bar style with this property
+      ),
       appBar: AppBar(
         elevation: 10.0,
         title: Text(appBarTitle),
         backgroundColor: mainColor,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 10.0,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: mainColor,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            title: Text("Map"),
-          ),
-          BottomNavigationBarItem(
-            icon: Stack(
-              children: <Widget>[
-                Icon(CupertinoIcons.heart),
-                  Visibility(
-                    visible: visible,
-                    child: Positioned(
-                      right: 0,
-                      child: Container(
-                        padding: EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 12,
-                          minHeight: 12,
-                        ),
-                        child: Text(
-                          size,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            title: Text("Donations"),
-          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.person),
-//            title: Text("Profile"),
-//          ),
-        ],
-        currentIndex: _bottomBarIndex,
-        selectedItemColor: Colors.white,
-        onTap: _onItemTapped,
       ),
       drawer: Drawer(
         child: Column(
@@ -264,14 +244,15 @@ class RestaurantState extends State<Home> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "Restaraunt Name",
+                            name,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 15.0,
                             ),
                           ),
+                          SizedBox(height: 5),
                           Text(
-                            "Chicago, IL",
+                            city + ", " + state,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 13.0,
@@ -319,8 +300,11 @@ class RestaurantState extends State<Home> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Help(), fullscreenDialog: true));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Help(),
+                              fullscreenDialog: true));
                     },
                     leading: Container(child: Icon(Icons.help)),
                     title: Text("Help"),
@@ -363,7 +347,8 @@ class RestaurantState extends State<Home> {
                                 borderRadius: new BorderRadius.circular(15)),
                             backgroundColor: Colors.white,
                             title: new Text("Favorites coming soon!"),
-                            content: new Text("Soon you will be able to favorite Shelters you work with"
+                            content: new Text(
+                                "Soon you will be able to favorite Shelters you work with"
                                 " closely and view them all in one place!"),
                             actions: <Widget>[
                               new FlatButton(

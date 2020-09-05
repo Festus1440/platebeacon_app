@@ -16,7 +16,7 @@ class _RestaurantMainAnalyticsState extends State<RestaurantMainAnalytics> {
   @override
   void initState() {
     super.initState();
-    Timer.run(() => _showDialog());
+    //Timer.run(() => _showDialog());
   }
 
 
@@ -37,20 +37,21 @@ class _RestaurantMainAnalyticsState extends State<RestaurantMainAnalytics> {
 
   //Function: Takes on parameter an sets the index of the currently selected widget
   void _onItemTappedd(int index) {
-    switch (index) {
-      case 0:
-        _showDialogSavings();
-        break;
-      case 1:
-        _showDialogRanking();
-        break;
-      case 2:
-        _showDialogEarnings();
-        break;
-      default:
-        _showDialog();
-    }
+//    switch (index) {
+//      case 0:
+//        _showDialogSavings();
+//        break;
+//      case 1:
+//        _showDialogRanking();
+//        break;
+//      case 2:
+//        _showDialogEarnings();
+//        break;
+//      default:
+//        _showDialog();
+//    }
 
+    if (!mounted) return;
     setState(() {
       _currentIndex = index;
     });

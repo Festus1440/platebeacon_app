@@ -1,12 +1,20 @@
+//import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//import 'package:flutter/services.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:geolocator/geolocator.dart';
+import 'package:sliding_sheet/sliding_sheet.dart';
+
+import 'map_request.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 0;
@@ -22,14 +30,14 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   Color mainColor;
   Completer<GoogleMapController> _controller = Completer();
-  Set<Marker> _markers = Set<Marker>(); // initialise a list of markers
-  Set<Polyline> _polyline = {}; //ignore for future
-  List<LatLng> polylineCoordinates = []; //ignore for future
-  PolylinePoints polylinePoints; // ignore for future
-  String googleAPIKey =
-      'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck'; //key from google
+  final Set<Marker> _markers = {}; // initialise a list of markers
+  final Set<Polyline> polyLines = {};
+  GoogleMapsServices _googleMapsServices = GoogleMapsServices();
+  Set<Polyline> get _polyLines => polyLines;
+  List<LatLng> routeCords;
   GoogleMapPolyline googleMapPolyline =
-      GoogleMapPolyline(apiKey: 'AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck');
+      new GoogleMapPolyline(apiKey: "AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck");
+  String googleAPiKey = "AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck";
   BitmapDescriptor currentLocIcon; // initialise custom markers
   BitmapDescriptor shelterIcon; // ""
   BitmapDescriptor restaurantIcon; // ""
@@ -39,6 +47,11 @@ class MapSampleState extends State<MapSample> {
   String userType;
   String mainCollection;
   bool loading = true;
+  String add = "";
+  bool canTrack = true;
+  bool listVis = true;
+  static LatLng latLng;
+
   @override
   void initState() {
     // this function is called when the page starts
@@ -49,21 +62,76 @@ class MapSampleState extends State<MapSample> {
 
   getData() async {
     await FirebaseAuth.instance.currentUser().then((user) {
+      if (!mounted) return;
       setState(() {
         if (user.displayName == "Shelter") {
           userType = "Shelter";
           mainColor = Colors.blue;
           mainCollection = "Restaurant";
-          //print(mainCollection);
+          loading = false;
+          //sleep(const Duration(seconds: 2));
         } else {
           userType = "Restaurant";
           mainColor = Colors.green;
           mainCollection = "Shelter";
-          //print(mainCollection);
+          loading = false;
+          //sleep(const Duration(seconds: 2));
         }
       });
-      loading = false;
     });
+  }
+
+  List<LatLng> _convertToLatLng(List points) {
+    List<LatLng> result = <LatLng>[];
+    for (int i = 0; i < points.length; i++) {
+      if (i % 2 != 0) {
+        result.add(LatLng(points[i - 1], points[i]));
+      }
+    }
+    return result;
+  }
+
+  List _decodePoly(String poly) {
+    var list = poly.codeUnits;
+    var lList = new List();
+    int index = 0;
+    int len = poly.length;
+    int c = 0;
+    do {
+      var shift = 0;
+      int result = 0;
+
+      do {
+        c = list[index] - 63;
+        result |= (c & 0x1F) << (shift * 5);
+        index++;
+        shift++;
+      } while (c >= 32);
+      if (result & 1 == 1) {
+        result = ~result;
+      }
+      var result1 = (result >> 1) * 0.00001;
+      lList.add(result1);
+    } while (index < len);
+
+    for (var i = 2; i < lList.length; i++) lList[i] += lList[i - 2];
+
+    print(lList.toString());
+
+    return lList;
+  }
+
+  void sendRequest(lat, long) async {
+    LatLng origin = LatLng(currentLocation.latitude, currentLocation.longitude);
+    LatLng destination = LatLng(lat, long);
+    String route =
+        await _googleMapsServices.getRouteCoordinates(origin, destination);
+    setPolyline(route, origin.toString());
+  }
+
+  void onCameraMove(CameraPosition position) {
+    latLng = position.target;
+    //print(position.target);
   }
 
   init() async {
@@ -80,46 +148,45 @@ class MapSampleState extends State<MapSample> {
     });
     // create an instance of Location
     location = Location();
-    polylinePoints = PolylinePoints();
 
-    // subscribe to changes in the user's location
-    // by "listening" to the location's onLocationChanged event
     location.onLocationChanged.listen((LocationData cLoc) {
-      // cLoc contains the lat and long of the
-      // current user's position in real time,
-      // so we're holding on to it
       currentLocation = cLoc;
-      //print(cLoc.speed);
-      //print(currentLocation);
-      updatePinOnMap();
+      if (canTrack == true) {
+        updatePinOnMap();
+        //_showCurrentLoc(currentLocation.latitude, currentLocation.longitude);
+      }
     });
-    // set custom marker pins
     setSourceAndDestinationIcons();
-    // set the initial location
-    setInitialLocation();
+    currentLocation = await location.getLocation();
   }
 
   void setSourceAndDestinationIcons() async {
     currentLocIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), 'assets/current_marker.png');
-
     shelterIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), 'assets/shelter_marker.png');
-
     restaurantIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5), 'assets/rest_marker.png');
   }
 
-  void setInitialLocation() async {
-    // set the initial location by pulling the user's
-    // current location from the location's getLocation()
-    currentLocation = await location.getLocation();
+  getSomePoints(lat, long) async {
+    routeCords = await googleMapPolyline.getCoordinatesWithLocation(
+        origin: LatLng(currentLocation.latitude, currentLocation.longitude),
+        destination: LatLng(lat, long),
+        mode: RouteMode.driving);
+  }
 
-    // hard-coded destination for this example
-    destinationLocation = LocationData.fromMap({
-      "latitude": DEST_LOCATION.latitude,
-      "longitude": DEST_LOCATION.longitude
-    });
+  void setPolyline(String encondedPoly, String origin) async {
+    polyLines.removeWhere((m) => m.polylineId.value == 'poly');
+    polyLines.add(Polyline(
+      polylineId: PolylineId("poly"),
+      visible: true,
+      points: routeCords,
+      width: 5,
+      startCap: Cap.squareCap,
+      endCap: Cap.buttCap,
+      color: mainColor,
+    ));
   }
 
   @override
@@ -143,82 +210,151 @@ class MapSampleState extends State<MapSample> {
       updatePinOnMap();
       //print(_permissionGranted);
     }
-    destinationLocation = LocationData.fromMap({
-      "latitude": DEST_LOCATION.latitude,
-      "longitude": DEST_LOCATION.longitude
-    });
     return Container(
       child: Stack(
         children: <Widget>[
           GoogleMap(
-              myLocationButtonEnabled: false,
-              myLocationEnabled: false,
-              compassEnabled: true,
-              tiltGesturesEnabled: false,
-              markers: _markers,
-              polylines: _polyline,
-              mapType: MapType.normal,
-              initialCameraPosition: initialCameraPosition,
-              onMapCreated: (GoogleMapController controller) {
-                controller.setMapStyle(Utils.mapStyles);
-                _controller.complete(controller);
-                destinationLocation = LocationData.fromMap({
-                  "latitude": DEST_LOCATION.latitude,
-                  "longitude": DEST_LOCATION.longitude
-                });
-                showPinsOnMap();
-              }),
+            onCameraMove: onCameraMove,
+            myLocationButtonEnabled: false,
+            myLocationEnabled: false,
+            compassEnabled: true,
+            tiltGesturesEnabled: false,
+            markers: _markers,
+            polylines: polyLines,
+            mapType: MapType.normal,
+            initialCameraPosition: initialCameraPosition,
+            onMapCreated: (GoogleMapController controller) {
+              controller.setMapStyle(Utils.mapStyles);
+              _controller.complete(controller);
+            },
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
+              //alignment: Alignment.centerRight,
               //color: Colors.blue,
               margin: EdgeInsets.symmetric(vertical: 20.0),
-              height: 150,
+              width: MediaQuery.of(context).size.width,
+              height: 190,
               child: StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance
-                    .collection(mainCollection ?? "Restaurant")
+                    .collection(mainCollection ?? "test")
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData || loading == true) return Text('Loading...');
-                  return ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: snapshot.data.documents
-                        .map((DocumentSnapshot document) {
-                      return Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: _boxes(
-                            "https://media.timeout.com/images/105239239/image.jpg",
-                            41.987135, -87.731037,
-                            document['displayName'] ?? "Null",
-                            document['role'] ?? "Null",
-                            shelterIcon),
-                      );
-                    }).toList(),
-                  );
+                  if (!snapshot.hasData || loading == true) {
+                    return Center(child: Text('Loading...'));
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1.0, color: Colors.grey),
+                            color: mainColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              //setPolyline();
+                              if (!mounted) return;
+                              setState(() {
+                                canTrack = true;
+                              });
+                              _showCurrentLoc(currentLocation.latitude,
+                                  currentLocation.longitude);
+                            },
+                            icon: Icon(
+                              Icons.my_location,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Visibility(
+                            visible: listVis,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data.documents
+                                  .map((DocumentSnapshot document) {
+                                if (document['lat'] != null &&
+                                    document['long'] != null) {
+                                  return Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10.0, right: 10.0),
+                                    child: _boxes(
+                                        document.documentID,
+                                        document['city'] ?? "City",
+                                        document['state'] ?? "State",
+                                        "https://media.timeout.com/images/105239239/image.jpg",
+                                        document['lat'].toDouble() ?? 41.987135,
+                                        document['long'].toDouble() ??
+                                            -87.731037,
+                                        document['displayName'] ?? "null",
+                                        document['role'] ?? "null",
+                                        shelterIcon),
+                                  );
+                                } else {
+                                  return Text("");
+                                }
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
                 },
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1.0, color: Colors.grey),
-                  color: mainColor,
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  onPressed: () {
-                    //show current location
-                    _showCurrentLoc(
-                        currentLocation.latitude, currentLocation.longitude);
+          Positioned(
+            top: 30,
+            right: 20,
+            left: 20,
+            child: Container(
+              height: 40,
+              child: Material(
+                borderRadius: BorderRadius.circular(8),
+                elevation: 8.0,
+                shadowColor: Color(0x802196F3),
+                child: TextField(
+                  onTap: () {
+                    setState(() {
+                      listVis = false;
+                      canTrack = false;
+                    });
                   },
-                  icon: Icon(
-                    Icons.my_location,
-                    color: Colors.white,
+                  autocorrect: true,
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (_) {
+                    if (add == "" || add == null) {
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                      setState(() {
+                        listVis = true;
+                      });
+                    } else {
+                      navigate();
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                      setState(() {
+                        listVis = true;
+                      });
+                    }
+                  },
+                  onChanged: (val) {
+                    if (!mounted) return;
+                    setState(() {
+                      add = val;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter an address",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(left: 15.0, top: 7.0),
+                    prefixIcon: Icon(Icons.search),
                   ),
                 ),
               ),
@@ -229,19 +365,42 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Widget _boxes(String _image, double lat, double long, String restaurantName,
-      String role, BitmapDescriptor icon) {
-    return GestureDetector(
-      onTap: () {
-        _goToArea(lat, long, restaurantName, role, icon);
-      },
-      child: Container(
-        child: FittedBox(
-          child: Material(
-            color: mainColor,
-            elevation: 7.0,
+  navigate() {
+    Geolocator().placemarkFromAddress(add).then((results) {
+      getSomePoints(
+          results[0].position.latitude, results[0].position.longitude);
+      _goToArea(
+          "0",
+          results[0].locality,
+          results[0].administrativeArea,
+          results[0].position.latitude,
+          results[0].position.longitude,
+          results[0].name ?? "Location",
+          "Place",
+          currentLocIcon);
+      print(results[0].toJson().toString());
+    }).catchError((error) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message),
+        ),
+      );
+      //print(error.toString());
+    });
+  }
+
+  Widget _boxes(String id, String city, String state, String _image, double lat,
+      double long, String restaurantName, String role, BitmapDescriptor icon) {
+    return Container(
+      child: FittedBox(
+        child: Material(
+          child: InkWell(
             borderRadius: BorderRadius.circular(18.0),
-            shadowColor: Color(0x802196F3),
+            onTap: () {
+              _goToArea(id, city, state, lat, long, restaurantName, role, icon);
+              getSomePoints(lat, long);
+              detailsBottomSheet(context, restaurantName, role, city, state, lat, long);
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -273,22 +432,24 @@ class MapSampleState extends State<MapSample> {
                   ),
                 ),
                 Container(
-                  //height: 100,
-                  //color: Colors.green,
                   padding: EdgeInsets.only(top: 0.0, right: 20.0),
-                  //color: Colors.blue,
-                  child: detailsContainer(restaurantName, role, lat, long),
+                  child: detailsContainer(
+                      restaurantName, role, lat, long, city, state),
                 ),
               ],
             ),
           ),
+          borderRadius: BorderRadius.circular(18.0),
+          color: mainColor,
+          elevation: 7.0,
+          shadowColor: Color(0x802196F3),
         ),
       ),
     );
   }
 
-  Widget detailsContainer(
-      String restaurantName, String role, double lat, double long) {
+  Widget detailsContainer(String restaurantName, String role, double lat,
+      double long, String city, String state) {
     return Column(
       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
@@ -309,7 +470,7 @@ class MapSampleState extends State<MapSample> {
           padding: EdgeInsets.only(left: 8.0),
           child: Container(
               child: Text(
-            "" + role + " in Chicago, IL",
+            "" + role + " in " + city + ", " + state,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,
@@ -373,40 +534,9 @@ class MapSampleState extends State<MapSample> {
   }
 
   void showPinsOnMap() {
-    // get a LatLng for the source location
-    // from the LocationData currentLocation object
     var pinPosition =
         LatLng(currentLocation.latitude, currentLocation.longitude);
-    // get a LatLng out of the LocationData object
-    var destPosition =
-        LatLng(destinationLocation.latitude, destinationLocation.longitude);
-    // add the initial source location pin
-    print(pinPosition);
-    _markers.add(Marker(
-        markerId: MarkerId('currentLoc'),
-        position: pinPosition,
-        infoWindow: InfoWindow(title: "My Location"),
-        icon: currentLocIcon));
-    // destination pin
-
-    // set the route lines on the map from source to destination
-    // for more info follow this tutorial
-    //setPolyline();
-  }
-
-  void setPolyline() async {
-    _polyline.add(Polyline(
-      polylineId: PolylineId('route1'),
-      visible: true,
-      width: 4,
-      color: Colors.blue,
-      points: await googleMapPolyline.getCoordinatesWithLocation(
-          origin: LatLng(37.331658, -122.030276),
-          destination: LatLng(37.329889, -122.034798),
-          mode: RouteMode.driving),
-      startCap: Cap.squareCap,
-      endCap: Cap.roundCap,
-    ));
+    _showCurrentLoc(pinPosition.latitude, pinPosition.longitude);
   }
 
   void updatePinOnMap() async {
@@ -422,30 +552,39 @@ class MapSampleState extends State<MapSample> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
     // do this inside the setState() so Flutter gets notified
-    if (!mounted)
-      return; // make sure not to run if its not mounted aka available saves memory
+    if (!mounted) return;
+    // make sure not to run if its not mounted aka available saves memory
     setState(() {
       // updated position
       var pinPosition =
           LatLng(currentLocation.latitude, currentLocation.longitude);
 
-      FirebaseAuth.instance.currentUser().then((user) {
-        String role2;
-        if (user.displayName == "Shelter") {
-          role2 = "Shelter";
-          Firestore.instance.collection(role2).document(user.uid).updateData({
-            'lat': pinPosition.latitude,
-            'long': pinPosition.longitude,
-          }).then((onValue) {});
-        } else {
-          role2 = "Restaurant";
-        }
-      });
+//      FirebaseAuth.instance.currentUser().then((user) {
+//        String role2;
+//        if (user.displayName == "Shelter") {
+//          role2 = "Shelter";
+//          Firestore.instance.collection(role2).document(user.uid).updateData({
+//            'lat': pinPosition.latitude,
+//            'long': pinPosition.longitude,
+//          }).then((onValue) {});
+//        } else {
+//          role2 = "Restaurant";
+//          Firestore.instance.collection(role2).document(user.uid).updateData({
+//            'lat': pinPosition.latitude,
+//            'long': pinPosition.longitude,
+//          }).then((onValue) {});
+//        }
+//      });
 
-      // the trick is to remove the marker (by id)
-      // and add it again at the updated location
       _markers.removeWhere((m) => m.markerId.value == 'currentLoc');
       _markers.add(Marker(
+          onTap: () {
+            _showCurrentLoc(pinPosition.latitude, pinPosition.longitude);
+            FocusScope.of(context).requestFocus(new FocusNode());
+            setState(() {
+              listVis = true;
+            });
+          },
           markerId: MarkerId('currentLoc'),
           position: pinPosition, //
           infoWindow: InfoWindow(title: "My Location"), // updated position
@@ -453,8 +592,13 @@ class MapSampleState extends State<MapSample> {
     });
   }
 
-  void _goToArea(double lat, double long, String name, String type,
-      BitmapDescriptor icon) async {
+  void _goToArea(String id, String city, String state, double lat, double long,
+      String name, String type, BitmapDescriptor icon) async {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    if (!mounted) return;
+    setState(() {
+      canTrack = false;
+    });
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(lat, long),
@@ -462,17 +606,32 @@ class MapSampleState extends State<MapSample> {
       tilt: CAMERA_TILT,
       bearing: CAMERA_BEARING,
     )));
+    if (!mounted) return;
     setState(() {
-      _markers.removeWhere((m) => m.markerId.value == type);
+      _markers.removeWhere((m) => m.markerId.value == id);
       _markers.add(Marker(
-          markerId: MarkerId(type),
+          onTap: () {
+            getSomePoints(lat, long);
+            //setPolyline();
+            FocusScope.of(context).requestFocus(new FocusNode());
+            setState(() {
+              listVis = true;
+            });
+            detailsBottomSheet(context, name, type, city, state, lat, long);
+          },
+          markerId: MarkerId(id),
           position: LatLng(lat, long),
-          infoWindow: InfoWindow(title: name, snippet: type + " in Chicago, IL"),
+          infoWindow: InfoWindow(
+              title: name, snippet: type + " in " + city + ", " + state),
           icon: icon));
     });
   }
 
   void _showCurrentLoc(double lat, double long) async {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    setState(() {
+      listVis = true;
+    });
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(lat, long),
@@ -480,13 +639,173 @@ class MapSampleState extends State<MapSample> {
       tilt: CAMERA_TILT,
       bearing: CAMERA_BEARING,
     )));
+    if (!mounted) return;
     setState(() {
-      _markers.removeWhere((m) => m.markerId.value == 'currentLoc');
-      _markers.add(Marker(
-          markerId: MarkerId('currentLoc'),
-          position: LatLng(lat, long),
-          icon: currentLocIcon));
+      canTrack = true;
+      Geolocator().placemarkFromCoordinates(lat, long).then((onValue) {
+        _markers.removeWhere((m) => m.markerId.value == 'currentLoc');
+        _markers.add(Marker(
+            onTap: () {
+              _showCurrentLoc(
+                  currentLocation.latitude, currentLocation.longitude);
+              FocusScope.of(context).requestFocus(new FocusNode());
+              setState(() {
+                listVis = true;
+              });
+            },
+            markerId: MarkerId('currentLoc'),
+            position: LatLng(lat, long), //
+            infoWindow: InfoWindow(
+                title: "Current Location",
+                snippet: onValue[0].subThoroughfare +
+                    " " +
+                    onValue[0].thoroughfare), // updated position
+            icon: currentLocIcon));
+      }).catchError((error) {
+        print(error.message);
+      });
     });
+  }
+
+  void detailsBottomSheet(context, name, type, city, state, lat, long) {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
+        ),
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+//height: MediaQuery.of(context).size.height * .30,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Center(
+                    child: Container(
+                      width: 44,
+                      height: 4,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 10, left: 15, right: 15),
+//color: mainColor,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          Text(type + " in " + city + ", " + state),
+                        ],
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                        width: MediaQuery.of(context).size.width,
+                        height: 40,
+                        child: FlatButton(
+                          onPressed: () {
+//sendRequest(lat, long);
+                            setPolyline("", "");
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Directions",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                          color: mainColor,
+                        ),
+                      ),
+                      Container(
+//width: 350,
+                        height: 200,
+                        margin:
+                        EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(6.0)),
+//border: Border.all(width: 1.0, color: mainColor),
+//shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/shelter.jpg'),
+                            )),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                                color: mainColor,
+                              ),
+                              child: FlatButton(
+                                child: Icon(Icons.call),
+                              ),
+                            ),
+                            Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                                color: mainColor,
+                              ),
+                              child: FlatButton(
+                                  child: FaIcon(FontAwesomeIcons.donate)
+                              ),
+                            ),
+                            Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                                color: mainColor,
+                              ),
+                              child: FlatButton(
+                                child: Icon(Icons.favorite),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
 

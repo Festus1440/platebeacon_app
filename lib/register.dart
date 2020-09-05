@@ -14,9 +14,9 @@ class Register extends StatelessWidget {
     return loading
         ? Loading()
         : MaterialApp(
-            title: "Material",
-            home: RegisterPage(),
-          );
+      title: "Material",
+      home: RegisterPage(),
+    );
   }
 }
 
@@ -106,7 +106,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   role = "Restaurant";
                                   print(role);
                                   checkBoxLabelText =
-                                      "Restaurant/Organization Name";
+                                  "Restaurant/Organization Name";
                                 });
                               }
                             });
@@ -163,16 +163,15 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                             Expanded(
                               child: TextField(
+                                keyboardType: TextInputType.text,
+                                textCapitalization: TextCapitalization.words,
+                                textInputAction: TextInputAction.next,
+                                onSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
                                 decoration: InputDecoration(
-                                  hintText: checkBoxLabelText,
+                                  labelText: checkBoxLabelText,
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: mainColor),
-                                  ),
-                                  //labelText: checkBoxLabelText,
-                                  labelStyle: TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
                                   ),
                                 ),
                                 onChanged: (value) {
@@ -200,8 +199,13 @@ class RegisterPageState extends State<RegisterPage> {
                             SizedBox(width: 20),
                             Expanded(
                               child: TextField(
+                                autocorrect: false,
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
+                                onSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
                                 decoration: InputDecoration(
-                                  hintText: "Email",
+                                  labelText: "Email",
                                 ),
                                 onChanged: (value) {
                                   this.setState(() {
@@ -228,9 +232,11 @@ class RegisterPageState extends State<RegisterPage> {
                             SizedBox(width: 20),
                             Expanded(
                               child: TextField(
+                                keyboardType: TextInputType.visiblePassword,
+                                autocorrect: false,
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  hintText: "Password",
+                                  labelText: "Password",
                                 ),
                                 onChanged: (value) {
                                   this.setState(() {
@@ -277,6 +283,7 @@ class RegisterPageState extends State<RegisterPage> {
                       //padding: EdgeInsets.fromLTRB(30.0, 8.0, 20.0, 8.0),
                       //splashColor: Colors.blueAccent,
                       onPressed: () async {
+                        FocusScope.of(context).requestFocus(new FocusNode());
                         setState(() => loading = false);
                         if (_email == null || _email == "") {
                           showError("Email can't be empty", true);
@@ -292,8 +299,7 @@ class RegisterPageState extends State<RegisterPage> {
                             user = (await _auth.createUserWithEmailAndPassword(
                               email: _email.trim(),
                               password: _password.trim(),
-                            ))
-                                .user;
+                            )).user;
                             //user.sendEmailVerification();
                           } catch (e) {
                             showError(e.message, true);
@@ -311,6 +317,7 @@ class RegisterPageState extends State<RegisterPage> {
                                     'role': role,
                                     'lat': 0.0,
                                     'long': 0.0,
+                                    'uid': user.uid,
                                   }).then((onValue) {});
                                   break;
                                 case 'Restaurant':
@@ -323,6 +330,7 @@ class RegisterPageState extends State<RegisterPage> {
                                     'role': role,
                                     'lat': 0.0,
                                     'long': 0.0,
+                                    'uid': user.uid,
                                   }).then((onValue) {});
                                   break;
                                 default:
@@ -335,10 +343,12 @@ class RegisterPageState extends State<RegisterPage> {
                                     'role': role,
                                     'lat': 0.0,
                                     'long': 0.0,
+                                    'uid': user.uid,
                                   }).then((onValue) {});
                               }
-                              Navigator.pop(context, role);
-                              //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(user: user), fullscreenDialog: true),);
+                              UserUpdateInfo updateUser = UserUpdateInfo();
+                              updateUser.displayName = role;
+                              user.updateProfile(updateUser).then((value) => Navigator.pop(context, role));
                             } else {
                               //showError("Error signing up", true);
                             }

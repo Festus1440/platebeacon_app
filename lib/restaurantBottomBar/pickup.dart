@@ -9,6 +9,7 @@ class Pickup extends StatefulWidget {
 }
 
 class _PickupState extends State<Pickup> {
+  bool isShelter;
   String userId = "";
   String mainCollection = "";
   String subCollection = "";
@@ -21,16 +22,20 @@ class _PickupState extends State<Pickup> {
     // this function is called when the page starts
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
+      if (!mounted) return;
       setState(() {
         userId = user.uid;
         if (user.displayName == "Shelter") {
           mainCollection = "Shelter";
+          mainCollection = "Shelter";
           subCollection = "pickup";
           mainColor = Colors.blue;
+          isShelter = true;
         } else {
           mainCollection = "Restaurant";
-          subCollection = "deliveries";
+          subCollection = "donations";
           mainColor = Colors.green;
+          isShelter = false;
         }
         loading = true;
       });
@@ -39,93 +44,136 @@ class _PickupState extends State<Pickup> {
     });
   }
 
-  Future getLists() async {
-    var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore
-        .collection(mainCollection)
-        .document(userId)
-        .collection("deliveries")
-        .getDocuments();
-    return qn.documents;
-  }
-
   @override
   Widget build(BuildContext context) {
-    if(loading == true){
-      print(userId);
-    }else{
-      print("loaded" + userId);
+    if (loading == true) {
+    } else {
+      //print("loaded" + userId);
       return new StreamBuilder(
         stream: Firestore.instance
-            .collection("donations").orderBy('id')
+            .collection(mainCollection)
+            .document(userId)
+            .collection(subCollection)
+            .orderBy('id')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) return Center(child: new Text('Loading...'));
+          if (!snapshot.hasData)
+            return Center(child: new CircularProgressIndicator());
           if (snapshot.data.documents.length <= 0) {
-            return Center(child: Text("No Available Donations"));
-          }
-          else {
-          return new ListView(
-            children: snapshot.data.documents.map((document) {
-              return ListTile(
-                onTap: () {
-                  // dont use for delete
-                },
-                leading: Container(
-                  height: 50,
-                  child: Icon(Icons.calendar_today),
-                ),
-                title: Text('Next Donation'),
-                subtitle: Text(
-                    document['date'].toString()),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: mainColor),
-                  height: 50,
-                  child: IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(2)),
-                            backgroundColor: Colors.white,
-                            title: Text("Delete Confirmation"),
-                            content: Text(
-                                "Are you sure you want to delete"),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text("Yes"),
-                                onPressed: () {
-                                  print(document.documentID);
-                                  Firestore.instance.collection("donations")
-                                      .document(document.documentID)
-                                      .delete()
-                                      .then((oValue) {
-                                    SnackBar(content: Text('Deleted'));
-                                  });
-                                  Navigator.of(context).pop();
-                                },
+            return Center(
+                child: Text(isShelter
+                    ? "Donations that have been sent to you will show here"
+                    : "Donations that you have made will show here"));
+          } else {
+            return new ListView(
+              //padding: EdgeInsets.all(15),
+              children: snapshot.data.documents.map((document) {
+                return InkWell(
+                  //onTap: (){},
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Icon(Icons.favorite),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        document['name'].toString() +
+                                            " Donation",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text("Scheduled For: " +
+                                          document['date'].toString()),
+                                      Text(isShelter
+                                          ? "From " +
+                                              document['from'].toString()
+                                          : "For " + document['to'].toString()),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              FlatButton(
-                                child: Text("No"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
+                              SizedBox(
+                                width: double.infinity,
+                                child: FlatButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Delete Confirmation"),
+                                          content: Text(
+                                              "Are you sure you want to delete"),
+                                          actions: <Widget>[
+                                            MaterialButton(
+                                              child: Text("Yes"),
+                                              onPressed: () {
+                                                Firestore.instance
+                                                    .collection(mainCollection)
+                                                    .document(userId)
+                                                    .collection(subCollection)
+                                                    .document(
+                                                        document.documentID)
+                                                    .delete()
+                                                    .then((onValue) {
+                                                  print("deleted" +
+                                                      " " +
+                                                      document.documentID);
+                                                });
+                                                Navigator.of(context).pop();
+                                              },
+                                              color: Colors.redAccent,
+                                              elevation: 0.0,
+                                              highlightElevation: 0.0,
+                                            ),
+                                            MaterialButton(
+                                              child: Text("No"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              color: Colors.cyanAccent,
+                                              elevation: 0.0,
+                                              highlightElevation: 0.0,
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: mainColor,
+                                ),
                               ),
                             ],
-                          );
-                        },
-                      );
-                    },
-                    icon: Icon(Icons.delete, color: Colors.white,),
+                          ),
+                        ),
+                        Divider(
+                          height: 0,
+                          thickness: 1,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
-          );
-        }
+                );
+              }).toList(),
+            );
+          }
         },
       );
     }

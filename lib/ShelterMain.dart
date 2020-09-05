@@ -29,7 +29,8 @@ class ShelterMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Material",
+      debugShowCheckedModeBanner: false,
+      title: "Plate Beacon",
       home: Home(),
       routes: <String, WidgetBuilder>{
         '/restaurant': (BuildContext context) => RestaurantDetails(),
@@ -77,6 +78,28 @@ class Home extends StatefulWidget {
 }
 
 class _MaterialHomeState extends State<Home> {
+  String userId;
+  String name = "Shelter Name";
+  String city = "City";
+  String state = "State";
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      if (!mounted) return;
+      setState(() {
+        userId = user.uid;
+      });
+      Firestore.instance.collection('Shelter').document(userId).get().then((document) {
+        setState(() {
+          name = document['displayName'] ?? "null";
+          city = document['city'] ?? "City";
+          state = document['state'] ?? "St";
+        });
+      });
+    });
+  }
+
   final bottomBarItems = [
     HomeScreen(),
     MapSample(),
@@ -170,14 +193,15 @@ class _MaterialHomeState extends State<Home> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "Shelter Name",
+                            name,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 15.0,
                             ),
                           ),
+                          SizedBox(height: 5,),
                           Text(
-                            "Chicago, IL",
+                            city+", "+state,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 13.0,

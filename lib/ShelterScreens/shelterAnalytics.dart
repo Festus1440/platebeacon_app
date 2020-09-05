@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 
 
-class shelterAnalytics extends StatelessWidget{
+class ShelterAnalytics extends StatelessWidget{
 
 
   @override

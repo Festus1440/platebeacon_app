@@ -29,10 +29,11 @@ class Login extends StatelessWidget {
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
-  bool loading = false;
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _obscure = true;
+  bool loginVisible = false;
   bool loading = false;
   String _email, _password;
   bool errorVisible = false;
@@ -48,21 +49,21 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+        elevation: 10.0,
         child: Container(
           height: 20.0,
-          color: Colors.black38,
+          color: Colors.green,
         ),
       ),
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0.0,
+        elevation: 10.0,
         title: Text("Log in"),
         backgroundColor: Colors.green,
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: Container(
+        child: ListView(
           children: <Widget>[
             Container(
               alignment: Alignment.center,
@@ -96,8 +97,15 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Expanded(
                         child: TextField(
+                          autocorrect: false,
+                          //autofocus: true,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          onSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          enabled: !loginVisible,
                           decoration: InputDecoration(
-                            hintText: "Email",
+                            labelText: "Email",
                           ),
                           onChanged: (value) {
                             this.setState(() {
@@ -127,10 +135,21 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Expanded(
                         child: TextField(
+                          autocorrect: false,
+                          keyboardType: TextInputType.visiblePassword,
+                          enabled: !loginVisible,
                           decoration: InputDecoration(
-                            hintText: "Password",
+                            labelText: "Password",
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.remove_red_eye),
+                              onPressed: (){
+                                setState(() {
+                                  _obscure = !_obscure;
+                                });
+                              },
+                            ),
                           ),
-                          obscureText: true,
+                          obscureText: _obscure,
                           onChanged: (value) {
                             this.setState(() {
                               _password = value;
@@ -154,7 +173,6 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(loginError),
                     ),
                   ),
-                  //SizedBox(height: 5.0),
                   Container(
                     alignment: Alignment(1.0, 0.0),
                     padding: EdgeInsets.only(top: 15.0),
@@ -180,54 +198,84 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 30.0),
                   Container(
-                    child: FlatButton(
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      color: Colors.green,
-                      textColor: Colors.white,
-                      disabledColor: Colors.grey,
-                      disabledTextColor: Colors.black,
-                      //splashColor: Colors.blueAccent,
-                      onPressed: () {
-                        setState(() => loading = true);
-                        if (_email == null || _email == "") {
-                          showError("Email can't be empty", true);
-                        } else if (_password == null || _password == "") {
-                          showError("Password can't be empty", true);
-                        } else {
-                          showError("", false);
-                          FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: _email.trim(), password: _password.trim())
-                              .then((value) {
-                            Navigator.pop(context, value.user);
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMain(), fullscreenDialog: true),);
-                            //Navigator.of(context).pop();
-                          }).catchError((error) {
-                            showError(error.message, true);
-                            print("Error: " + error.message);
-                          });
-                          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
-                          //Navigator.of(context).pushReplacementNamed('shelterMain');
-                        }
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 50.0,
-                        child: Text(
-                          "Log in",
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
+                    child: Stack(
+                      children: <Widget>[
+                        Visibility(
+                          visible: loginVisible,
+                          child: Container(
+                              margin: EdgeInsets.only(top: 25),
+                              alignment: Alignment.center,
+                              width: 40,
+                              height: 40,
+                              child: CircularProgressIndicator()),
+                        ),
+                        Visibility(
+                          visible: !loginVisible,
+                          child: FlatButton(
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            color: Colors.green,
+                            textColor: Colors.white,
+                            disabledColor: Colors.grey,
+                            disabledTextColor: Colors.black,
+                            //splashColor: Colors.blueAccent,
+                            onPressed: () {
+                              FocusScope.of(context)
+                                  .requestFocus(new FocusNode());
+                              setState(() {
+                                loading = true;
+                              });
+                              if (_email == null || _email == "") {
+                                showError("Email can't be empty", true);
+                              } else if (_password == null || _password == "") {
+                                showError("Password can't be empty", true);
+                              } else {
+                                showError("", false);
+                                setState(() {
+                                  loginVisible = true;
+                                });
+                                FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                        email: _email.trim(),
+                                        password: _password.trim())
+                                    .then((value) {
+                                  FirebaseAuth.instance.currentUser().then((value) {
+                                    Navigator.pop(context, value.displayName);
+                                  });
+                                }).catchError((error) {
+                                  setState(() {
+                                    loginVisible = false;
+                                  });
+                                  showError(error.message, true);
+                                  print("Error: " + error.message);
+                                });
+                                //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShelterMain()),);
+                                //Navigator.of(context).pushReplacementNamed('shelterMain');
+                              }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50.0,
+                              child: Text(
+                                "Log in",
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                  //SizedBox(height: 30.0),
                 ],
               ),
-            )
+            ),
+            Container(
+              //color: Colors.blue,
+              height: MediaQuery.of(context).viewInsets.bottom,
+            ),
           ],
         ),
       ),

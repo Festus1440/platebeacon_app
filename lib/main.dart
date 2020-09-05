@@ -13,12 +13,13 @@ class MaterialDesign extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         return MaterialApp(
+          theme: ThemeData(fontFamily: 'Calibri'),
           debugShowCheckedModeBanner: false,
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/register': (BuildContext context) => RegisterPage(),
           },
-          title: "Material",
+          title: "Plate Beacon",
           home: userLoggedIn(),
         );
       }
@@ -27,48 +28,46 @@ class MaterialDesign extends StatelessWidget {
 
 
 _goToRegister(BuildContext context) async {
-  String role = await Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => RegisterPage(), fullscreenDialog: true),
+  final role = await Navigator.push(context, MaterialPageRoute(
+        builder: (context) => RegisterPage(),
+        fullscreenDialog: true),
   );
   if (role != null) {
-    await authorizeAccess(role);
+    //authorizeAccess(role);
     print(role);
   }
+  return role;
 }
 
 _goToLogin(BuildContext context) async {
-  FirebaseUser role = await Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => LoginPage(), fullscreenDialog: true),
+  final role = await Navigator.push(context, MaterialPageRoute(
+      builder: (context) => LoginPage(),
+      fullscreenDialog: true),
   );
   if (role != null) {
-    //print(role.displayName);
-    //authorizeAccess(role);
+    print("role ${role}");
   }
+  FirebaseAuth.instance.currentUser().then((value) => print(value));
 }
 
-authorizeAccess(role) {
-  FirebaseAuth.instance.currentUser().then((user) {
-    UserUpdateInfo updateUser = UserUpdateInfo();
-    updateUser.displayName = role;
-    user.updateProfile(updateUser);
-    //print(user.displayName);
-  });
+Future<FirebaseUser> authorizeAccess(role) async {
+  FirebaseUser userr = await FirebaseAuth.instance.currentUser();
+  UserUpdateInfo updateUser = UserUpdateInfo();
+  updateUser.displayName = role;
+  userr.updateProfile(updateUser);
+  return userr;
 }
 
 Widget userLoggedIn() {
   return StreamBuilder(
     stream: FirebaseAuth.instance.onAuthStateChanged,
     builder: (BuildContext context, snapshot) {
-      //print(snapshot.data);
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Scaffold(
           body: Center(child: Text("Please wait...")),
         );
       } else {
+        //print(snapshot.data);
         if (snapshot.hasData) {
           //logged in
           return FutureBuilder(
@@ -104,12 +103,6 @@ class _MaterialHomeState extends State<MaterialHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: Colors.black38,
-        ),
-      ),
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

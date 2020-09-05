@@ -144,6 +144,7 @@ class _HomePageAnalytics extends State<RestaurantSavingCharts> {
                       child: Container(
                         child: Center(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
                                 'Weekly Donations',
@@ -165,7 +166,6 @@ class _HomePageAnalytics extends State<RestaurantSavingCharts> {
                                         entryTextStyle: charts.TextStyleSpec(
                                             color: charts.MaterialPalette.purple
                                                 .shadeDefault,
-                                            fontFamily: 'Georgia',
                                             fontSize: 11
                                         ),
                                       ),
@@ -189,7 +189,7 @@ class _HomePageAnalytics extends State<RestaurantSavingCharts> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(0.0),
                       child: Container(
                         child: Center(
                           child: Column(
@@ -214,7 +214,6 @@ class _HomePageAnalytics extends State<RestaurantSavingCharts> {
                                         entryTextStyle: charts.TextStyleSpec(
                                             color: charts.MaterialPalette.purple
                                                 .shadeDefault,
-                                            fontFamily: 'Georgia',
                                             fontSize: 11
                                         ),
                                       ),

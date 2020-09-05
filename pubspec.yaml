@@ -19,6 +19,11 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_spinkit: "^4.1.2"
   charts_flutter: ^0.9.0
+  persistent_bottom_nav_bar: ^2.0.5
+  expandable_bottom_sheet: ^0.2.1+1
+  font_awesome_flutter: ^8.8.1
+  sliding_sheet: ^0.3.5
+  geolocator: ^5.3.1
 
 dev_dependencies:
   flutter_test:
