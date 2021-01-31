@@ -21,27 +21,6 @@ class _PickupState extends State<Pickup> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      if (!mounted) return;
-      setState(() {
-        userId = user.uid;
-        if (user.displayName == "Shelter") {
-          mainCollection = "Shelter";
-          mainCollection = "Shelter";
-          subCollection = "pickup";
-          mainColor = Colors.blue;
-          isShelter = true;
-        } else {
-          mainCollection = "Restaurant";
-          subCollection = "donations";
-          mainColor = Colors.green;
-          isShelter = false;
-        }
-        loading = true;
-      });
-      loading = false;
-      //sleep(const Duration(seconds: 2));
-    });
   }
 
   @override
@@ -50,16 +29,16 @@ class _PickupState extends State<Pickup> {
     } else {
       //print("loaded" + userId);
       return new StreamBuilder(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection(mainCollection)
-            .document(userId)
+            .doc(userId)
             .collection(subCollection)
             .orderBy('id')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData)
             return Center(child: new CircularProgressIndicator());
-          if (snapshot.data.documents.length <= 0) {
+          if (snapshot.data.docs.length <= 0) {
             return Center(
                 child: Text(isShelter
                     ? "Donations that have been sent to you will show here"
@@ -67,7 +46,7 @@ class _PickupState extends State<Pickup> {
           } else {
             return new ListView(
               //padding: EdgeInsets.all(15),
-              children: snapshot.data.documents.map((document) {
+              children: snapshot.data.docs.map((document) {
                 return InkWell(
                   //onTap: (){},
                   child: Container(
@@ -121,17 +100,16 @@ class _PickupState extends State<Pickup> {
                                             MaterialButton(
                                               child: Text("Yes"),
                                               onPressed: () {
-                                                Firestore.instance
+                                                FirebaseFirestore.instance
                                                     .collection(mainCollection)
-                                                    .document(userId)
+                                                    .doc(userId)
                                                     .collection(subCollection)
-                                                    .document(
-                                                        document.documentID)
+                                                    .doc(document.id)
                                                     .delete()
                                                     .then((onValue) {
                                                   print("deleted" +
                                                       " " +
-                                                      document.documentID);
+                                                      document.id);
                                                 });
                                                 Navigator.of(context).pop();
                                               },

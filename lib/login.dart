@@ -50,9 +50,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         elevation: 10.0,
-        child: Container(
-          height: 20.0,
-          color: Colors.green,
+        color: Colors.green,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       resizeToAvoidBottomPadding: false,
@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                   Visibility(
                     visible: errorVisible,
                     child: Container(
-                      margin: EdgeInsets.only(top: 10.0),
+                      margin: EdgeInsets.only(top: 10.0,left: 45),
                       alignment: Alignment(-1.0, 0.0),
                       child: Text(loginError),
                     ),
@@ -234,14 +234,8 @@ class _LoginPageState extends State<LoginPage> {
                                 setState(() {
                                   loginVisible = true;
                                 });
-                                FirebaseAuth.instance
-                                    .signInWithEmailAndPassword(
-                                        email: _email.trim(),
-                                        password: _password.trim())
-                                    .then((value) {
-                                  FirebaseAuth.instance.currentUser().then((value) {
-                                    Navigator.pop(context, value.displayName);
-                                  });
+                                FirebaseAuth.instance.signInWithEmailAndPassword(email: _email.trim(), password: _password.trim()).then((value) {
+                                  Navigator.pop(context, value.user.uid);
                                 }).catchError((error) {
                                   setState(() {
                                     loginVisible = false;

@@ -8,25 +8,13 @@ import 'dart:async';
 
 Widget whatUser() {
   //logged in
-  return FutureBuilder(
-      future: FirebaseAuth.instance.currentUser(),
-      builder: (BuildContext context, AsyncSnapshot user) {
-        //print(user.data);
-        if (user.connectionState == ConnectionState.waiting) {
-          return Center(child: Text("Please wait..."));
-        } else {
-          if (user.data.displayName == "Shelter") {
-            return ShelterHome();
-          } else if (user.data.displayName == "Restaurant") {
-            return RestaurantHome();
-          } else {
-            return Error();
-          }
-        }
-      });
+  return Text("");
 }
 
 class HomeScreen extends StatelessWidget {
+  final String name;
+  HomeScreen(this.name);
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -34,10 +22,18 @@ class HomeScreen extends StatelessWidget {
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            height: 250,
+            margin: EdgeInsets.only(left:20, top: 20),
+            alignment: Alignment.centerLeft,
+            child: Text("${name}",style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),)),
+          Container(
+            height: 220,
+            margin: EdgeInsets.all(20),
             //margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
             decoration: BoxDecoration(
-                //borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 //border: Border.all(width: 1.0, color: mainColor),
                 //shape: BoxShape.circle,
                 image: DecorationImage(
@@ -66,7 +62,7 @@ var _controller = TextEditingController();
 Color mainColor = Colors.green;
 String mainCollection = "";
 String subCollection = "";
-String userId = "";
+String _userId = "";
 
 class _RestaurantHomeState extends State<RestaurantHome> {
   bool showModal = false;
@@ -90,44 +86,15 @@ class _RestaurantHomeState extends State<RestaurantHome> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      if (user.displayName == "Shelter") {
-        if (!mounted) return;
-        setState(() {
-          userId = user.uid;
-          mainCollection = "Shelter";
-          subCollection = "pickup";
-          mainColor = Colors.blue;
-        });
-      } else {
-        if (!mounted) return;
-        setState(() {
-          userId = user.uid;
-          mainCollection = "Restaurant";
-          subCollection = "donations";
-          mainColor = Colors.green;
-        });
-        Firestore.instance
-            .collection("Restaurant")
-            .document(userId)
-            .get()
-            .then((DocumentSnapshot data) {
-          setState(() {
-            from = data.data['displayName'] ?? "null";
-          });
-        });
-        countDonations();
-      }
-    });
   }
 
   void countDonations() async {
-    QuerySnapshot _myDoc = await Firestore.instance
+    QuerySnapshot _myDoc = await FirebaseFirestore.instance
         .collection("Restaurant")
-        .document(userId)
+        .doc(_userId)
         .collection("donations")
-        .getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+        .get();
+    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     //print(_myDocCount.length);
     if (!mounted) return;
     setState(() {
@@ -136,12 +103,12 @@ class _RestaurantHomeState extends State<RestaurantHome> {
   }
 
   void countPickups(userId) async {
-    QuerySnapshot _myDoc = await Firestore.instance
+    QuerySnapshot _myDoc = await FirebaseFirestore.instance
         .collection("Shelter")
-        .document(userId)
+        .doc(userId)
         .collection("pickup")
-        .getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+        .get();
+    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     print(_myDocCount.length);
     if (!mounted) return;
     setState(() {
@@ -150,24 +117,24 @@ class _RestaurantHomeState extends State<RestaurantHome> {
   }
 
   update() {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection("Restaurant")
-        .document(userId)
+        .doc(_userId)
         .collection("donations")
-        .document()
-        .setData({
+        .doc()
+        .set({
       'date': selectedDate + selectedTime,
       "id": date,
       "from": from,
       "to": selectedHint,
       "name": name,
     }).then((onValue) {
-      Firestore.instance
+      FirebaseFirestore.instance
           .collection("Shelter")
-          .document(selectedId)
+          .doc(selectedId)
           .collection("pickup")
-          .document()
-          .setData({
+          .doc()
+          .set({
         'date': selectedDate + selectedTime,
         "id": date,
         "from": from,
@@ -195,6 +162,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
       print(formattedTimeOfDay);
       selectedTime = " at " + formattedTimeOfDay;
     }
+    if (!mounted) return;
     setState(() {
       hintText.text = selectedDate + selectedTime;
       date = int.parse(selectedDate.replaceAll("/", ""));
@@ -235,6 +203,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
               Container(
                 child: ListTile(
                   onTap: () {
+                    if (!mounted) return;
                     setState(() {
                       showModal = true;
                     });
@@ -245,7 +214,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                     margin: EdgeInsets.only(
                       left: 0,
                     ),
-                    child: Text("Schedule Donation",style: TextStyle(fontFamily: "SF"),),
+                    child: Text("Schedule a Donation",style: TextStyle(fontFamily: "SF"),),
                   ), //
                 ),
               ),
@@ -260,7 +229,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                   ),
                   title: Container(
                       margin: EdgeInsets.only(left: 0),
-                      child: Text("Next Donation")),
+                      child: Text("Next Donation", style: TextStyle(fontFamily: 'SF'),)),
                   subtitle: Container(
                     margin: EdgeInsets.only(left: 0),
                     child: fetch("No Scheduled Donations"),
@@ -291,6 +260,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                           splashColor: mainColor,
                           icon: Icon(Icons.close),
                           onPressed: () {
+                            if (!mounted) return;
                             setState(() {
                               showModal = false;
                             });
@@ -317,6 +287,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                                   hintText: error ?? "Title",
                                 ),
                                 onChanged: (value) {
+                                  if (!mounted) return;
                                   setState(() {
                                     name = value;
                                   });
@@ -324,7 +295,7 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                               ),
 
                               StreamBuilder<QuerySnapshot>(
-                                  stream: Firestore.instance
+                                  stream: FirebaseFirestore.instance
                                       .collection("Shelter")
                                       .snapshots(),
                                   builder: (BuildContext context,
@@ -341,24 +312,25 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                                           itemHeight: 60,
                                           hint: Text(
                                               selectedHint ?? "Choose a Shelter"),
-                                          items: snapshot.data.documents
+                                          items: snapshot.data.docs
                                               .map((DocumentSnapshot document) {
                                             return DropdownMenuItem<String>(
-                                              value: document.documentID,
+                                              value: document.id,
                                               child:
-                                                  Text(document.data['displayName']),
+                                                  Text(document.data()['displayName']),
                                             );
                                           }).toList(),
                                           onChanged: (value) {
-                                            Firestore.instance
+                                            FirebaseFirestore.instance
                                                 .collection("Shelter")
-                                                .document(value)
+                                                .doc(value)
                                                 .get()
                                                 .then((DocumentSnapshot data) {
+                                              if (!mounted) return;
                                               setState(() {
                                                 selectedId = value;
                                                 selectedHint =
-                                                    data.data['displayName'] ??
+                                                    data.data()['displayName'] ??
                                                         "error";
                                                 print(
                                                     selectedId + " " + selectedHint);
@@ -427,12 +399,14 @@ class _RestaurantHomeState extends State<RestaurantHome> {
                                         selectedId == "" ||
                                         name == null ||
                                         name == "") {
+                                      if (!mounted) return;
                                       setState(() {
                                         error = "Title is required";
                                       });
                                       print("missing Fields");
                                     } else {
                                       update();
+                                      if (!mounted) return;
                                       setState(() {
                                         showModal = false;
                                       });
@@ -466,17 +440,17 @@ Widget fetch(message) {
     return Text("Please wait");
   } else {
     return StreamBuilder(
-      stream: Firestore.instance
+      stream: FirebaseFirestore.instance
           .collection(mainCollection)
-          .document(userId)
+          .doc(_userId)
           .collection(subCollection)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data.documents.length <= 0) {
+          if (snapshot.data.docs.length <= 0) {
             return Text(message);
           } else {
-            var data = snapshot.data.documents.first['date'];
+            var data = snapshot.data.docs.first['date'];
             if (data == null) {
               data = message;
               return Text(data.toString());
@@ -502,25 +476,6 @@ class _ShelterHomeState extends State<ShelterHome> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      if (user.displayName == "Shelter") {
-        if (!mounted) return;
-        setState(() {
-          userId = user.uid;
-          mainCollection = "Shelter";
-          subCollection = "pickup";
-          mainColor = Colors.blue;
-        });
-      } else {
-        if (!mounted) return;
-        setState(() {
-          userId = user.uid;
-          mainCollection = "Restaurant";
-          subCollection = "donations";
-          mainColor = Colors.green;
-        });
-      }
-    });
   }
 
   @override

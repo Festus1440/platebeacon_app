@@ -1,23 +1,29 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:share/share.dart';
 
-
-Color mainColor = Colors.green;
-
-
 class Stories extends StatefulWidget{
+  final String type;
+  Stories(this.type);
+
   @override
   _StoriesState createState() => _StoriesState();
 }
 
 class _StoriesState extends State<Stories> {
+  Color mainColor;
 
   @override
   void initState() {
     super.initState();
-    Timer.run(() => _showDialog());
+    if(widget.type == "Shelter"){
+      mainColor = Colors.blue;
+    }
+    else {
+      mainColor = Colors.green;
+    }
   }
 
   @override
@@ -28,27 +34,27 @@ class _StoriesState extends State<Stories> {
         backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       body: Column (
         children: <Widget>[
           Center(
-            child: Container (
-              height: 200,
-              decoration: BoxDecoration (
-                image: DecorationImage (
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/Stories.jpg'),
-                )
-              ),
-            )
+              child: Container (
+                height: 200,
+                decoration: BoxDecoration (
+                    image: DecorationImage (
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/Stories.jpg'),
+                    )
+                ),
+              )
           ),
           Divider(
-            height: 10,
-            thickness: 5,
+            height: 0,
+            thickness: 1,
             color: mainColor,
             indent: 0.0,
             endIndent: 0.0,
@@ -62,9 +68,9 @@ class _StoriesState extends State<Stories> {
                       margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                       alignment: Alignment.topCenter,
                       child: Text(
-                        "Share Story",
+                        "Share your story",
                         style: TextStyle(
-                          fontSize: 30.0,
+                          fontSize: 20.0,
                           fontWeight:FontWeight.bold,
                         ),
                       ),
@@ -78,7 +84,7 @@ class _StoriesState extends State<Stories> {
           ),
           Divider(
             height: 40.0,
-            thickness: 5,
+            thickness: 1,
             color: mainColor,
             indent: 0.0,
             endIndent: 0.0,
@@ -88,36 +94,18 @@ class _StoriesState extends State<Stories> {
               print("press");
             },
             contentPadding: EdgeInsets.only(left: 20, right: 20),
-            leading: Container(
-              width: 35,
-              height: 35,
-              decoration: BoxDecoration (
-                image: DecorationImage (
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/facebook1.png'),
-                ),
-              ),
-            ),
+            leading: FaIcon(FontAwesomeIcons.facebook),
             title: Text("Facebook"),
-            trailing: Icon(Icons.more_vert),
+            trailing: Icon(Icons.share),
           ),
           ListTile(
             onTap: (){
               print("press to instagram");
             },
             contentPadding: EdgeInsets.only(left: 20, right: 20),
-            leading: Container(
-              width: 35,
-              height: 35,
-              decoration: BoxDecoration (
-                image: DecorationImage (
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/instagram1.png'),
-                ),
-              ),
-            ),
+            leading: FaIcon(FontAwesomeIcons.instagram),
             title: Text("Instagram"),
-            trailing: Icon(Icons.more_vert),
+            trailing: Icon(Icons.share),
           ),
 
         ],
@@ -126,33 +114,4 @@ class _StoriesState extends State<Stories> {
 
     );
   }
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
-          backgroundColor: Colors.white,
-          title: new Text("Stories coming soon!"),
-          content: new Text("Soon you'll be able to share your experiences using Plate Beacon to all your fans!"
-              " Be proud of the contributions you've made to help those in need! We Applaud you!"),
-          actions: <Widget>[
-            new FlatButton(
-              child: new
-              Text("Sounds good!") ,
-              textColor: Colors.green,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
-
 }

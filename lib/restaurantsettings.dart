@@ -6,11 +6,16 @@ import 'package:flutterapp/restaurantBottomBar/restaurantAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutterapp/restaurantDrawer/Notifications.dart';
 import 'package:flutterapp/restaurantDrawer/Subscriptions.dart';
+import 'ShelterDrawer/Notifications.dart';
 import 'accountsettings.dart';
 
 Color mainColor;
 
 class RestaurantSettings extends StatefulWidget {
+  final String _type;
+
+  RestaurantSettings(this._type);
+
   @override
   _RestaurantSettingsState createState() => _RestaurantSettingsState();
 }
@@ -27,21 +32,19 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        if (user.displayName == "Shelter") {
-          mainColor = Colors.blue;
-        } else {
-          mainColor = Colors.green;
-        }
-      });
+    setState(() {
+      if (widget._type == "Shelter") {
+        mainColor = Colors.blue;
+      } else {
+        mainColor = Colors.green;
+      }
     });
   }
 
   getData() async {
-    await Firestore.instance
-        .collection("Restaurant")
-        .document(userId)
+    await FirebaseFirestore.instance.collection
+        ("Restaurant")
+        .doc(userId)
         .get()
         .then((DocumentSnapshot data) {
       personName = data["displayName"] ?? "Null";
@@ -60,9 +63,9 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
         backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       body: ListView(
@@ -80,7 +83,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RestaurantAccountDetails()));
+                      builder: (context) => EditAccountDetails("Restaurant")));
             },
           ),
           ListTile(
@@ -96,7 +99,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AccountSettingsDetails()));
+                      builder: (context) => AccountSettingsDetails("Restaurant")));
             },
           ),
           ListTile(
@@ -127,7 +130,7 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RestaurantNotifications()));
+                      builder: (context) => Notifications("Restaurant")));
             },
           ),
           ListTile(
@@ -137,15 +140,33 @@ class _RestaurantSettingsState extends State<RestaurantSettings> {
                 builder: (BuildContext context) {
                   // return object of type Dialog
                   return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(15)),
+                    //shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                     backgroundColor: Colors.white,
-                    title: new Text("About coming soon!"),
-                    content: new Text(
-                        "Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
+                    title: new Text("About"),
+                    content: new Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Developers"),
+                        SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text("randomText"),
+                                Text("randomText"),
+                                Text("randomText"),
+                                Text("randomText"),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     actions: <Widget>[
                       new FlatButton(
-                        child: new Text("Sounds good!"),
+                        child: new Text("Close"),
                         textColor: Colors.green,
                         onPressed: () {
                           Navigator.of(context).pop();

@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:flutter/services.dart';
-import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +34,6 @@ class MapSampleState extends State<MapSample> {
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
   Set<Polyline> get _polyLines => polyLines;
   List<LatLng> routeCords;
-  GoogleMapPolyline googleMapPolyline =
-      new GoogleMapPolyline(apiKey: "AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck");
   String googleAPiKey = "AIzaSyAp9WMYokTxIxuOlphnUT63L2HlLzv6Qck";
   BitmapDescriptor currentLocIcon; // initialise custom markers
   BitmapDescriptor shelterIcon; // ""
@@ -56,69 +53,7 @@ class MapSampleState extends State<MapSample> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    getData();
     init(); // get user location and ask for permission
-  }
-
-  getData() async {
-    await FirebaseAuth.instance.currentUser().then((user) {
-      if (!mounted) return;
-      setState(() {
-        if (user.displayName == "Shelter") {
-          userType = "Shelter";
-          mainColor = Colors.blue;
-          mainCollection = "Restaurant";
-          loading = false;
-          //sleep(const Duration(seconds: 2));
-        } else {
-          userType = "Restaurant";
-          mainColor = Colors.green;
-          mainCollection = "Shelter";
-          loading = false;
-          //sleep(const Duration(seconds: 2));
-        }
-      });
-    });
-  }
-
-  List<LatLng> _convertToLatLng(List points) {
-    List<LatLng> result = <LatLng>[];
-    for (int i = 0; i < points.length; i++) {
-      if (i % 2 != 0) {
-        result.add(LatLng(points[i - 1], points[i]));
-      }
-    }
-    return result;
-  }
-
-  List _decodePoly(String poly) {
-    var list = poly.codeUnits;
-    var lList = new List();
-    int index = 0;
-    int len = poly.length;
-    int c = 0;
-    do {
-      var shift = 0;
-      int result = 0;
-
-      do {
-        c = list[index] - 63;
-        result |= (c & 0x1F) << (shift * 5);
-        index++;
-        shift++;
-      } while (c >= 32);
-      if (result & 1 == 1) {
-        result = ~result;
-      }
-      var result1 = (result >> 1) * 0.00001;
-      lList.add(result1);
-    } while (index < len);
-
-    for (var i = 2; i < lList.length; i++) lList[i] += lList[i - 2];
-
-    print(lList.toString());
-
-    return lList;
   }
 
   void sendRequest(lat, long) async {
@@ -170,10 +105,10 @@ class MapSampleState extends State<MapSample> {
   }
 
   getSomePoints(lat, long) async {
-    routeCords = await googleMapPolyline.getCoordinatesWithLocation(
-        origin: LatLng(currentLocation.latitude, currentLocation.longitude),
-        destination: LatLng(lat, long),
-        mode: RouteMode.driving);
+    // routeCords = await googleMapPolyline.getCoordinatesWithLocation(
+    //     origin: LatLng(currentLocation.latitude, currentLocation.longitude),
+    //     destination: LatLng(lat, long),
+    //     mode: RouteMode.driving);
   }
 
   void setPolyline(String encondedPoly, String origin) async {
@@ -236,77 +171,7 @@ class MapSampleState extends State<MapSample> {
               margin: EdgeInsets.symmetric(vertical: 20.0),
               width: MediaQuery.of(context).size.width,
               height: 190,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance
-                    .collection(mainCollection ?? "test")
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData || loading == true) {
-                    return Center(child: Text('Loading...'));
-                  } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0, color: Colors.grey),
-                            color: mainColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              //setPolyline();
-                              if (!mounted) return;
-                              setState(() {
-                                canTrack = true;
-                              });
-                              _showCurrentLoc(currentLocation.latitude,
-                                  currentLocation.longitude);
-                            },
-                            icon: Icon(
-                              Icons.my_location,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Visibility(
-                            visible: listVis,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: snapshot.data.documents
-                                  .map((DocumentSnapshot document) {
-                                if (document['lat'] != null &&
-                                    document['long'] != null) {
-                                  return Container(
-                                    padding: EdgeInsets.only(
-                                        left: 10.0, right: 10.0),
-                                    child: _boxes(
-                                        document.documentID,
-                                        document['city'] ?? "City",
-                                        document['state'] ?? "State",
-                                        "https://media.timeout.com/images/105239239/image.jpg",
-                                        document['lat'].toDouble() ?? 41.987135,
-                                        document['long'].toDouble() ??
-                                            -87.731037,
-                                        document['displayName'] ?? "null",
-                                        document['role'] ?? "null",
-                                        shelterIcon),
-                                  );
-                                } else {
-                                  return Text("");
-                                }
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),
+              child: Text("2"),
             ),
           ),
           Positioned(
@@ -556,8 +421,7 @@ class MapSampleState extends State<MapSample> {
     // make sure not to run if its not mounted aka available saves memory
     setState(() {
       // updated position
-      var pinPosition =
-          LatLng(currentLocation.latitude, currentLocation.longitude);
+      var pinPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
 
 //      FirebaseAuth.instance.currentUser().then((user) {
 //        String role2;

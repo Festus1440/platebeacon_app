@@ -20,7 +20,7 @@ class _SubscriptionsState extends State<Subscriptions> {
   @override
   void initState() {
     super.initState();
-    Timer.run(() => _showDialog());
+    //Timer.run(() => _showDialog());
   }
 
   @override
@@ -32,9 +32,9 @@ class _SubscriptionsState extends State<Subscriptions> {
         backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       body: Column(

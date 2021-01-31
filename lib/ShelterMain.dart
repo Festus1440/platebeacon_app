@@ -1,12 +1,22 @@
+import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Home.dart';
 import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
 import 'package:flutterapp/restaurantBottomBar/pickup.dart';
 import 'package:flutterapp/restaurantDrawer/Help.dart';
+import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:flutterapp/Settings.dart';
 //import 'package:flutterapp/restaurantDrawer/ResturantStories.dart';
 //import 'restaurantsettings.dart';
 import 'ShelterDrawer/ShelterStories.dart';
+import 'custom-widget.dart';
 import 'map.dart';
 import 'shelterBottomBarPages/shelterAccount.dart';
 import 'main.dart';
@@ -32,44 +42,12 @@ class ShelterMain extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Plate Beacon",
       home: Home(),
-      routes: <String, WidgetBuilder>{
-        '/restaurant': (BuildContext context) => RestaurantDetails(),
-        '/notifications': (BuildContext context) => Notifications(),
-        '/main': (BuildContext context) => MaterialDesign(),
-        '/events': (BuildContext context) => Events(),
-        '/shelterAnalytics': (BuildContext context) => ShelterMainAnalytics(),
-      },
     );
   }
 }
 
 Widget fetch(data) {
-  return FutureBuilder(
-      future: FirebaseAuth.instance.currentUser(),
-      builder: (BuildContext context, AsyncSnapshot user) {
-        if (user.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        } else {
-          return StreamBuilder<DocumentSnapshot>(
-              stream: Firestore.instance
-                  .collection("Shelter")
-                  .document(user.data.uid)
-                  .snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text("Error");
-                }
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return Text("Loading");
-                  default:
-                    //String s = Text(snapshot.data[data]).data;
-                    return Text(snapshot.data[data]);
-                }
-              });
-        }
-      });
+  return Text("");
 }
 
 class Home extends StatefulWidget {
@@ -78,38 +56,76 @@ class Home extends StatefulWidget {
 }
 
 class _MaterialHomeState extends State<Home> {
-  String userId;
+  //String userId;
   String name = "Shelter Name";
   String city = "City";
   String state = "State";
+  Completer<GoogleMapController> _mapController = Completer();
+  Future<String> _getDataFromSharedPref(key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final data = prefs.getString(key);
+    if (data == null){
+      return null;
+    }
+    return data;
+  }
+
+  Future<void> _setSharedPref(key, String) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, String);
+  }
+
+  Future<void> _deleteData(key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  }
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
   @override
   void initState() {
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      if (!mounted) return;
-      setState(() {
-        userId = user.uid;
-      });
-      Firestore.instance.collection('Shelter').document(userId).get().then((document) {
-        setState(() {
-          name = document['displayName'] ?? "null";
-          city = document['city'] ?? "City";
-          state = document['state'] ?? "St";
-        });
-      });
-    });
   }
 
-  final bottomBarItems = [
-    HomeScreen(),
-    MapSample(),
-    Pickup(),
-    ShelterAccount(),
-  ];
+  List<Widget> _buildScreens() {
+    return [
+      HomeScreen(name),
+      MapSample(),
+      Pickup(),
+    ];
+  }
+  PersistentTabController _controller;
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.home),
+        title: ("Home"),
+        activeColor: Colors.white,
+        inactiveColor: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.map),
+        title: ("Map"),
+        activeColor: Colors.white,
+        inactiveColor: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.shopping_basket),
+        title: ("Pickups"),
+        activeColor: Colors.white,
+        inactiveColor: Colors.black,
+      ),
+    ];
+  }
+
   Color mainColor = Colors.blue;
   int _bottomBarIndex = 0; // the first page
   String appBarTitle = "Home";
   void _onItemTapped(int index) {
+    if (!mounted) return;
     setState(() {
       _bottomBarIndex = index;
       switch (index) {
@@ -134,37 +150,36 @@ class _MaterialHomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0.0,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.blue,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            title: Text("Map"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            title: Text("Pickups"),
-          ),
-          //BottomNavigationBarItem(
-            //icon: Icon(Icons.person),
-            //title: Text("Profile"),
-          //),
-        ],
-        currentIndex: _bottomBarIndex,
-        selectedItemColor: Colors.white,
-        onTap: _onItemTapped,
+      body: PersistentTabView(
+          controller: _controller,
+          navBarHeight: 60,
+          screens: _buildScreens(),
+          items: _navBarsItems(), // Redundant here but defined to demonstrate for other than custom style
+          confineInSafeArea: false,
+          backgroundColor: Colors.blue,
+          handleAndroidBackButtonPress: true,
+          onItemSelected: (int) {
+            _onItemTapped(int);
+            if (!mounted) return;
+            setState(() {
+
+            }); // This is required to update the nav bar if Android back button is pressed
+          },
+          itemCount: 3,
+          navBarStyle:
+          NavBarStyle.style9 // Choose the nav bar style with this property
       ),
-      body: bottomBarItems[_bottomBarIndex],
       appBar: AppBar(
         elevation: 10.0,
         title: Text(appBarTitle),
         backgroundColor: Colors.blue,
+        actions: [
+          IconButton(icon: Icon(Icons.settings),
+            onPressed: (){
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ShelterSettings("Shelter")));
+            },)
+        ],
       ),
       drawer: Drawer(
         child: Column(
@@ -201,7 +216,7 @@ class _MaterialHomeState extends State<Home> {
                           ),
                           SizedBox(height: 5,),
                           Text(
-                            city+", "+state,
+                            "${city}${state == null || state == "" ? "": ", "+ state}",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 13.0,
@@ -215,120 +230,114 @@ class _MaterialHomeState extends State<Home> {
               ),
             ),
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/restaurant');
-                    },
-                    leading: Icon(Icons.restaurant),
-                    title: Text("Restaurant Details"),
-                  ),
-                  ListTile(
-                    //Creates the link to the analytics page.
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed('/shelterAnalytics');
-//                Navigator.push(context,
-//                    MaterialPageRoute(builder: (context) => AnalyticsBody()));
-//                setState(() {
-//                  _bottomBarIndex = 1;
-//                });
-                    },
-                    leading: Icon(Icons.insert_chart),
-                    title: Text("My Analytics"),
-                  ),
-
-
-
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ShelterStories()));
-                    },
-                    leading: Icon(Icons.library_books),
-                    title: Text("Stories"),
-                  ),
-
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
-                    },
-                    leading: Icon(Icons.event),
-                    title: Text("Events"),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Help(), fullscreenDialog: true));
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: ListView(
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantDetails()));
                       },
-                    leading: Icon(Icons.help),
-                    title: Text("Help"),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      // flutter defined function
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          // return object of type Dialog
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
-                            backgroundColor: Colors.white,
-                            title: new Text("Favorites coming soon!"),
-                            content: new Text("Soon you will be able to favorite Shelters you work with"
-                                " closely and view them all in one place!"),
-                            actions: <Widget>[
-                              new FlatButton(
-                                child: new Text("Sounds good!"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
+                      leading: Icon(Icons.restaurant),
+                      title: Text("Restaurant Details"),
+                    ),
+                    ListTile(
+                      //Creates the link to the analytics page.
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ShelterMainAnalytics()));
+                      },
+                      leading: Icon(Icons.insert_chart),
+                      title: Text("My Analytics"),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Stories("Shelter")));
+                      },
+                      leading: Icon(Icons.library_books),
+                      title: Text("Stories"),
+                    ),
+
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
+                      },
+                      leading: Icon(Icons.event),
+                      title: Text("Events"),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Help(), fullscreenDialog: true));
                         },
-                      );
-                    },
-                    leading: Container(
-                        //margin: EdgeInsets.only(left: 10.0),
-                        child: Icon(Icons.favorite)),
-                    title: Text("Favorites"),
+                      leading: Icon(Icons.help),
+                      title: Text("Help"),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        // flutter defined function
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            // return object of type Dialog
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                              backgroundColor: Colors.white,
+                              title: new Text("Favorites coming soon!"),
+                              content: new Text("Soon you will be able to favorite Shelters you work with"
+                                  " closely and view them all in one place!"),
+                              actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("Sounds good!"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      leading: Container(
+                          //margin: EdgeInsets.only(left: 10.0),
+                          child: Icon(Icons.favorite)),
+                      title: Text("Favorites"),
 
-                  ),
+                    ),
 
-                  Divider(
-                    height: 15.0,
-                    thickness: 0.5,
-                    color: mainColor,
-                    indent: 20.0,
-                    endIndent: 20.0,
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ShelterSettings()));
-                    },
-                    leading: Icon(Icons.settings),
-                    title: Text("Settings"),
-                  ),
-
-                  ListTile(
-                    onTap: () {
-                      Navigator.pop(context);
-                      FirebaseAuth.instance.signOut().then((value) {
-                        Navigator.of(context).pushReplacementNamed('/main');
-                      });
-                    },
-                    leading: Icon(Icons.arrow_back),
-                    title: Text("Log out"),
-                  ),
-                ],
+                    Divider(
+                      height: 15.0,
+                      thickness: 0.5,
+                      color: mainColor,
+                      indent: 20.0,
+                      endIndent: 20.0,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => ShelterSettings("Shelter")));
+                      },
+                      leading: Icon(Icons.settings),
+                      title: Text("Settings"),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.pop(context);
+                        FirebaseAuth.instance.signOut().then((value) {
+                          //Navigator.of(context).pushReplacementNamed('/main');
+                        });
+                      },
+                      leading: Icon(Icons.arrow_back),
+                      title: Text("Log out"),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -15,16 +15,6 @@ Color mainColor;
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        if (user.displayName == "Shelter") {
-          mainColor = Colors.blue;
-        } else {
-          mainColor = Colors.green;
-        }
-
-      });
-    });
   }
 
   @override
@@ -35,9 +25,9 @@ Color mainColor;
         backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       body: Column (
@@ -64,7 +54,7 @@ Color mainColor;
                     margin: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                     alignment: Alignment.topCenter,
                     child: Text(
-                      "If you need any help please contact us: ",
+                      "If you need any help please contact us via ",
                       style: TextStyle(
                         fontSize: 20.0,
                         // fontWeight:FontWeight.bold,
@@ -72,52 +62,26 @@ Color mainColor;
                     ),
                   )
                 ],
-              )
-            //  ],
-
+              ),
           ),
-
-          // ),
-
+          SizedBox(height: 40,),
           ListTile(
             onTap: (){
               print("press");
             },
-            contentPadding: EdgeInsets.only(top: 50, left: 30, right: 20),
-            leading: Container(
-              width: 35,
-              height: 35,
-              decoration: BoxDecoration (
-                image: DecorationImage (
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/email.jpg'),
-                ),
-              ),
-            ),
+            contentPadding: EdgeInsets.only(left: 30, right: 30),
+            leading: Icon(Icons.email),
             title: Text("Email: platebeacon@gmail.com"),
-
           ),
-
-
+          SizedBox(height: 10,),
           ListTile(
             onTap: (){
               print("press to instagram");
             },
-            contentPadding: EdgeInsets.only(top: 20, left: 30, right: 20),
-            leading: Container(
-              width: 35,
-              height: 35,
-              decoration: BoxDecoration (
-                image: DecorationImage (
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/phone1.png'),
-                ),
-              ),
-            ),
+            contentPadding: EdgeInsets.only(left: 30, right: 30),
+            leading: Icon(Icons.phone),
             title: Text("Phone : + 1847 219 8377"),
-
           ),
-
         ],
       ),
     );

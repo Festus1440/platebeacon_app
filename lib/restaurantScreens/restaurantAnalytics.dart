@@ -28,7 +28,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
   @override
   void initState() {
     super.initState();
-    Timer.run(() => _showDialog());
+    //Timer.run(() => _showDialog());
   }
 
   int _selectedIndex = 0;

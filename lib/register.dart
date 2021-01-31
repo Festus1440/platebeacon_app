@@ -49,9 +49,10 @@ class RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        elevation: 10.0,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       appBar: AppBar(
@@ -294,64 +295,34 @@ class RegisterPageState extends State<RegisterPage> {
                         } else {
                           showError("Please wait ...", true);
                           setState(() => loading = true);
-                          FirebaseUser user;
+                          FirebaseAuth _auth = FirebaseAuth.instance;
+                          User user = _auth.currentUser;
                           try {
-                            user = (await _auth.createUserWithEmailAndPassword(
+                            _auth.createUserWithEmailAndPassword(
                               email: _email.trim(),
                               password: _password.trim(),
-                            )).user;
-                            //user.sendEmailVerification();
+                            ).then((value) {
+                              if (user != null) {
+                                FirebaseFirestore.instance
+                                    .collection(role)
+                                    .doc(user.uid)
+                                    .set({
+                                  'displayName': _name,
+                                  'email': _email.trim(),
+                                  'role': role,
+                                  'lat': 0.0,
+                                  'long': 0.0,
+                                  'uid': user.uid,
+                                }).then((onValue) {
+                                  Navigator.pop(context, role);
+                                });
+                              } else {
+                                //showError("Error signing up", true);
+                              }
+                            });
                           } catch (e) {
                             showError(e.message, true);
                             print(e.toString());
-                          } finally {
-                            if (user != null) {
-                              switch (role) {
-                                case 'Shelter':
-                                  Firestore.instance
-                                      .collection(role)
-                                      .document(user.uid)
-                                      .setData({
-                                    'displayName': _name,
-                                    'email': _email.trim(),
-                                    'role': role,
-                                    'lat': 0.0,
-                                    'long': 0.0,
-                                    'uid': user.uid,
-                                  }).then((onValue) {});
-                                  break;
-                                case 'Restaurant':
-                                  Firestore.instance
-                                      .collection(role)
-                                      .document(user.uid)
-                                      .setData({
-                                    'displayName': _name,
-                                    'email': _email.trim(),
-                                    'role': role,
-                                    'lat': 0.0,
-                                    'long': 0.0,
-                                    'uid': user.uid,
-                                  }).then((onValue) {});
-                                  break;
-                                default:
-                                  Firestore.instance
-                                      .collection(role)
-                                      .document(user.uid)
-                                      .setData({
-                                    'displayName': _name,
-                                    'email': _email.trim(),
-                                    'role': role,
-                                    'lat': 0.0,
-                                    'long': 0.0,
-                                    'uid': user.uid,
-                                  }).then((onValue) {});
-                              }
-                              UserUpdateInfo updateUser = UserUpdateInfo();
-                              updateUser.displayName = role;
-                              user.updateProfile(updateUser).then((value) => Navigator.pop(context, role));
-                            } else {
-                              //showError("Error signing up", true);
-                            }
                           }
                         }
                       },

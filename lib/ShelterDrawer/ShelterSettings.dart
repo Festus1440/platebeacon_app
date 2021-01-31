@@ -11,6 +11,10 @@ import 'Notifications.dart';
 Color mainColor;
 
 class ShelterSettings extends StatefulWidget {
+  final String type;
+
+  ShelterSettings(this.type);
+
   @override
   _ShelterSettingsState createState() => _ShelterSettingsState();
 }
@@ -23,14 +27,12 @@ class _ShelterSettingsState extends State<ShelterSettings> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        if (user.displayName == "Shelter") {
-          mainColor = Colors.blue;
-        } else {
-          mainColor = Colors.green;
-        }
-      });
+    setState(() {
+      if (widget.type == "Shelter") {
+        mainColor = Colors.blue;
+      } else {
+        mainColor = Colors.green;
+      }
     });
   }
 
@@ -43,9 +45,9 @@ class _ShelterSettingsState extends State<ShelterSettings> {
         backgroundColor:mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       body: ListView(
@@ -58,12 +60,11 @@ class _ShelterSettingsState extends State<ShelterSettings> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: Text("Change your name,description and profile photo."),
+            subtitle: Text("Edit profile name, address and profile photo."),
             onTap: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => RestaurantAccountDetails()));
+                  MaterialPageRoute(builder: (context) => EditAccountDetails("Shelter")));
             },
           ),
           ListTile(
@@ -79,7 +80,7 @@ class _ShelterSettingsState extends State<ShelterSettings> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AccountSettingsDetails()));
+                      builder: (context) => AccountSettingsDetails("Shelter")));
             },
           ),
           ListTile(
@@ -95,7 +96,7 @@ class _ShelterSettingsState extends State<ShelterSettings> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Notifications()));
+                      builder: (context) => Notifications("Shelter")));
             },
           ),
           ListTile(
@@ -105,13 +106,33 @@ class _ShelterSettingsState extends State<ShelterSettings> {
                 builder: (BuildContext context) {
                   // return object of type Dialog
                   return AlertDialog(
-                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                    //shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
                     backgroundColor: Colors.white,
-                    title: new Text("About coming soon!"),
-                    content: new Text("Our story shall be told! ..By us verbally for now but stay tuned! About will make its debut!"),
+                    title: new Text("About"),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Developers"),
+                        SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text("randomText"),
+                                Text("randomText"),
+                                Text("randomText"),
+                                Text("randomText"),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     actions: <Widget>[
                       new FlatButton(
-                        child: new Text("Sounds good!"),
+                        child: new Text("Close"),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

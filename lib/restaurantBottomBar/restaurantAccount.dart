@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,65 +6,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'main.dart';
 
 Color mainColor;
 
-// commit//
-class RestaurantAccount extends StatelessWidget {
+class EditAccountDetails extends StatefulWidget {
+  final String type;
+  EditAccountDetails(this.type);
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              ListTile(
-                //contentPadding: EdgeInsets.only(left: 15.0, right: 5.0, top: 5.0, bottom: 10.0,),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RestaurantAccountDetails()));
-                },
-                leading: Container(
-                  width: 50,
-                  height: 50,
-                  //margin: EdgeInsets.only(top: 20.0),
-                  decoration: BoxDecoration(
-                    //border: Border.all(width: 0.0, color: mainColor),
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/PB.jpg'),
-                    ),
-                  ),
-                ),
-                title: Text("Name of Profile"),
-                subtitle: Text("View account"),
-              ),
-              Divider(
-                height: 0.0,
-                thickness: 0.5,
-                color: mainColor,
-                indent: 0.0,
-                endIndent: 0.0,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  _EditAccountDetailsState createState() =>
+      _EditAccountDetailsState();
 }
 
-class RestaurantAccountDetails extends StatefulWidget {
-  @override
-  _RestaurantAccountDetailsState createState() =>
-      _RestaurantAccountDetailsState();
-}
-
-class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
+class _EditAccountDetailsState extends State<EditAccountDetails> {
   String userId = "";
   var personName = TextEditingController();
   var email = TextEditingController();
@@ -77,31 +34,63 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
   String streetSearch = "";
   String collection = "";
   bool loading = true;
+  Map dataread;
+
+  Future<String> _getDataFromSharedPref(key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final data = prefs.getString(key);
+    if (data == null){
+      return null;
+    }
+    return data;
+  }
+
+  Future<void> _setSharedPref(key, String) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, String);
+  }
 
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        userId = user.uid;
-        if (user.displayName == "Shelter") {
-          collection = "Shelter";
-          mainColor = Colors.blue;
-        } else {
-          collection = "Restaurant";
-          mainColor = Colors.green;
-        }
-      });
-      print(userId.toString());
-      getData();
+    _getDataFromSharedPref(userId).then((value) {
+      if (value != null){
+        Map data = jsonDecode(value);
+        if (!mounted) return;
+        setState(() {
+          loading = false;
+          personName.text = data["displayName"] ?? "";
+          email.text = data["email"] ?? "";
+          role.text = data["role"] ?? "";
+          street.text = data["street"] ?? "";
+          streetSearch = data["street"] ?? "";
+          city.text = data["city"] ?? "";
+          citySearch = data["city"] ?? "";
+          state.text = data["state"] ?? "";
+          zip.text = data["zip"] ?? "";
+          phone.text = data["phone"] ?? "";
+        });
+      }
+      else {
+        getData(userId);
+      }
+    });
+    setState(() {
+      if (widget.type == "Shelter") {
+        collection = "Shelter";
+        mainColor = Colors.blue;
+      } else {
+        collection = "Restaurant";
+        mainColor = Colors.green;
+      }
     });
   }
 
-  getData() async {
-    await Firestore.instance
+  getData(id) async {
+    await FirebaseFirestore.instance
         .collection(collection)
-        .document(userId)
+        .doc(id)
         .get()
         .then((DocumentSnapshot data) {
       setState(() {
@@ -124,9 +113,9 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       appBar: AppBar(
@@ -147,10 +136,10 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                     .placemarkFromAddress(streetSearch + " " + citySearch)
                     .then((results) {
                   print(street.text.trim() + " " + city.text.trim());
-                  Firestore.instance
+                  FirebaseFirestore.instance
                       .collection(collection)
-                      .document(userId)
-                      .updateData({
+                      .doc(userId)
+                      .update({
                     'displayName': personName.text.trim(),
                     'street': results[0].subThoroughfare +
                         " " +
@@ -162,7 +151,19 @@ class _RestaurantAccountDetailsState extends State<RestaurantAccountDetails> {
                     'long': results[0].position.longitude,
                     'email': email.text.trim(),
                     'phone': phone.text.trim(),
-                  }).then((onValue) {
+                  }).then((value) {
+                    String data = json.encode({'displayName': personName.text.trim(),
+                      'street': results[0].subThoroughfare +
+                          " " +
+                          results[0].thoroughfare,
+                      'city': results[0].locality,
+                      'state': results[0].administrativeArea,
+                      'zip': results[0].postalCode,
+                      'lat': results[0].position.latitude,
+                      'long': results[0].position.longitude,
+                      'email': email.text.trim(),
+                      'phone': phone.text.trim()});
+                    _setSharedPref(userId, data);
                     setState(() {
                       loading = false;
                       street.text = results[0].subThoroughfare +

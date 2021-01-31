@@ -2,37 +2,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Home.dart';
-
 import 'main.dart';
-//import 'package:flutterapp/ShelterDrawer/restaurantDetails.dart';
+//import 'package:flutterapp/ShelterDrawer/Events.dart';
 
 
 class AccountSettingsDetails extends StatefulWidget {
+  final String _type;
+
+  AccountSettingsDetails(this._type,);
+
   @override
   _AccountDetailsState createState() => _AccountDetailsState();
 }
 
 class _AccountDetailsState extends State<AccountSettingsDetails> {
-  //bool tappedYes = false;
+  var email = TextEditingController();
   String role;
-  FirebaseUser userObject;
   @override
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        userObject = user;
-        if (user.displayName == "Shelter") {
-          role = "Shelter";
-          mainColor = Colors.blue;
-          //print(mainCollection);
-        } else {
-          role = "Restaurant";
-          mainColor = Colors.green;
-          //print(mainCollection);
-        }
-      });
+    setState(() {
+      if (widget._type == "Shelter") {
+        role = "Shelter";
+        mainColor = Colors.blue;
+        //print(mainCollection);
+      } else {
+        role = "Restaurant";
+        mainColor = Colors.green;
+        //print(mainCollection);
+      }
     });
   }
 
@@ -42,6 +41,12 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
       appBar: AppBar(
         title: Text("Account Settings"),
         backgroundColor: mainColor,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
+        ),
       ),
       body: Container(
         child: Column(
@@ -58,15 +63,43 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    subtitle: Text("Change your login and notification email"),
                     onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            //shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                            backgroundColor: Colors.white,
+                            title: Text("Change Email"),
+                            content: TextField(
+                              controller: email,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelText: "New Email",
+                              ),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("Change"),
+                                onPressed: () {
+                                  print(email.text);
+                                  //widget._currentUser.
+                                },
+                              ),
+                              FlatButton(
+                                child: Text("Cancel"),
+                                //color: Colors.blueAccent,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
-                  ),
-                  Divider(
-                    height: 0.0,
-                    thickness: 0.5,
-                    color: Colors.black,
-                    indent: 0.0,
-                    endIndent: 0.0,
                   ),
                   ListTile(
                     //contentPadding: EdgeInsets.only(left: 20.0, right: 30.0),
@@ -76,15 +109,14 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    //subtitle: Text("Change your name,description and profile photo."),
+                    subtitle: Text("Permanently delete my account"),
                     onTap: () {
                       //print(userObject.toString());
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:  BorderRadius.circular(2)),
+                            //shape: RoundedRectangleBorder(borderRadius:  BorderRadius.circular(2)),
                             backgroundColor: Colors.white,
                             title:  Text("Delete Confirmation"),
                             content:  Text(
@@ -93,15 +125,7 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                               FlatButton(
                                 child:  Text("Yes"),
                                 onPressed: () {
-                                  Firestore.instance.collection(role).document(userObject.uid).delete().then((value) {
-                                    print("value");
-                                    Navigator.of(context).pop();
-                                    //userObject.delete()
-                                    //userObject.delete().then((value) {
 
-                                    //});
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MaterialDesign()));
-                                  });
                                 },
                               ),
                               FlatButton(
@@ -115,13 +139,6 @@ class _AccountDetailsState extends State<AccountSettingsDetails> {
                         },
                       );
                     },
-                  ),
-                  Divider(
-                    height: 0.0,
-                    thickness: 0.5,
-                    color: Colors.black,
-                    indent: 0.0,
-                    endIndent: 0.0,
                   ),
                 ],
               ),

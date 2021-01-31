@@ -98,25 +98,11 @@ class _ShelterAccountDetailsState extends State<ShelterAccountDetails> {
   void initState() {
     // this function is called when the page starts
     super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      setState(() {
-        userId = user.uid;
-        if (user.displayName == "Shelter") {
-          collection = "Shelter";
-          mainColor = Colors.blue;
-        } else {
-          collection = "Restaurant";
-          mainColor = Colors.green;
-        }
-      });
-      print(userId.toString());
-      getData();
-    });
   }
   getData() async {
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection(collection)
-        .document(userId)
+        .doc(userId)
         .get()
         .then((DocumentSnapshot data) {
       setState(() {

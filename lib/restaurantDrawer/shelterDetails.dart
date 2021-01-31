@@ -12,9 +12,9 @@ class ShelterDetails extends StatelessWidget {
         backgroundColor: mainColor,
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 20.0,
-          color: mainColor,
+        color: mainColor,
+        child: Padding(
+          padding: EdgeInsets.all(20),
         ),
       ),
       body: Column(
